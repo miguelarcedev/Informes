@@ -1,42 +1,6 @@
 from unittest.mock import DEFAULT
 from django.db import models
-
-
-SEXO = [
-        ('Mujer', 'Mujer'),
-        ('Hombre', 'Hombre'),
-    ]
-    
-UOO = [
-        ('Ungido', 'Ungido'),
-        ('Otras Ovejas', 'Otras Ovejas'),
-    ]
-
-ASM = [
-        ('Anciano', 'Anciano'),
-        ('Siervo Ministerial', 'Siervo Ministerial'),
-    ]
-
-PR = [
-        ('Precursor Regular', 'Precursor Regular'),
-        
-    ]
-
-GRUPO = [
-        ('1', '1'),
-        ('2', '2'),
-        ('3', '3'),
-        ('4', '4'),
-        
-    ]
-
-ESTADO = [
-        ('Activo', 'Activo'),
-        ('Inactivo', 'Inactivo'),
-        ('Mudado', 'Mudado'),
-        ('Fallecido', 'Fallecido'),
-        
-    ]
+from informes.choices import *
 
 
 class Publicador(models.Model):

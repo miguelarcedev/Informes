@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+<body>
+
+    <h1>Publicadores</h1>
+    <ul>
+    {% for publicador in object_list %}
+        <li>{{ publicador.nombre }} </li>
+    {% empty %}
+        <li>No articles yet.</li>
+    {% endfor %}
+    </ul>
+</body>
+</html>

@@ -1,38 +1,6 @@
 from django.db import models
 from publicador.models import Publicador
-
-# Create your models here.
-
-
-MES = [
-        ('Enero', 'Enero'),
-        ('Febrero', 'Febrero'),
-        ('Marzo', 'Marzo'),
-        ('Abril', 'Abril'),
-        ('Mayo', 'Mayo'),
-        ('Junio', 'Junio'),
-        ('Julio', 'Julio'),
-        ('Agosto', 'Agosto'),
-        ('Septiembre', 'Septiembre'),
-        ('Octubre', 'Octubre'),
-        ('Noviembre', 'Noviembre'),
-        ('Diciembre', 'Diciembre'),
-]
-
-NOTAS = [
-        ('Auxiliar', 'Auxiliar'),
-        ('Inactivo', 'Inactivo'),
-        ('Mudado', 'Mudado'),
-        ('Construccion', 'Construccion'),
-        ('Enfermo', 'Enfermo'),
-        ('Expulsado', 'Expulsado'),
-        ('Reactivado', 'Reactivado'),
-        ('Asamblea', 'Asamblea'),
-        ('Escuela Precursor', 'Escuela Precursor'),
-        ('Inicia Regular', 'Inicia Regular'),
-        ('Nuevo Publicador', 'Nuevo Publicador'),
-        
-]
+from informes.choices import *
 
 
 class Informe(models.Model):
