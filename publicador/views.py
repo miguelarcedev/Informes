@@ -20,7 +20,7 @@ class PublicadorListView(ListView):
     paginate_by = 100  # if pagination is desired
 
 
-class InformePdf(View):
+class TarjetaPdf(View):
 
     def get(self, request, *args, **kwargs):
         
