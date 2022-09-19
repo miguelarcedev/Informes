@@ -32,6 +32,26 @@
     .text-center{
         text-align: center;
     }
+
+    @page {
+        size: a6 , landscape;
+        @frame header_frame {
+        left: 15pt;
+        width: 270pt;
+        top: 20pt;
+        height: 40pt;
+        }
+        @frame content_frame {
+        left: 15pt; width: 370pt; top: 50pt; height: 100vh;
+        }
+        /* @frame footer_frame {
+        -pdf-frame-content:footer_content;
+        left: 15pt; width: 270pt; top: 772pt; height: 20pt;
+        } */
+    }
+
+
+
 </style>
 <body>
 
@@ -43,24 +63,26 @@
     <b>Fecha de nacimiento:</b> {{ publicador.nacimiento }}<br>
     <b>Fecha de bautismo:</b> {{ publicador.bautismo}}<br>
     <b>Sexo:</b> {{ publicador.sexo }}<br>
+    <b>Año: 2021</b>
 </p>
 <table id="invoice">
     <thead>
     <tr>
-        <th style="width: 10%;">AÑO</th>
-        <th style="width: 10%;">MES</th>
-        <th style="width: 20%;">PUBLICACIONES</th>
-        <th style="width: 10%;">VIDEOS</th>
-        <th style="width: 10%;">HORAS</th>
-        <th style="width: 10%;">REVISITAS</th>
-        <th style="width: 10%;">CURSOS B.</th>
-        <th style="width: 20%;">NOTAS</th>
+        
+        <th style="width: 10%;">Mes</th>
+        <th style="width: 20%;">Publicaciones</th>
+        <th style="width: 10%;">Videos</th>
+        <th style="width: 10%;">Horas</th>
+        <th style="width: 10%;">Revisitas</th>
+        <th style="width: 10%;">Cursos B.</th>
+        <th style="width: 20%;">Notas</th>
     </tr>
     </thead>
     <tbody>
     {% for d in publicador.informe_set.all %}
+        {% if d.año == 2021 %}
         <tr {% if forloop.first %}style="padding-top: 3px;" {% endif %}>
-            <td class="text-center">{{ d.año }}</td>
+            
             <td class="text-center">{{ d.mes }}</td>
             <td class="text-center">{{ d.publicaciones }}</td>
             <td class="text-center">{{ d.videos }}</td>
@@ -69,8 +91,10 @@
             <td class="text-center">{{ d.estudios_biblicos }}</td>
             <td class="text-center">{{ d.notas }}</td>
         </tr>
-    {% endfor %}
+        {% endif %}
     
+    {% endfor %}
+        
     </tbody>
 </table>
 
