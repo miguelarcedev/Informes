@@ -7,8 +7,11 @@
     
     <h1>Años</h1>
     <ul>
-    {% for asistencia in object_list %}
-        <li>{{ asistencia.año }} </li>
+               
+    {% for a in años %}
+        
+            <li><a href="{% url 'Entre_Semana_por_año' a.año %}" class="btn btn-success"> {{ a.año }}</a></li>
+            
     {% empty %}
         <li>No articles yet.</li>
     {% endfor %}

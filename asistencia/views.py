@@ -10,6 +10,7 @@ from django.urls import reverse_lazy
 from asistencia.models import *
 from django.views.generic import  View
 from django.utils import timezone
+from django.db.models import Sum
 
 # Create your views here.
 
@@ -33,11 +34,14 @@ class Entre_SemanaListView(ListView):
     paginate_by = 12  # if pagination is desired
 
 
-class Entre_Semana_añosListView(ListView):
+def Entre_Semana_list(request, año):
+    años=Entre_Semana.objects.filter(año=año)
+    return render(request, "asistencia/lista_por_año.html",{"años": años})
 
-    model = Entre_Semana
-    template_name = 'asistencia/lista_años.html'
-    paginate_by = 100  # if pagination is desired
+
+def Entre_Semana_años(request):
+    años=Entre_Semana.objects.values('año').order_by('año').annotate(suma=Sum('cantidad'))
+    return render(request, "asistencia/lista_años.html",{"años": años})
     
 
 

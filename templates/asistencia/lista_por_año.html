@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+<body>
+
+    
+    <div class="container">
+        <h3>Asistencia de Entre Semana</h3>
+        <table  style="width:50%">
+                 
+            <thead align="justify">
+                <tr>
+                    <th>Año</th>
+                    <th>Mes</th>
+                    <th>Cantidad</th>
+                    <th>Total</th>
+                    <th>Promedio</th>
+                    
+                    
+                </tr>
+            </thead>
+            <tbody>
+                {% for asistencia in años %}
+                <tr>
+                    <td>{{asistencia.año}}</td>
+                    <td>{{asistencia.mes}}</td>
+                    <td>{{asistencia.cantidad}}</td>
+                    <td>{{asistencia.total}}</td>
+                    <td>{{asistencia.promedio}}</td>
+                   
+                    
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+          
+    </div>
+
+</body>
+</html>
