@@ -13,7 +13,7 @@ class Entre_Semana(models.Model):
     class Meta():
         verbose_name='entre semana'
         verbose_name_plural='entre semana'
-        ordering=['año']
+        ordering=['id']
     
     def __str__(self):
         return str(self.año) +" - " + self.mes
@@ -31,7 +31,7 @@ class Fin_De_Semana(models.Model):
     class Meta():
         verbose_name='fin de semana'
         verbose_name_plural='fin de semana'
-        ordering=['año']
+        ordering=['id']
 
     def __str__(self):
         return str(self.año) +" - " + self.mes

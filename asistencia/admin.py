@@ -17,10 +17,10 @@ class Entre_Admin(ImportExportModelAdmin):
 class Fin_Resource(resources.ModelResource):
 
     class Meta:
-        model = Entre_Semana
+        model = Fin_De_Semana
 
 class Fin_Admin(ImportExportModelAdmin):
-    resource_class = Entre_Resource
+    resource_class = Fin_Resource
     list_display = ('año', 'mes','cantidad','total','promedio')
     list_filter = ['año']
 

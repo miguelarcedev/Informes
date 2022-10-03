@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+<body>
+
+    
+    <h1>Años</h1>
+    <ul>
+    {% for asistencia in object_list %}
+        <li>{{ asistencia.año }} </li>
+    {% empty %}
+        <li>No articles yet.</li>
+    {% endfor %}
+    </ul>
+
+</body>
+</html>
