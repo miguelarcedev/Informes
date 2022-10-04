@@ -1,21 +1,33 @@
-<!DOCTYPE html>
-<html>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+{% extends "base.html" %}
 
-<body>
-
+{% block contenido %}   
     
-    <h1>Años</h1>
-    <ul>
-               
-    {% for a in años %}
+<div class="container">
+    <div class="row">
         
-            <li><a href="{% url 'Entre_Semana_por_año' a.año %}" class="btn btn-success"> {{ a.año }}</a></li>
-            
-    {% empty %}
-        <li>No articles yet.</li>
-    {% endfor %}
-    </ul>
+        <div class="col-md-3">
+          <div class="card" style="width: 100%; margin: 5px 5px;">
+          
+            <div class="card-footer text-center">
+              <h3 class="card-title">Años</h3>
+            </div>
+            <div class="card-body" style="text-align: center ;">
+                {% for a in años %}
+                <li><a href="{% url 'Entre_Semana_por_año' a.año %}" > {{ a.año }}</a></li>           
+                {% endfor %}
+            </div>
 
-</body>
-</html>
+            <div class="card-footer text-center">
+              <a href="" class="btn btn-success"> Agregar al carro</a>
+            </div>
+          
+          </div>
+
+        </div>
+
+               
+
+    </div>
+  </div>         
+    
+{% endblock %}
