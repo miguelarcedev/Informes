@@ -19,11 +19,7 @@ from . import views
 
 
 urlpatterns = [
-<<<<<<< HEAD
     path('', views.home, name="Home"),
-=======
-    path('', include('informe.urls')), 
->>>>>>> d6f6a63f060c624022de1d7ed04d8abe1ec51a8b
     path('admin/', admin.site.urls),
     path('informe/', include('informe.urls')),
     path('publicador/', include('publicador.urls')),
