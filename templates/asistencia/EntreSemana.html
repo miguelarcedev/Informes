@@ -70,17 +70,13 @@
         <th style="width: 20%;">Cantidad</th>
         <th style="width: 10%;">Total</th>
         <th style="width: 10%;">Promedio</th>
-        <th style="width: 10%;">Mes</th>
-        <th style="width: 20%;">Cantidad</th>
-        <th style="width: 10%;">Total</th>
-        <th style="width: 10%;">Promedio</th>
         
     </tr>
     </thead>
     
     <tbody>
     {% for d in asistencia.all %}
-        {% if d.año == 2022 %}
+        
         <tr {% if forloop.first %}style="padding-top: 3px;" {% endif %}>
             
             <td class="text-center">{{ d.mes }}</td>
@@ -89,7 +85,7 @@
             <td class="text-center">{{ d.promedio }}</td>
             
         </tr>
-        {% endif %}
+        
     
     {% endfor %}
         

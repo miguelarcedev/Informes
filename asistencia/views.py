@@ -44,17 +44,13 @@ def Entre_Semana_años(request):
     return render(request, "asistencia/lista_años.html",{"años": años})
     
 
-
-    
-
-
 class EntreSemanaPdf(View):
 
-    def get(self, request, *args, **kwargs):
+    def get(self, request,año, *args, **kwargs):
         
         
         template = get_template('asistencia/EntreSemana.html')
-        context = {'asistencia': Entre_Semana.objects.all}
+        context = {'asistencia': Entre_Semana.objects.filter(año=año)}
         html = template.render(context)
         response = HttpResponse(content_type='application/pdf')
         pisaStatus = pisa.CreatePDF(html, dest=response)

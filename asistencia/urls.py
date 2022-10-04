@@ -10,7 +10,7 @@ from . import views
 urlpatterns = [
     
     
-    path('EntreSemana/', EntreSemanaPdf.as_view(), name='EntreSemana_pdf'),
+    path('EntreSemana/<int:año>/', EntreSemanaPdf.as_view(), name='EntreSemana_pdf'),
     path('FinDeSemana/', FinDeSemanaPdf.as_view(), name='FinDeSemana_pdf'),
     path('EntreSemana_list/', EntreSemanaListView.as_view(), name='EntreSemana_list'),
     path('Entre_Semana_list/', Entre_SemanaListView.as_view(), name='Entre_Semana_list'),

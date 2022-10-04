@@ -20,20 +20,24 @@
             </thead>
             <tbody>
                 {% for asistencia in años %}
+                
                 <tr>
                     <td>{{asistencia.año}}</td>
                     <td>{{asistencia.mes}}</td>
                     <td>{{asistencia.cantidad}}</td>
                     <td>{{asistencia.total}}</td>
                     <td>{{asistencia.promedio}}</td>
-                   
-                    
+                                   
                 </tr>
+                <a href="{% url 'EntreSemana_pdf' asistencia.año %}" > Imprimir</a>
                 {% endfor %}
+                
             </tbody>
+            
         </table>
           
     </div>
+    
 
     {% endblock %}
 
