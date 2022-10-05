@@ -36,7 +36,7 @@ class Entre_SemanaListView(ListView):
 
 def Entre_Semana_list(request, año):
     años=Entre_Semana.objects.filter(año=año)
-    return render(request, "asistencia/lista_por_año.html",{"años": años})
+    return render(request, "asistencia/lista_por_año.html",{"años": años, "anio":año})
 
 
 def Entre_Semana_años(request):

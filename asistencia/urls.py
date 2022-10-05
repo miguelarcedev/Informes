@@ -15,5 +15,5 @@ urlpatterns = [
     path('EntreSemana_list/', EntreSemanaListView.as_view(), name='EntreSemana_list'),
     path('Entre_Semana_list/', Entre_SemanaListView.as_view(), name='Entre_Semana_list'),
     path('Entre_Semana_anio/', views.Entre_Semana_años, name='Entre_Semana_años'),
-    #path('Entre_Semana_por_año/<int:año>/', views.Entre_Semana_list, name='Entre_Semana_por_año'),
+    path('Entre_Semana_por_año/<int:año>/', views.Entre_Semana_list, name='Entre_Semana_por_año'),
 ]

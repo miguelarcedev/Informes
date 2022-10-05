@@ -29,13 +29,15 @@
                     <td>{{asistencia.promedio}}</td>
                                    
                 </tr>
-                <a href="{% url 'EntreSemana_pdf' asistencia.año %}" > Imprimir</a>
+                
                 {% endfor %}
+                
+                  
                 
             </tbody>
             
         </table>
-          
+        <a href="{% url 'EntreSemana_pdf' anio %}" > Imprimir PDF</a> 
     </div>
     
 
