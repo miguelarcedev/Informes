@@ -5,24 +5,21 @@
     
     <div class="container">
         <h3>Asistencia de Entre Semana</h3>
+        <h5>Año: {{anio}}</h5>
         <table  style="width:50%">
                  
             <thead align="justify">
                 <tr>
-                    <th>Año</th>
                     <th>Mes</th>
                     <th>Cantidad</th>
                     <th>Total</th>
                     <th>Promedio</th>
-                    
-                    
                 </tr>
             </thead>
             <tbody>
                 {% for asistencia in años %}
                 
                 <tr>
-                    <td>{{asistencia.año}}</td>
                     <td>{{asistencia.mes}}</td>
                     <td>{{asistencia.cantidad}}</td>
                     <td>{{asistencia.total}}</td>
@@ -31,13 +28,14 @@
                 </tr>
                 
                 {% endfor %}
-                
-                  
-                
             </tbody>
             
         </table>
-        <a href="{% url 'EntreSemana_pdf' anio %}" > Imprimir PDF</a> 
+        {% if entre == "entre" %}
+            <a href="{% url 'EntreSemana_pdf' anio %}" > Imprimir PDF</a>
+        {% else %}
+            <a href="{% url 'FinDeSemana_pdf' anio %}" > Imprimir PDF</a>
+        {% endif %}
     </div>
     
 

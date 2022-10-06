@@ -12,9 +12,18 @@
               <h4 class="card-title">Año</h4>
             </div>
             <div class="card-body" style="text-align: center ;">
-                {% for a in años %}
-                <li><a href="{% url 'Entre_Semana_por_año' a.año %}" > {{ a.año }}</a></li>           
-                {% endfor %}
+                
+                  {% if entre == "entre" %}
+                    {% for a in años %}
+                    <li><a href="{% url 'Entre_Semana_por_año' a.año %}" > {{ a.año }}</a></li> 
+                    {% endfor %}
+                  {% else %} 
+                    {% for a in años %}
+                    <li><a href="{% url 'Fin_de_Semana_por_año' a.año %}" > {{ a.año }}</a></li>
+                    {% endfor %}
+                  {% endif %}
+                  
+                
             </div>
 
             
