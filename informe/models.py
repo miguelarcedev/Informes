@@ -11,13 +11,13 @@ class Informe(models.Model):
     videos = models.IntegerField(null=True, blank=True)
     horas = models.IntegerField(null=True, blank=True,default=0)
     revisitas = models.IntegerField(null=True, blank=True)
-    estudios_biblicos = models.IntegerField(null=True, blank=True)
+    estudios = models.IntegerField(null=True, blank=True)
     notas = models.CharField(max_length=20, choices=NOTAS,null=True, blank=True)    
 
     class Meta():
         verbose_name='informe'
         verbose_name_plural='informes'
-        ordering=['publicador']
+        ordering=['id']
 
     def __str__(self):
         return str(self.publicador)

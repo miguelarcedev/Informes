@@ -11,12 +11,13 @@ class Publicadores(models.Model):
     videos = models.IntegerField(null=True, blank=True)
     horas = models.IntegerField(null=True, blank=True,default=0)
     revisitas = models.IntegerField(null=True, blank=True)
-    estudios_biblicos = models.IntegerField(null=True, blank=True)
+    estudios = models.IntegerField(null=True, blank=True)
     informan = models.IntegerField(null=True, blank=True)
 
     class Meta():
         verbose_name='publicador'
         verbose_name_plural='publicadores'
+        ordering=['id']
         
 
 class Auxiliares(models.Model):
@@ -26,12 +27,13 @@ class Auxiliares(models.Model):
     videos = models.IntegerField(null=True, blank=True)
     horas = models.IntegerField(null=True, blank=True,default=0)
     revisitas = models.IntegerField(null=True, blank=True)
-    estudios_biblicos = models.IntegerField(null=True, blank=True)
+    estudios = models.IntegerField(null=True, blank=True)
     informan = models.IntegerField(null=True, blank=True)
 
     class Meta():
         verbose_name='auxiliar'
         verbose_name_plural='auxiliares'
+        ordering=['id']
 
 class Regulares(models.Model):
     año = models.IntegerField()
@@ -40,12 +42,13 @@ class Regulares(models.Model):
     videos = models.IntegerField(null=True, blank=True)
     horas = models.IntegerField(null=True, blank=True,default=0)
     revisitas = models.IntegerField(null=True, blank=True)
-    estudios_biblicos = models.IntegerField(null=True, blank=True)
+    estudios = models.IntegerField(null=True, blank=True)
     informan = models.IntegerField(null=True, blank=True)
 
     class Meta():
         verbose_name='reuglar'
         verbose_name_plural='regulares'
+        ordering=['id']
 
     
     

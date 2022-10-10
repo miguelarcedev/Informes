@@ -25,6 +25,8 @@ NOTAS = [
         ('Escuela Precursor', 'Escuela Precursor'),
         ('Inicia Regular', 'Inicia Regular'),
         ('Nuevo Publicador', 'Nuevo Publicador'),
+        ('Bautismo', 'Bautismo'),
+        ('Readmitido', 'Readmitido'),
         
 ]
 

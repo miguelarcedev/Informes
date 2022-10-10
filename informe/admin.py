@@ -11,7 +11,7 @@ class Informe_Resource(resources.ModelResource):
 
 class Informe_Admin(ImportExportModelAdmin):
     resource_class = Informe_Resource
-    list_display = ('publicador','año', 'mes','publicaciones','videos','horas', 'revisitas', 'estudios_biblicos', 'notas')
+    list_display = ('publicador','año', 'mes','publicaciones','videos','horas', 'revisitas', 'estudios', 'notas')
     list_filter = ['publicador', 'año']
 
 admin.site.register(Informe, Informe_Admin)
