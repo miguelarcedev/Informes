@@ -6,35 +6,38 @@
 
   <div class="container">
     <div class="row">
-
+       
         <div class="col-md-3">
           <div class="card" style="width: 100%; margin: 5px 5px;">
           
-            <div class="card-footer text-center" style="background: rgb(105, 144, 177);">
+            <div class="card-footer text-center" style="background: rgb(128, 176, 216);">
               <h3 class="card-title">Asistencia</h3>
             </div>
             <div class="card-body" style="text-align: center ;">
                            
-              <a href="{% url 'Entre_Semana_años' %}" >Entre Semana</a>
+              <a href="{% url 'lista_años' 'entre' %}" >Entre Semana</a>
               <h1> </h1>
-              <a href="{% url 'Fin_de_Semana_años' %}" >Fin de Semana</a>
+              <a href="{% url 'lista_años' 'fin' %}" >Fin de Semana</a>
             </div>
 
                       
           </div>
 
         </div>
+
         <div class="col-md-3">
           <div class="card" style="width: 100%; margin: 5px 5px;">
           
-            <div class="card-footer text-center" style="background: rgb(105, 144, 177);">
-              <h3 class="card-title">Publicadores</h3>
+            <div class="card-footer text-center" style="background: rgb(128, 176, 216);">
+              <h3 class="card-title">Totales</h3>
             </div>
             <div class="card-body" style="text-align: center ;">
                            
-              <a href="{% url 'Entre_Semana_años' %}" >Listado</a>
+              <a href="" >Publicadores</a>
               <h1> </h1>
-              <a href="{% url 'Entre_Semana_años' %}" >Tarjeta</a>
+              <a href="" >Auxiliares</a>
+              <h1> </h1>
+              <a href="" >Regulares</a>
             </div>
 
                       

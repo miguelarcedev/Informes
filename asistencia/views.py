@@ -13,13 +13,14 @@ from django.db.models import Sum, Avg
 
 # Create your views here.
 
-def Entre_Semana_años(request):
-    años=Entre_Semana.objects.values('año').order_by('año').annotate(suma=Sum('cantidad'))
-    return render(request, "asistencia/lista_años.html",{"años": años, "entre":"entre"})
 
-def Fin_de_Semana_años(request):
-    años=Fin_De_Semana.objects.values('año').order_by('año').annotate(suma=Sum('cantidad'))
-    return render(request, "asistencia/lista_años.html",{"años": años, "fin":"fin"})
+def lista_años(request, entre_fin):
+    if entre_fin == "entre":
+        años=Entre_Semana.objects.values('año').order_by('año').annotate(suma=Sum('cantidad'))
+        return render(request, "asistencia/lista_años.html",{"años": años, "entre":"entre"})
+    else:
+        años=Fin_De_Semana.objects.values('año').order_by('año').annotate(suma=Sum('cantidad'))
+        return render(request, "asistencia/lista_años.html",{"años": años, "fin":"fin"})
 
 def Entre_Semana_list(request, año):
     años=Entre_Semana.objects.filter(año=año)
