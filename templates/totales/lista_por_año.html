@@ -42,18 +42,22 @@
             <thead align="justify">
                 <tr>
                     <th>
-                        <b>Promedio de asistencia mensual:</b>
+                        <b>Promedio de horas mensual:</b>
 
                     </th>
                     <th>
-                        <b>{{ promedio.promedio__avg|floatformat:"0" }}</b>
+                        <b>{{ promedio.horas__avg|floatformat:"0" }}</b>
 
                     </th>
                     <th>
-                        {% if entre == "entre" %}
-                        <a href="{% url 'EntreSemana_pdf' anio %}" class="btn btn-primary">PDF</a>
-                        {% else %}
-                         <a href="{% url 'FinDeSemana_pdf' anio %}" class="btn btn-primary">PDF</a>
+                        {% if pub == "pub" %}
+                        <a href="{% url 'tot_pub_pdf' anio %}" class="btn btn-danger">PDF</a>
+                        {% endif %}
+                        {% if aux == "aux" %}
+                         <a href="{% url 'tot_aux_pdf' anio %}" class="btn btn-danger">PDF</a>
+                        {% endif %}
+                        {% if reg == "reg" %}
+                         <a href="{% url 'tot_reg_pdf' anio %}" class="btn btn-danger">PDF</a>
                         {% endif %}
 
                     </th>

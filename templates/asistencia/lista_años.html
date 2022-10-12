@@ -15,11 +15,11 @@
                 
                   {% if entre == "entre" %}
                     {% for a in años %}
-                    <li><a href="{% url 'lista_por_año' a.año 'entre' %}" > {{ a.año }}</a></li> 
+                    <li><a href="{% url 'asistencia_por_año' a.año 'entre' %}" > {{ a.año }}</a></li> 
                     {% endfor %}
                   {% else %} 
                     {% for a in años %}
-                    <li><a href="{% url 'lista_por_año' a.año 'fin' %}" > {{ a.año }}</a></li>
+                    <li><a href="{% url 'asistencia_por_año' a.año 'fin' %}" > {{ a.año }}</a></li>
                     {% endfor %}
                   {% endif %}
                   
