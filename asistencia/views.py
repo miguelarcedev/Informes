@@ -22,15 +22,16 @@ def lista_años(request, entre_fin):
         años=Fin_De_Semana.objects.values('año').order_by('año').annotate(suma=Sum('cantidad'))
         return render(request, "asistencia/lista_años.html",{"años": años, "fin":"fin"})
 
-def Entre_Semana_list(request, año):
-    años=Entre_Semana.objects.filter(año=año)
-    promedio = Entre_Semana.objects.filter(año=año).aggregate(Avg('promedio'))
-    return render(request, "asistencia/lista_por_año.html",{"años": años, "anio":año, "entre":"entre",'titulo': "Reunion de entre semana",'promedio': promedio})
+def lista_por_año(request, año, entre_fin):
+    if entre_fin == "entre":
+        años=Entre_Semana.objects.filter(año=año)
+        promedio = Entre_Semana.objects.filter(año=año).aggregate(Avg('promedio'))
+        return render(request, "asistencia/lista_por_año.html",{"años": años, "anio":año, "entre":"entre",'titulo': "Reunion de entre semana",'promedio': promedio})
+    else:
+        años=Fin_De_Semana.objects.filter(año=año)
+        promedio = Fin_De_Semana.objects.filter(año=año).aggregate(Avg('promedio'))
+        return render(request, "asistencia/lista_por_año.html",{"años": años, "anio":año, "fin":"fin",'titulo': "Reunion del fin de semana",'promedio': promedio})
 
-def Fin_de_Semana_list(request, año):
-    años=Fin_De_Semana.objects.filter(año=año)
-    promedio = Fin_De_Semana.objects.filter(año=año).aggregate(Avg('promedio'))
-    return render(request, "asistencia/lista_por_año.html",{"años": años, "anio":año, "fin":"fin",'titulo': "Reunion del fin de semana",'promedio': promedio})
 
 class EntreSemanaPdf(View):
 

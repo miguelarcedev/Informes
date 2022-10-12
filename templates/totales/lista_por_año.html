@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block contenido %}   
+
+    
+    <div class="container">
+        <h4>{{titulo}}</h4>
+        
+        
+        <table  class="table table-striped table-bordered" style="width:50%">
+                 
+            <thead align="justify">
+                <tr>
+                    <th>Año: {{anio}}</th>
+                    <th>Publicaciones</th>
+                    <th>Videos</th>
+                    <th>Horas</th>
+                    <th>Revisitas</th>
+                    <th>Estudios</th>
+                    <th>Informan</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for asistencia in años %}
+                
+                <tr>
+                    <td>{{asistencia.mes}}</td>
+                    <td>{{asistencia.publicaciones}}</td>
+                    <td>{{asistencia.videos}}</td>
+                    <td>{{asistencia.horas}}</td>
+                    <td>{{asistencia.revisitas}}</td>
+                    <td>{{asistencia.estudios}}</td>
+                    <td>{{asistencia.informan}}</td>
+                                   
+                </tr>
+                
+                {% endfor %}
+            </tbody>
+                        
+        </table>
+        <table  class="table table-striped table-bordered" style="width:50%">
+            <thead align="justify">
+                <tr>
+                    <th>
+                        <b>Promedio de asistencia mensual:</b>
+
+                    </th>
+                    <th>
+                        <b>{{ promedio.promedio__avg|floatformat:"0" }}</b>
+
+                    </th>
+                    <th>
+                        {% if entre == "entre" %}
+                        <a href="{% url 'EntreSemana_pdf' anio %}" class="btn btn-primary">PDF</a>
+                        {% else %}
+                         <a href="{% url 'FinDeSemana_pdf' anio %}" class="btn btn-primary">PDF</a>
+                        {% endif %}
+
+                    </th>
+                </tr>
+            </thead>
+        
+        </table>
+        
+        
+    </div>
+    
+
+    {% endblock %}
+

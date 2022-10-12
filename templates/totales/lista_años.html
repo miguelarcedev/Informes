@@ -13,13 +13,19 @@
             </div>
             <div class="card-body" style="text-align: center ;">
                 
-                  {% if entre == "entre" %}
+                  {% if pub == "pub" %}
                     {% for a in años %}
-                    <li><a href="{% url 'lista_por_año' a.año 'entre' %}" > {{ a.año }}</a></li> 
+                    <li><a href="{% url 'lista_por_año' a.año 'pub' %}" > {{ a.año }}</a></li> 
                     {% endfor %}
-                  {% else %} 
+                  {% endif %}
+                  {% if aux == "aux" %}
                     {% for a in años %}
-                    <li><a href="{% url 'lista_por_año' a.año 'fin' %}" > {{ a.año }}</a></li>
+                    <li><a href="{% url 'lista_por_año' a.año 'aux' %}" > {{ a.año }}</a></li>
+                    {% endfor %}
+                  {% endif %}
+                  {% if reg == "reg" %}
+                    {% for a in años %}
+                    <li><a href="{% url 'lista_por_año' a.año 'reg' %}" > {{ a.año }}</a></li>
                     {% endfor %}
                   {% endif %}
                   
