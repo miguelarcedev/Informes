@@ -16,8 +16,10 @@ from django.views.generic import  View
 class PublicadorListView(ListView):
 
     model = Publicador
-    template_name = 'publicador/lista.html'
-    paginate_by = 100  # if pagination is desired
+    template_name = 'publicador/lista_activos.html'
+    paginate_by = 25  # if pagination is desired
+    def get_queryset(self):
+        return Publicador.objects.filter(estado="Activo")
 
 
 class TarjetaPdf(View):
