@@ -7,13 +7,16 @@ from xhtml2pdf import pisa
 from django.views.generic.list import ListView
 from django.http import  HttpResponse, HttpResponseRedirect
 from django.urls import reverse_lazy
+
 from publicador.models import Publicador
+from informe.models import Informe
 from django.views.generic import  View
+from django.db.models import Sum, Avg
 
 
 # Create your views here.
 
-class PublicadorListView(ListView):
+class ActivosListView(ListView):
 
     model = Publicador
     template_name = 'publicador/lista_activos.html'
@@ -21,14 +24,20 @@ class PublicadorListView(ListView):
     def get_queryset(self):
         return Publicador.objects.filter(estado="Activo")
 
+def lista_años(request, pk):
+    
+    años=Informe.objects.filter(publicador=pk).values('año').order_by('año').annotate(suma=Sum('horas'))
+    return render(request, "publicador/lista_años.html",{"años": años,"pk": pk})
+    
+
 
 class TarjetaPdf(View):
 
-    def get(self, request, *args, **kwargs):
+    def get(self, request,año, *args, **kwargs):
         
         
-        template = get_template('publicador/tarjeta.html')
-        context = {'publicador': Publicador.objects.get(pk=self.kwargs['pk'])}
+        template = get_template('publicador/tarjeta_pub.html')
+        context = {'publicador': Publicador.objects.get(pk=self.kwargs['pk']),'año':año}
         html = template.render(context)
         response = HttpResponse(content_type='application/pdf')
         pisaStatus = pisa.CreatePDF(html, dest=response)

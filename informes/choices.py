@@ -14,6 +14,7 @@ MES = [
 ]
 
 NOTAS = [
+        ('', ''),
         ('Auxiliar', 'Auxiliar'),
         ('Inactivo', 'Inactivo'),
         ('Mudado', 'Mudado'),

@@ -36,7 +36,7 @@ def lista_por_año(request, año, entre_fin):
 class EntreSemanaPdf(View):
 
     def get(self, request,año, *args, **kwargs):
-        template = get_template('asistencia/pdf.html')
+        template = get_template('asistencia/tarjeta_asist.html')
         promedio = Entre_Semana.objects.filter(año=año).aggregate(Avg('promedio'))
         context = {'asistencia': Entre_Semana.objects.filter(año=año),'anio':año, 'titulo': "Reunion de entre semana",'promedio': promedio}
         html = template.render(context)
@@ -47,7 +47,7 @@ class EntreSemanaPdf(View):
 class FinDeSemanaPdf(View):
 
     def get(self, request,año,*args, **kwargs):
-        template = get_template('asistencia/pdf.html')
+        template = get_template('asistencia/tarjeta_asist.html')
         promedio = Fin_De_Semana.objects.filter(año=año).aggregate(Avg('promedio'))
         context = {'asistencia': Fin_De_Semana.objects.filter(año=año),'anio':año, 'titulo': "Reunion del fin de semana",'promedio': promedio}
         html = template.render(context)

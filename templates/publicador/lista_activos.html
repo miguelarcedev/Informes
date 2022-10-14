@@ -4,7 +4,7 @@
 
     
     <div class="container">
-        <h4>{{titulo}}</h4>
+        <h4>Publicadores activos</h4>
         
         
         <table  class="table table-striped table-bordered" style="width:50%">
@@ -21,7 +21,7 @@
                 
                 <tr>
                     <td>{{publicador.nombre}}</td>
-                    <td><a href="" class="btn btn-primary">Tarjeta</a></td>
+                    <td><a href="{% url 'activos_años_list' publicador.id %}" class="btn btn-primary">Tarjeta</a></td>
                     
                                    
                 </tr>

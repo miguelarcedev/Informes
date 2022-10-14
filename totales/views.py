@@ -41,7 +41,7 @@ def lista_por_año(request, año, pub_aux_reg):
 class tot_pub_Pdf(View):
 
     def get(self, request,año, *args, **kwargs):
-        template = get_template('totales/pdf.html')
+        template = get_template('totales/tarjeta_totales.html')
         promedio = Publicadores.objects.filter(año=año).aggregate(Avg('horas'))
         context = {'totales': Publicadores.objects.filter(año=año),'anio':año, 'titulo': "Totales - Publicadores",'promedio': promedio}
         html = template.render(context)
@@ -52,7 +52,7 @@ class tot_pub_Pdf(View):
 class tot_aux_Pdf(View):
 
     def get(self, request,año, *args, **kwargs):
-        template = get_template('totales/pdf.html')
+        template = get_template('totales/tarjeta_totales.html')
         promedio = Auxiliares.objects.filter(año=año).aggregate(Avg('horas'))
         context = {'totales': Auxiliares.objects.filter(año=año),'anio':año, 'titulo': "Totales - Precursores Auxiliares",'promedio': promedio}
         html = template.render(context)
@@ -63,7 +63,7 @@ class tot_aux_Pdf(View):
 class tot_reg_Pdf(View):
 
     def get(self, request,año, *args, **kwargs):
-        template = get_template('totales/pdf.html')
+        template = get_template('totales/tarjeta_totales.html')
         promedio = Regulares.objects.filter(año=año).aggregate(Avg('horas'))
         context = {'totales': Regulares.objects.filter(año=año),'anio':año, 'titulo': "Totales - Precursores Regulares",'promedio': promedio}
         html = template.render(context)
