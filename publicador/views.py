@@ -20,9 +20,17 @@ class ActivosListView(ListView):
 
     model = Publicador
     template_name = 'publicador/lista_activos.html'
-    paginate_by = 25  # if pagination is desired
+    paginate_by = 100  # if pagination is desired
     def get_queryset(self):
         return Publicador.objects.filter(estado="Activo")
+
+class InactivosListView(ListView):
+
+    model = Publicador
+    template_name = 'publicador/lista_inactivos.html'
+    paginate_by = 100  # if pagination is desired
+    def get_queryset(self):
+        return Publicador.objects.filter(estado="Inactivo")
 
 def lista_años(request, pk):
     
