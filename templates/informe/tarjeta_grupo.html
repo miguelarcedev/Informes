@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<style>
+    .img-invoice {
+        width: 50px;
+        text-align: center;
+        margin: 0 auto;
+    }
+
+    
+    .head {
+        text-align: center;
+        text-transform: uppercase;
+    }
+
+    #invoice thead tr th {
+        text-align: center;
+        border-bottom: 0px solid black;
+        border-top: 0px solid black;
+        padding-top: 4px;
+    }
+
+    #invoice thead tr {
+        
+        margin-bottom: 1;
+        padding-bottom: 0;
+    }
+
+    #invoice tbody tr {
+        padding: 0.1;
+    }
+
+    .text-center{
+        text-align: center;
+    }
+
+    @page {
+        size: a6 , landscape;
+        @frame header_frame {
+        left: 15pt;
+        width: 370pt;
+        top: 10pt;
+        height: 20pt;
+        }
+        @frame content_frame {
+        left: 15pt; width: 370pt; top: 25pt; height: 100vh;
+        }
+        @frame footer_frame {
+        -pdf-frame-content:footer_content;
+        left: 15pt; width: 370pt; top: 772pt; height: 20pt;
+        }
+    }
+
+</style>
+<body>
+
+<h2 class="text-center">REGISTRO DE PUBLICADOR DE LA CONGREGACION</h2>
+
+{% for d in publicador %}
+
+    <table>
+    <tr>
+    <td style="width: 50%;"><b>Nombre:</b> {{ d.nombre }}</td>
+    <td><strong></strong></td>
+    <td><strong>{{ d.sexo }}</strong></td>
+    </tr>
+
+    <tr>
+    <td><b>Fecha de nacimiento:</b> {{ d.nacimiento }}</td>
+    <td></td>
+    <td>{{ d.u_oo }}</td>
+    </tr>
+
+    <tr>
+    <td><b>Fecha de bautismo:</b> {{ d.bautismo}}</td>
+    <td></td>
+    <td>{% if d.a_sm != NULL %}{{ d.a_sm}}{% endif %}</td>
+    </tr>
+
+    <tr>
+    <td></td>
+    <td></td>
+    <td>{% if d.regular != NULL %}{{ d.regular}}{% endif %}</td>
+    </tr>
+    </table>    
+    
+    <table id="invoice" border="0.2">
+        <thead>
+        <tr>
+            <th style="width: 15%;">{{año}}</th>
+            <th style="width: 15%;">Publicaciones</th>
+            <th style="width: 10%;">Videos</th>
+            <th style="width: 10%;">Horas</th>
+            <th style="width: 10%;">Revisitas</th>
+            <th style="width: 10%;">Estudios</th>
+            <th style="width: 30%;">Notas</th>
+            
+        </tr>
+        </thead>
+        
+        <tbody>
+        {% for d in publicador.informe_set.all %}
+        /* {% if año == 2022 %} */
+        <tr>
+            <td class="text-center">{{ d.mes }}</td>
+            <td class="text-center">{{ d.publicaciones }}</td>
+            <td class="text-center">{{ d.videos }}</td>
+            <td class="text-center">{{ d.horas }}</td>
+            <td class="text-center">{{ d.revisitas }}</td>
+            <td class="text-center">{{ d.estudios }}</td>
+            {% if d.notas != NULL %}
+            <td class="text-center">  {{ d.notas }}</td>
+            
+            {% endif %}
+        </tr>
+        /* {% endif %} */
+        
+        {% endfor %}
+            
+        </tbody>
+    </table>
+
+
+{% endfor %}
+
+</body>
+</html>
