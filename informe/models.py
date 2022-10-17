@@ -13,7 +13,7 @@ class Informe(models.Model):
     horas = models.IntegerField(null=True, blank=True,default=0)
     revisitas = models.IntegerField(null=True, blank=True)
     estudios = models.IntegerField(null=True, blank=True)
-    notas = models.CharField(max_length=20, choices=NOTAS,null=True, blank=True, default="")    
+    notas = models.CharField(max_length=20, choices=NOTAS, blank=True, null=True)    
 
     class Meta():
         verbose_name='informe'

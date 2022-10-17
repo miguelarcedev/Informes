@@ -71,6 +71,7 @@
         <th style="width: 10%;">Revisitas</th>
         <th style="width: 10%;">Estudios</th>
         <th style="width: 30%;">Notas</th>
+        
     </tr>
     </thead>
     
@@ -84,7 +85,12 @@
         <td class="text-center">{{ d.horas }}</td>
         <td class="text-center">{{ d.revisitas }}</td>
         <td class="text-center">{{ d.estudios }}</td>
+        {% if d.notas == NULL %}
+        
+        <td class="text-center">             </td>
+        {% else %}
         <td class="text-center">{{ d.notas }}</td>
+        {% endif %}
     </tr>
     {% endif %}
     
