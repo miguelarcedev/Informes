@@ -36,8 +36,9 @@ SEXO = [
     ]
     
 UOO = [
-        ('Ungido', 'Ungido'),
         ('Otras Ovejas', 'Otras Ovejas'),
+        ('Ungido', 'Ungido'),
+        
     ]
 
 ASM = [
@@ -55,7 +56,8 @@ GRUPO = [
         ('2', '2'),
         ('3', '3'),
         ('4', '4'),
-        
+        ('5', '5'),
+        ('6', '6'),
     ]
 
 ESTADO = [

@@ -106,17 +106,9 @@
         <td class="text-center">{{ d.horas }}</td>
         <td class="text-center">{{ d.revisitas }}</td>
         <td class="text-center">{{ d.estudios }}</td>
-<<<<<<< HEAD
-        {% if d.notas == NULL %}
-        
-        <td class="text-center">             </td>
-        {% else %}
-        <td class="text-center">{{ d.notas }}</td>
-=======
         {% if d.notas != NULL %}
         <td class="text-center">  {{ d.notas }}</td>
         
->>>>>>> 567c661b791081a96d7ed925b9bcfedcc9bf6ffe
         {% endif %}
     </tr>
     {% endif %}
