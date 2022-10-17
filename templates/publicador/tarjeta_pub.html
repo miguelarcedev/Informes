@@ -55,11 +55,32 @@
 </style>
 <body>
 
-<h3 class="text-center">REGISTRO DE PUBLICADOR DE LA CONGREGACION</h3>
-    <b>Nombre:</b> {{ publicador.nombre }}<br>
-    <b>Fecha de nacimiento:</b> {{ publicador.nacimiento }}<br>
-    <b>Fecha de bautismo:</b> {{ publicador.bautismo}}<br>
-    
+<h2 class="text-center">REGISTRO DE PUBLICADOR DE LA CONGREGACION</h2>
+<table>
+<tr>
+  <td style="width: 50%;"><b>Nombre:</b> {{ publicador.nombre }}</td>
+  <td><strong></strong></td>
+  <td><strong>{{ publicador.sexo }}</strong></td>
+</tr>
+
+<tr>
+  <td><b>Fecha de nacimiento:</b> {{ publicador.nacimiento }}</td>
+  <td></td>
+  <td>{{ publicador.u_oo }}</td>
+</tr>
+
+<tr>
+  <td><b>Fecha de bautismo:</b> {{ publicador.bautismo}}</td>
+  <td></td>
+  <td>{% if publicador.a_sm != NULL %}{{ publicador.a_sm}}{% endif %}</td>
+</tr>
+
+<tr>
+  <td></td>
+  <td></td>
+  <td>{% if publicador.regular != NULL %}{{ publicador.regular}}{% endif %}</td>
+</tr>
+</table>    
     
 <table id="invoice" border="0.2">
     <thead>
@@ -85,11 +106,17 @@
         <td class="text-center">{{ d.horas }}</td>
         <td class="text-center">{{ d.revisitas }}</td>
         <td class="text-center">{{ d.estudios }}</td>
+<<<<<<< HEAD
         {% if d.notas == NULL %}
         
         <td class="text-center">             </td>
         {% else %}
         <td class="text-center">{{ d.notas }}</td>
+=======
+        {% if d.notas != NULL %}
+        <td class="text-center">  {{ d.notas }}</td>
+        
+>>>>>>> 567c661b791081a96d7ed925b9bcfedcc9bf6ffe
         {% endif %}
     </tr>
     {% endif %}
