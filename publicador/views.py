@@ -36,14 +36,11 @@ def lista_años(request, pk):
     
     años=Informe.objects.filter(publicador=pk).values('año').order_by('año').annotate(suma=Sum('horas'))
     return render(request, "publicador/lista_años.html",{"años": años,"pk": pk})
-    
 
 
 class TarjetaPdf(View):
 
     def get(self, request,año, *args, **kwargs):
-        
-        
         template = get_template('publicador/tarjeta_pub.html')
         context = {'publicador': Publicador.objects.get(pk=self.kwargs['pk']),'año':año}
         html = template.render(context)

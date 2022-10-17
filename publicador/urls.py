@@ -13,5 +13,5 @@ urlpatterns = [
     path('inactivos/', InactivosListView.as_view(), name='inactivos-list'),
     path('inactivos_años/<int:pk>/',views.lista_años, name='inactivos_años_list'),
     path('tarjeta/<int:pk>/<int:año>/', TarjetaPdf.as_view(), name='tarjeta_pdf'),
-    
+   
 ]
