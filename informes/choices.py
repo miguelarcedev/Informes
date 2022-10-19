@@ -63,6 +63,7 @@ GRUPO = [
 ESTADO = [
         ('Activo', 'Activo'),
         ('Inactivo', 'Inactivo'),
+        ('Baja', 'Baja'),
         ('Mudado', 'Mudado'),
         ('Fallecido', 'Fallecido'),
         

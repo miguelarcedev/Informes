@@ -39,7 +39,7 @@ class Precursores(View):
 class Inactivos(View):
 
     def get(self, request, *args, **kwargs):
-        template = get_template('informe/tarjeta_grupo.html')
+        template = get_template('informe/tarjeta_inactivos.html')
         context = {'publicador': Publicador.objects.filter(estado="Inactivo"),'año':2022}
         html = template.render(context)
         response = HttpResponse(content_type='application/pdf')
