@@ -7,7 +7,7 @@
         text-align: center;
         margin: 0 auto;
     }
-
+    
     
     .head {
         text-align: center;
@@ -35,6 +35,11 @@
         text-align: center;
     }
 
+    p.saltodepagina
+        {
+            page-break-after: always;
+        }
+
     @page {
         size: a6 , landscape;
         @frame header_frame {
@@ -42,6 +47,7 @@
         width: 370pt;
         top: 10pt;
         height: 20pt;
+        
         }
         @frame content_frame {
         left: 15pt; width: 370pt; top: 25pt; height: 100vh;
@@ -50,38 +56,38 @@
         -pdf-frame-content:footer_content;
         left: 15pt; width: 370pt; top: 772pt; height: 20pt;
         }
+        
+        
     }
 
 </style>
 <body>
-
+    
+{% for p in publicador %}
 <h2 class="text-center">REGISTRO DE PUBLICADOR DE LA CONGREGACION</h2>
-
-{% for d in publicador %}
-
     <table>
     <tr>
-    <td style="width: 50%;"><b>Nombre:</b> {{ d.nombre }}</td>
+    <td style="width: 60%;"><b>Nombre:</b> {{ p.nombre }}</td>
     <td><strong></strong></td>
-    <td><strong>{{ d.sexo }}</strong></td>
+    <td><strong>{{ p.sexo }}</strong></td>
     </tr>
 
     <tr>
-    <td><b>Fecha de nacimiento:</b> {{ d.nacimiento }}</td>
+    <td><b>Fecha de nacimiento:</b> {{ p.nacimiento }}</td>
     <td></td>
-    <td>{{ d.u_oo }}</td>
+    <td>{{ p.u_oo }}</td>
     </tr>
 
     <tr>
-    <td><b>Fecha de bautismo:</b> {{ d.bautismo}}</td>
+    <td><b>Fecha de bautismo:</b> {{ p.bautismo}}</td>
     <td></td>
-    <td>{% if d.a_sm != NULL %}{{ d.a_sm}}{% endif %}</td>
+    <td>{% if p.a_sm != NULL %}{{ p.a_sm}}{% endif %}</td>
     </tr>
 
     <tr>
     <td></td>
     <td></td>
-    <td>{% if d.regular != NULL %}{{ d.regular}}{% endif %}</td>
+    <td>{% if p.regular != NULL %}{{ p.regular}}{% endif %}</td>
     </tr>
     </table>    
     
@@ -100,27 +106,27 @@
         </thead>
         
         <tbody>
-        {% for d in publicador.informe_set.all %}
-        /* {% if año == 2022 %} */
+        {% for i in p.informe_set.all %}
+        {% if i.año == 2022 %}
         <tr>
-            <td class="text-center">{{ d.mes }}</td>
-            <td class="text-center">{{ d.publicaciones }}</td>
-            <td class="text-center">{{ d.videos }}</td>
-            <td class="text-center">{{ d.horas }}</td>
-            <td class="text-center">{{ d.revisitas }}</td>
-            <td class="text-center">{{ d.estudios }}</td>
-            {% if d.notas != NULL %}
-            <td class="text-center">  {{ d.notas }}</td>
+            <td class="text-center">{{ i.mes }}</td>
+            <td class="text-center">{{ i.publicaciones }}</td>
+            <td class="text-center">{{ i.videos }}</td>
+            <td class="text-center">{{ i.horas }}</td>
+            <td class="text-center">{{ i.revisitas }}</td>
+            <td class="text-center">{{ i.estudios }}</td>
+            {% if i.notas != NULL %}
+            <td class="text-center">  {{ i.notas }}</td>
             
             {% endif %}
         </tr>
-        /* {% endif %} */
+        {% endif %}
         
         {% endfor %}
             
         </tbody>
     </table>
-
+    <p class="saltodepagina" />
 
 {% endfor %}
 

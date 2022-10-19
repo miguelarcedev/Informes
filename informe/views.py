@@ -8,6 +8,7 @@ from django.http import HttpResponse
 from xhtml2pdf import pisa
 from publicador.models import Publicador
 
+
 # Create your views here.
 
 def home(request):
@@ -19,12 +20,30 @@ class Tarjeta_grupo(View):
 
     def get(self, request,grupo, *args, **kwargs):
         template = get_template('informe/tarjeta_grupo.html')
-        context = {'publicador': Publicador.objects.filter(grupo=grupo),'año':2022}
+        context = {'publicador': Publicador.objects.filter(grupo=grupo).filter(estado="Activo"),'año':2022}
         html = template.render(context)
         response = HttpResponse(content_type='application/pdf')
         pisaStatus = pisa.CreatePDF(html, dest=response)
         return response
 
+class Precursores(View):
+
+    def get(self, request, *args, **kwargs):
+        template = get_template('informe/tarjeta_grupo.html')
+        context = {'publicador': Publicador.objects.filter(regular="Precursor Regular").filter(estado="Activo"),'año':2022}
+        html = template.render(context)
+        response = HttpResponse(content_type='application/pdf')
+        pisaStatus = pisa.CreatePDF(html, dest=response)
+        return response
    
+class Inactivos(View):
+
+    def get(self, request, *args, **kwargs):
+        template = get_template('informe/tarjeta_grupo.html')
+        context = {'publicador': Publicador.objects.filter(estado="Inactivo"),'año':2022}
+        html = template.render(context)
+        response = HttpResponse(content_type='application/pdf')
+        pisaStatus = pisa.CreatePDF(html, dest=response)
+        return response
   
 
