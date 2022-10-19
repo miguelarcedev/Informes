@@ -7,7 +7,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from xhtml2pdf import pisa
 from publicador.models import Publicador
-
+from informe.models import Informe
 
 # Create your views here.
 
@@ -19,8 +19,11 @@ def home(request):
 class Tarjeta_grupo(View):
 
     def get(self, request,grupo, *args, **kwargs):
+        ultimo_registro = Informe.objects.all().last()
+        año1 = ultimo_registro.año - 1
+        año2 = ultimo_registro.año
         template = get_template('informe/tarjeta_grupo.html')
-        context = {'publicador': Publicador.objects.filter(grupo=grupo).filter(estado="Activo"),'año':2022}
+        context = {'publicador': Publicador.objects.filter(grupo=grupo).filter(estado="Activo"),'año1':año1,'año2':año2}
         html = template.render(context)
         response = HttpResponse(content_type='application/pdf')
         pisaStatus = pisa.CreatePDF(html, dest=response)

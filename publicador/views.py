@@ -40,19 +40,8 @@ def lista_años(request, pk):
 
 
 class TarjetaPdf(View):
-    año = datetime.datetime.today().year
-    mes = datetime.datetime.today().month
-    año1 = 0
-    año2 = 0
-
-    if mes == "Octubre" or mes == "Noviembre" or mes == "Diciembre":
-        año1 = año
-        año2 = año +1
-    else:
-        año1 = año - 1
-        año2 = año
-
-    def get(self, request,año, *args, **kwargs):
+    def get(self, request, *args, **kwargs):
+        
         template = get_template('publicador/tarjeta_pub.html')
         context = {'publicador': Publicador.objects.get(pk=self.kwargs['pk']),'año1':año1,'año2':año2}
         html = template.render(context)
