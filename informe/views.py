@@ -23,7 +23,7 @@ class Tarjeta_grupo(View):
         año1 = ultimo_registro.año - 1
         año2 = ultimo_registro.año
         template = get_template('informe/tarjeta_grupo.html')
-        context = {'publicador': Publicador.objects.filter(grupo=grupo).filter(estado="Activo"),'año1':año1,'año2':año2}
+        context = {'publicador': Publicador.objects.filter(grupo=grupo).filter(estado="Activo").filter(regular__isnull=True),'año1':año1,'año2':año2}
         html = template.render(context)
         response = HttpResponse(content_type='application/pdf')
         pisaStatus = pisa.CreatePDF(html, dest=response)
@@ -32,8 +32,11 @@ class Tarjeta_grupo(View):
 class Precursores(View):
 
     def get(self, request, *args, **kwargs):
+        ultimo_registro = Informe.objects.all().last()
+        año1 = ultimo_registro.año - 1
+        año2 = ultimo_registro.año
         template = get_template('informe/tarjeta_grupo.html')
-        context = {'publicador': Publicador.objects.filter(regular="Precursor Regular").filter(estado="Activo"),'año':2022}
+        context = {'publicador': Publicador.objects.filter(regular="Precursor Regular").filter(estado="Activo"),'año1':año1,'año2':año2}
         html = template.render(context)
         response = HttpResponse(content_type='application/pdf')
         pisaStatus = pisa.CreatePDF(html, dest=response)
@@ -43,7 +46,7 @@ class Inactivos(View):
 
     def get(self, request, *args, **kwargs):
         template = get_template('informe/tarjeta_inactivos.html')
-        context = {'publicador': Publicador.objects.filter(estado="Inactivo"),'año':2022}
+        context = {'publicador': Publicador.objects.filter(estado="Inactivo")}
         html = template.render(context)
         response = HttpResponse(content_type='application/pdf')
         pisaStatus = pisa.CreatePDF(html, dest=response)

@@ -8,64 +8,36 @@ from django.views.generic.list import ListView
 from django.http import  HttpResponse, HttpResponseRedirect
 from totales.models import *
 from django.views.generic import  View
-from django.db.models import Sum, Avg
+from django.db.models import  Avg
 
 # Create your views here.
 
 
-def lista_años(request, pub_aux_reg):
-    if pub_aux_reg == "pub":
-        años=Publicadores.objects.values('año').order_by('año').annotate(suma=Sum('horas'))
-        return render(request, "totales/lista_años.html",{"años": años, "pub":"pub"})
-    if pub_aux_reg == "aux":
-        años=Auxiliares.objects.values('año').order_by('año').annotate(suma=Sum('horas'))
-        return render(request, "totales/lista_años.html",{"años": años, "aux":"aux"})
-    if pub_aux_reg == "reg":
-        años=Regulares.objects.values('año').order_by('año').annotate(suma=Sum('horas'))
-        return render(request, "totales/lista_años.html",{"años": años, "reg":"reg"})
+class Tarjeta(View):
 
-def lista_por_año(request, año, pub_aux_reg):
-    if pub_aux_reg == "pub":
-        años=Publicadores.objects.filter(año=año)
-        promedio = Publicadores.objects.filter(año=año).aggregate(Avg('horas'))
-        return render(request, "totales/lista_por_año.html",{"años": años, "anio":año, "pub":"pub",'titulo': "Totales - Publicadores",'promedio': promedio})
-    if pub_aux_reg == "aux":
-        años=Auxiliares.objects.filter(año=año)
-        promedio = Auxiliares.objects.filter(año=año).aggregate(Avg('horas'))
-        return render(request, "totales/lista_por_año.html",{"años": años, "anio":año, "aux":"aux",'titulo': "Totales - Precursores Auxiliares",'promedio': promedio})
-    if pub_aux_reg == "reg":
-        años=Regulares.objects.filter(año=año)
-        promedio = Regulares.objects.filter(año=año).aggregate(Avg('horas'))
-        return render(request, "totales/lista_por_año.html",{"años": años, "anio":año, "reg":"reg",'titulo': "Totales - Precursores Regulares",'promedio': promedio})
-
-class tot_pub_Pdf(View):
-
-    def get(self, request,año, *args, **kwargs):
+    def get(self, request,pub_aux_reg, *args, **kwargs):
+        if pub_aux_reg == "pub":
+            ultimo_registro = Publicadores.objects.all().last()
+            año1 = ultimo_registro.año - 1
+            año2 = ultimo_registro.año
+            promedio1 = Publicadores.objects.filter(año=año1).aggregate(Avg('horas'))
+            promedio2 = Publicadores.objects.filter(año=año2).aggregate(Avg('horas'))
+            context = {'totales': Publicadores.objects.all(),'año1':año1,'año2':año2, 'titulo': "PUBLICADORES - TOTALES",'promedio1': promedio1,'promedio2': promedio2}
+        if pub_aux_reg == "aux":
+            ultimo_registro = Auxiliares.objects.all().last()
+            año1 = ultimo_registro.año - 1
+            año2 = ultimo_registro.año
+            promedio1 = Auxiliares.objects.filter(año=año1).aggregate(Avg('horas'))
+            promedio2 = Auxiliares.objects.filter(año=año2).aggregate(Avg('horas'))
+            context = {'totales': Auxiliares.objects.all(),'año1':año1,'año2':año2, 'titulo': "AUXILIARES - TOTALES",'promedio1': promedio1,'promedio2': promedio2}
+        if pub_aux_reg == "reg":
+            ultimo_registro = Regulares.objects.all().last()
+            año1 = ultimo_registro.año - 1
+            año2 = ultimo_registro.año
+            promedio1 = Regulares.objects.filter(año=año1).aggregate(Avg('horas'))
+            promedio2 = Regulares.objects.filter(año=año2).aggregate(Avg('horas'))
+            context = {'totales': Regulares.objects.all(),'año1':año1,'año2':año2, 'titulo': "REGULARES - TOTALES",'promedio1': promedio1,'promedio2': promedio2}
         template = get_template('totales/tarjeta_totales.html')
-        promedio = Publicadores.objects.filter(año=año).aggregate(Avg('horas'))
-        context = {'totales': Publicadores.objects.filter(año=año),'anio':año, 'titulo': "Totales - Publicadores",'promedio': promedio}
-        html = template.render(context)
-        response = HttpResponse(content_type='application/pdf')
-        pisaStatus = pisa.CreatePDF(html, dest=response)
-        return response
-        
-class tot_aux_Pdf(View):
-
-    def get(self, request,año, *args, **kwargs):
-        template = get_template('totales/tarjeta_totales.html')
-        promedio = Auxiliares.objects.filter(año=año).aggregate(Avg('horas'))
-        context = {'totales': Auxiliares.objects.filter(año=año),'anio':año, 'titulo': "Totales - Precursores Auxiliares",'promedio': promedio}
-        html = template.render(context)
-        response = HttpResponse(content_type='application/pdf')
-        pisaStatus = pisa.CreatePDF(html, dest=response)
-        return response
-
-class tot_reg_Pdf(View):
-
-    def get(self, request,año, *args, **kwargs):
-        template = get_template('totales/tarjeta_totales.html')
-        promedio = Regulares.objects.filter(año=año).aggregate(Avg('horas'))
-        context = {'totales': Regulares.objects.filter(año=año),'anio':año, 'titulo': "Totales - Precursores Regulares",'promedio': promedio}
         html = template.render(context)
         response = HttpResponse(content_type='application/pdf')
         pisaStatus = pisa.CreatePDF(html, dest=response)
