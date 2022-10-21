@@ -61,11 +61,272 @@
 <p>
     <b>{{ titulo }}</b>
     
-</p><br>
-    
-{{septiembre1.año}}
+</p>
+<br>
+<table id="invoice" border="0.2">
+        <thead>
+            <tr>
+                <th style="width: 15%;">{{año1}}</th>
+                <th style="width: 15%;">Publicaciones</th>
+                <th style="width: 10%;">Videos</th>
+                <th style="width: 10%;">Horas</th>
+                <th style="width: 10%;">Revisitas</th>
+                <th style="width: 10%;">Estudios</th>
+                <th style="width: 30%;">Informan</th>
+                
+            </tr>
+        </thead>
+        
+        <tbody>
+            
+            <tr>
+                <td class="text-center">Septiembre</td>
+                {% if septiembre1.publicaciones__sum  is not None %}
+                    <td class="text-center">{{ septiembre1.publicaciones__sum }}</td>
+                {% else %}
+                    <td class="text-center"> </td>
+                {% endif %}
+                
+              
+                <td class="text-center">{{ septiembre1.videos__sum }}</td>
+                <td class="text-center">{{ septiembre1.horas__sum }}</td>
+                <td class="text-center">{{ septiembre1.revisitas__sum }}</td>
+                <td class="text-center">{{ septiembre1.estudios__sum }}</td>
+                <td class="text-center">{{ septiembre1.id__count }}</td>
+            </tr>
+            <tr>
+                <td class="text-center">Octubre</td>
+                <td class="text-center">{{ octubre1.publicaciones__sum }}</td>
+                <td class="text-center">{{ octubre1.videos__sum }}</td>
+                <td class="text-center">{{ octubre1.horas__sum }}</td>
+                <td class="text-center">{{ octubre1.revisitas__sum }}</td>
+                <td class="text-center">{{ octubre1.estudios__sum }}</td>
+                <td class="text-center">{{ octubre1.id__count }}</td>
+            </tr>
+            <tr>
+                <td class="text-center">Noviembre</td>
+                <td class="text-center">{{ noviembre1.publicaciones__sum }}</td>
+                <td class="text-center">{{ noviembre1.videos__sum }}</td>
+                <td class="text-center">{{ noviembre1.horas__sum }}</td>
+                <td class="text-center">{{ noviembre1.revisitas__sum }}</td>
+                <td class="text-center">{{ noviembre1.estudios__sum }}</td>
+                <td class="text-center">{{ noviembre1.id__count }}</td>
+            </tr>
+            <tr>
+                <td class="text-center">Diciembre</td>
+                <td class="text-center">{{ diciembre1.publicaciones__sum }}</td>
+                <td class="text-center">{{ diciembre1.videos__sum }}</td>
+                <td class="text-center">{{ diciembre1.horas__sum }}</td>
+                <td class="text-center">{{ diciembre1.revisitas__sum }}</td>
+                <td class="text-center">{{ diciembre1.estudios__sum }}</td>
+                <td class="text-center">{{ diciembre1.id__count }}</td>
+            </tr>
+            <tr>
+                <td class="text-center">Enero</td>
+                <td class="text-center">{{ enero1.publicaciones__sum }}</td>
+                <td class="text-center">{{ enero1.videos__sum }}</td>
+                <td class="text-center">{{ enero1.horas__sum }}</td>
+                <td class="text-center">{{ enero1.revisitas__sum }}</td>
+                <td class="text-center">{{ enero1.estudios__sum }}</td>
+                <td class="text-center">{{ enero1.id__count }}</td>
+            </tr>
+            <tr>
+                <td class="text-center">Febrero</td>
+                <td class="text-center">{{ febrero1.publicaciones__sum }}</td>
+                <td class="text-center">{{ febrero1.videos__sum }}</td>
+                <td class="text-center">{{ febrero1.horas__sum }}</td>
+                <td class="text-center">{{ febrero1.revisitas__sum }}</td>
+                <td class="text-center">{{ febrero1.estudios__sum }}</td>
+                <td class="text-center">{{ febrero1.id__count }}</td>
+            </tr>
+            <tr>
+                <td class="text-center">Marzo</td>
+                <td class="text-center">{{ marzo1.publicaciones__sum }}</td>
+                <td class="text-center">{{ marzo1.videos__sum }}</td>
+                <td class="text-center">{{ marzo1.horas__sum }}</td>
+                <td class="text-center">{{ marzo1.revisitas__sum }}</td>
+                <td class="text-center">{{ marzo1.estudios__sum }}</td>
+                <td class="text-center">{{ marzo1.id__count }}</td>
+            </tr>
+            <tr>
+                <td class="text-center">Abril</td>
+                <td class="text-center">{{ abril1.publicaciones__sum }}</td>
+                <td class="text-center">{{ abril1.videos__sum }}</td>
+                <td class="text-center">{{ abril1.horas__sum }}</td>
+                <td class="text-center">{{ abril1.revisitas__sum }}</td>
+                <td class="text-center">{{ abril1.estudios__sum }}</td>
+                <td class="text-center">{{ abril1.id__count }}</td>
+            </tr>
+            <tr>
+                <td class="text-center">Mayo</td>
+                <td class="text-center">{{ mayo1.publicaciones__sum }}</td>
+                <td class="text-center">{{ mayo1.videos__sum }}</td>
+                <td class="text-center">{{ mayo1.horas__sum }}</td>
+                <td class="text-center">{{ mayo1.revisitas__sum }}</td>
+                <td class="text-center">{{ mayo1.estudios__sum }}</td>
+                <td class="text-center">{{ mayo1.id__count }}</td>
+            </tr>
+            <tr>
+                <td class="text-center">Junio</td>
+                <td class="text-center">{{ junio1.publicaciones__sum }}</td>
+                <td class="text-center">{{ junio1.videos__sum }}</td>
+                <td class="text-center">{{ junio1.horas__sum }}</td>
+                <td class="text-center">{{ junio1.revisitas__sum }}</td>
+                <td class="text-center">{{ junio1.estudios__sum }}</td>
+                <td class="text-center">{{ junio1.id__count }}</td>
+            </tr>
+            <tr>
+                <td class="text-center">Julio</td>
+                <td class="text-center">{{ julio1.publicaciones__sum }}</td>
+                <td class="text-center">{{ julio1.videos__sum }}</td>
+                <td class="text-center">{{ julio1.horas__sum }}</td>
+                <td class="text-center">{{ julio1.revisitas__sum }}</td>
+                <td class="text-center">{{ julio1.estudios__sum }}</td>
+                <td class="text-center">{{ julio1.id__count }}</td>
+            </tr>
+            <tr>
+                <td class="text-center">Agosto</td>
+                <td class="text-center">{{ agosto1.publicaciones__sum }}</td>
+                <td class="text-center">{{ agosto1.videos__sum }}</td>
+                <td class="text-center">{{ agosto1.horas__sum }}</td>
+                <td class="text-center">{{ agosto1.revisitas__sum }}</td>
+                <td class="text-center">{{ agosto1.estudios__sum }}</td>
+                <td class="text-center">{{ agosto1.id__count }}</td>
+            </tr>
+                
+        </tbody>
+</table><br><br>
 
-<b>Promedio de horas mensual: {{ septiembre1.horas__sum}}</b>
+<table id="invoice" border="0.2">
+        <thead>
+            <tr>
+                <th style="width: 15%;">{{año2}}</th>
+                <th style="width: 15%;">Publicaciones</th>
+                <th style="width: 10%;">Videos</th>
+                <th style="width: 10%;">Horas</th>
+                <th style="width: 10%;">Revisitas</th>
+                <th style="width: 10%;">Estudios</th>
+                <th style="width: 30%;">Informan</th>
+                
+            </tr>
+        </thead>
+        
+        <tbody>
+            
+            <tr>
+                <td class="text-center">Septiembre</td>
+                {% if septiembre2.publicaciones__sum != NULL %}
+                <td class="text-center">{{ septiembre2.publicaciones__sum }}</td>
+                {% endif %}
+                <td class="text-center">{{ septiembre2.videos__sum }}</td>
+                <td class="text-center">{{ septiembre2.horas__sum }}</td>
+                <td class="text-center">{{ septiembre2.revisitas__sum }}</td>
+                <td class="text-center">{{ septiembre2.estudios__sum }}</td>
+                <td class="text-center">{{ septiembre2.id__count }}</td>
+            </tr>
+            <tr>
+                <td class="text-center">Octubre</td>
+                <td class="text-center">{{ octubre2.publicaciones__sum }}</td>
+                <td class="text-center">{{ octubre2.videos__sum }}</td>
+                <td class="text-center">{{ octubre2.horas__sum }}</td>
+                <td class="text-center">{{ octubre2.revisitas__sum }}</td>
+                <td class="text-center">{{ octubre2.estudios__sum }}</td>
+                <td class="text-center">{{ octubre2.id__count }}</td>
+            </tr>
+            <tr>
+                <td class="text-center">Noviembre</td>
+                <td class="text-center">{{ noviembre2.publicaciones__sum }}</td>
+                <td class="text-center">{{ noviembre2.videos__sum }}</td>
+                <td class="text-center">{{ noviembre2.horas__sum }}</td>
+                <td class="text-center">{{ noviembre2.revisitas__sum }}</td>
+                <td class="text-center">{{ noviembre2.estudios__sum }}</td>
+                <td class="text-center">{{ noviembre2.id__count }}</td>
+            </tr>
+            <tr>
+                <td class="text-center">Diciembre</td>
+                <td class="text-center">{{ diciembre2.publicaciones__sum }}</td>
+                <td class="text-center">{{ diciembre2.videos__sum }}</td>
+                <td class="text-center">{{ diciembre2.horas__sum }}</td>
+                <td class="text-center">{{ diciembre2.revisitas__sum }}</td>
+                <td class="text-center">{{ diciembre2.estudios__sum }}</td>
+                <td class="text-center">{{ diciembre2.id__count }}</td>
+            </tr>
+            <tr>
+                <td class="text-center">Enero</td>
+                <td class="text-center">{{ enero2.publicaciones__sum }}</td>
+                <td class="text-center">{{ enero2.videos__sum }}</td>
+                <td class="text-center">{{ enero2.horas__sum }}</td>
+                <td class="text-center">{{ enero2.revisitas__sum }}</td>
+                <td class="text-center">{{ enero2.estudios__sum }}</td>
+                <td class="text-center">{{ enero2.id__count }}</td>
+            </tr>
+            <tr>
+                <td class="text-center">Febrero</td>
+                <td class="text-center">{{ febrero2.publicaciones__sum }}</td>
+                <td class="text-center">{{ febrero2.videos__sum }}</td>
+                <td class="text-center">{{ febrero2.horas__sum }}</td>
+                <td class="text-center">{{ febrero2.revisitas__sum }}</td>
+                <td class="text-center">{{ febrero2.estudios__sum }}</td>
+                <td class="text-center">{{ febrero2.id__count }}</td>
+            </tr>
+            <tr>
+                <td class="text-center">Marzo</td>
+                <td class="text-center">{{ marzo2.publicaciones__sum }}</td>
+                <td class="text-center">{{ marzo2.videos__sum }}</td>
+                <td class="text-center">{{ marzo2.horas__sum }}</td>
+                <td class="text-center">{{ marzo2.revisitas__sum }}</td>
+                <td class="text-center">{{ marzo2.estudios__sum }}</td>
+                <td class="text-center">{{ marzo2.id__count }}</td>
+            </tr>
+            <tr>
+                <td class="text-center">Abril</td>
+                <td class="text-center">{{ abril2.publicaciones__sum }}</td>
+                <td class="text-center">{{ abril2.videos__sum }}</td>
+                <td class="text-center">{{ abril2.horas__sum }}</td>
+                <td class="text-center">{{ abril2.revisitas__sum }}</td>
+                <td class="text-center">{{ abril2.estudios__sum }}</td>
+                <td class="text-center">{{ abril2.id__count }}</td>
+            </tr>
+            <tr>
+                <td class="text-center">Mayo</td>
+                <td class="text-center">{{ mayo2.publicaciones__sum }}</td>
+                <td class="text-center">{{ mayo2.videos__sum }}</td>
+                <td class="text-center">{{ mayo2.horas__sum }}</td>
+                <td class="text-center">{{ mayo2.revisitas__sum }}</td>
+                <td class="text-center">{{ mayo2.estudios__sum }}</td>
+                <td class="text-center">{{ mayo2.id__count }}</td>
+            </tr>
+            <tr>
+                <td class="text-center">Junio</td>
+                <td class="text-center">{{ junio2.publicaciones__sum }}</td>
+                <td class="text-center">{{ junio2.videos__sum }}</td>
+                <td class="text-center">{{ junio2.horas__sum }}</td>
+                <td class="text-center">{{ junio2.revisitas__sum }}</td>
+                <td class="text-center">{{ junio2.estudios__sum }}</td>
+                <td class="text-center">{{ junio2.id__count }}</td>
+            </tr>
+            <tr>
+                <td class="text-center">Julio</td>
+                <td class="text-center">{{ julio2.publicaciones__sum }}</td>
+                <td class="text-center">{{ julio2.videos__sum }}</td>
+                <td class="text-center">{{ julio2.horas__sum }}</td>
+                <td class="text-center">{{ julio2.revisitas__sum }}</td>
+                <td class="text-center">{{ julio2.estudios__sum }}</td>
+                <td class="text-center">{{ julio2.id__count }}</td>
+            </tr>
+            <tr>
+                <td class="text-center">Agosto</td>
+                <td class="text-center">{{ agosto2.publicaciones__sum }}</td>
+                <td class="text-center">{{ agosto2.videos__sum }}</td>
+                <td class="text-center">{{ agosto2.horas__sum }}</td>
+                <td class="text-center">{{ agosto2.revisitas__sum }}</td>
+                <td class="text-center">{{ agosto2.estudios__sum }}</td>
+                <td class="text-center">{{ agosto2.id__count }}</td>
+            </tr>
+                
+        </tbody>
+</table>
+    
 
 </body>
 </html>
