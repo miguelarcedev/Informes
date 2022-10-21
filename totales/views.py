@@ -8,7 +8,8 @@ from django.views.generic.list import ListView
 from django.http import  HttpResponse, HttpResponseRedirect
 from totales.models import *
 from django.views.generic import  View
-from django.db.models import  Avg
+from django.db.models import  Avg, Sum, Count
+from informe.models import Informe
 
 # Create your views here.
 
@@ -38,6 +39,31 @@ class Tarjeta(View):
             promedio2 = Regulares.objects.filter(año=año2).aggregate(Avg('horas'))
             context = {'totales': Regulares.objects.all(),'año1':año1,'año2':año2, 'titulo': "REGULARES - TOTALES",'promedio1': promedio1,'promedio2': promedio2}
         template = get_template('totales/tarjeta_totales.html')
+        html = template.render(context)
+        response = HttpResponse(content_type='application/pdf')
+        pisaStatus = pisa.CreatePDF(html, dest=response)
+        return response
+
+class Totales(View):
+
+    def get(self, request,pub_aux_reg, *args, **kwargs):
+        ultimo_registro = Informe.objects.all().last()
+        año1 = ultimo_registro.año - 1
+        año2 = ultimo_registro.año
+        if pub_aux_reg == "pub":
+            context = {'totales': Informe.objects.filter(año=año1),
+                'año1':año1,'año2':año2,
+                'titulo': "PUBLICADORES - TOTALES",
+                'promedio1': promedio1,
+                'promedio2': promedio2}
+        if pub_aux_reg == "aux":
+            context = {'septiembre1': Informe.objects.filter(año=año1).filter(mes="Julio").filter(notas="Auxiliar").aggregate(Sum('horas'))}
+                
+        if pub_aux_reg == "reg":
+            promedio1 = Regulares.objects.filter(año=año1).aggregate(Avg('horas'))
+            promedio2 = Regulares.objects.filter(año=año2).aggregate(Avg('horas'))
+            context = {'totales': Regulares.objects.all(),'año1':año1,'año2':año2, 'titulo': "REGULARES - TOTALES",'promedio1': promedio1,'promedio2': promedio2}
+        template = get_template('totales/totales.html')
         html = template.render(context)
         response = HttpResponse(content_type='application/pdf')
         pisaStatus = pisa.CreatePDF(html, dest=response)

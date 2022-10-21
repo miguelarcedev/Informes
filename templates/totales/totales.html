@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<style>
+    .img-invoice {
+        width: 50px;
+        text-align: center;
+        margin: 0 auto;
+    }
+
+    
+    .head {
+        text-align: center;
+        text-transform: uppercase;
+    }
+
+    #invoice thead tr th {
+        text-align: center;
+        border-bottom: 0px solid black;
+        border-top: 0px solid black;
+        padding-top: 4px;
+    }
+
+    #invoice thead tr {
+        
+        margin-bottom: 1;
+        padding-bottom: 0;
+    }
+
+    #invoice tbody tr {
+        padding: 0.1;
+    }
+
+    .text-center{
+        text-align: center;
+    }
+    
+
+    @page {
+        size: a5 ;
+        @frame header_frame {
+        left: 15pt;
+        width: 370pt;
+        top: 20pt;
+        height: 40pt;
+        }
+        @frame content_frame {
+        left: 15pt; width: 370pt; top: 50pt; height: 100vh;
+        }
+        @frame footer_frame {
+        -pdf-frame-content:footer_content;
+        left: 15pt; width: 370pt; top: 772pt; height: 20pt;
+        }
+    }
+
+</style>
+
+<body>
+
+<h3 class="text-center">REGISTRO DE PUBLICADOR DE LA CONGREGACION</h3>
+<p>
+    <b>{{ titulo }}</b>
+    
+</p><br>
+    
+{{septiembre1.año}}
+
+<b>Promedio de horas mensual: {{ septiembre1.horas__sum}}</b>
+
+</body>
+</html>
