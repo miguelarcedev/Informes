@@ -68,3 +68,10 @@ ESTADO = [
         ('Fallecido', 'Fallecido'),
         
     ]
+
+SERVICIO = [
+        ('Auxiliar', 'Auxiliar'),
+        ('Publicador', 'Publicador'),
+        ('Regular', 'Regular'),
+        
+    ]

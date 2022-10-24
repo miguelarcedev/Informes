@@ -11,7 +11,7 @@ class Informe_Resource(resources.ModelResource):
 
 class Informe_Admin(ImportExportModelAdmin):
     resource_class = Informe_Resource
-    list_display = ('publicador','año', 'mes','publicaciones','videos','horas', 'revisitas', 'estudios', 'notas')
+    list_display = ('publicador','año', 'mes','publicaciones','videos','horas', 'revisitas', 'estudios', 'notas', 'servicio')
     list_filter = ['publicador', 'año','mes']
     
 

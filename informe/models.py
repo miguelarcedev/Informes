@@ -1,4 +1,5 @@
 from email.policy import default
+from unittest.util import _MAX_LENGTH
 from django.db import models
 from publicador.models import Publicador
 from informes.choices import *
@@ -13,7 +14,8 @@ class Informe(models.Model):
     horas = models.IntegerField(null=True, blank=True,default=0)
     revisitas = models.IntegerField(null=True, blank=True,default=0)
     estudios = models.IntegerField(null=True, blank=True,default=0)
-    notas = models.CharField(max_length=20, choices=NOTAS, blank=True, null=True)    
+    notas = models.CharField(max_length=20, choices=NOTAS, blank=True, null=True)
+    servicio = models.CharField(max_length=10, choices=SERVICIO,default="Publicador")    
 
     class Meta():
         verbose_name='informe'
