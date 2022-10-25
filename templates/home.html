@@ -15,9 +15,9 @@
             </div>
             <div class="card-body" style="text-align: center ;">
                            
-              <a href="{% url 'asistencia_años' 'entre' %}" >Entre Semana</a>
+              <a href="{% url 'asistencia' 'entre' %}" >Entre Semana</a>
               <h1> </h1>
-              <a href="{% url 'asistencia_años' 'fin' %}" >Fin de Semana</a>
+              <a href="{% url 'asistencia' 'fin' %}" >Fin de Semana</a>
             </div>
 
                       
@@ -33,17 +33,14 @@
             </div>
             <div class="card-body" style="text-align: center ;">
                            
-              <a href="{% url 'tarjeta_totales' 'pub' %}" >Publicadores</a>
+              
+              <a href="{% url 'totales' 'pub' %}" >Publicadores</a>
               <h1> </h1>
-              <a href="{% url 'totales' 'pub' %}" >Publicadores1</a>
+              
+              <a href="{% url 'totales' 'aux' %}" >Auxiliares</a>
               <h1> </h1>
-              <a href="{% url 'tarjeta_totales' 'aux' %}" >Auxiliares</a>
-              <h1> </h1>
-              <a href="{% url 'totales' 'aux' %}" >Auxiliares1</a>
-              <h1> </h1>
-              <a href="{% url 'tarjeta_totales' 'reg' %}" >Regulares</a>
-              <h1> </h1>
-              <a href="{% url 'totales' 'reg' %}" >Regulares1</a>
+              
+              <a href="{% url 'totales' 'reg' %}" >Regulares</a>
             </div>
 
                       
@@ -59,7 +56,7 @@
             </div>
             <div class="card-body" style="text-align: center ;">
                            
-              <a href="{% url 'activos-list' %}" >Activos</a>
+              <a href="{% url 'activos-list'  %}" >Activos</a>
               <h1> </h1>
               <a href="{% url 'inactivos-list' %}" >Inactivos</a>
               <h1> </h1>

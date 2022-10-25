@@ -65,7 +65,7 @@ ESTADO = [
         ('Inactivo', 'Inactivo'),
         ('Baja', 'Baja'),
         ('Mudado', 'Mudado'),
-        ('Fallecido', 'Fallecido'),
+        
         
     ]
 

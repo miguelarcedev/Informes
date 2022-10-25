@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path
-from informe.views import Tarjeta_grupo, Precursores, Inactivos
+from informe.views import Tarjeta_grupo, Precursores, Inactivos, Totales
 from informe import views
 
 
@@ -9,4 +9,5 @@ urlpatterns = [
     path('tarjeta_grupo/<int:grupo>/', Tarjeta_grupo.as_view(), name='tarjeta_grupo'),
     path('precursores/', Precursores.as_view(), name='precursores'),
     path('inactivos/', Inactivos.as_view(), name='inactivos'),
+    path('totales/<str:pub_aux_reg>/', Totales.as_view(), name='totales'),
 ]

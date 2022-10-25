@@ -40,7 +40,6 @@ INSTALLED_APPS = [
     'publicador',
     'informe',
     'asistencia',
-    'totales',
     'import_export',
 ]
 

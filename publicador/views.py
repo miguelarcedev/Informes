@@ -20,6 +20,7 @@ class ActivosListView(ListView):
     paginate_by = 100  # if pagination is desired
     def get_queryset(self):
         return Publicador.objects.filter(estado="Activo")
+        
 
 class InactivosListView(ListView):
 
@@ -31,7 +32,6 @@ class InactivosListView(ListView):
 
            
 class Tarjeta(View):
-
     def get(self, request, *args, **kwargs):
         ultimo_registro = Informe.objects.all().last()
         año1 = ultimo_registro.año - 1
@@ -44,17 +44,14 @@ class Tarjeta(View):
         return response        
        
 class Tarjeta_Inactivo(View):
-
     def get(self, request,pk, *args, **kwargs):
         ultimo_registro = Informe.objects.filter(publicador=pk).last()
         if ultimo_registro:
             año1 = ultimo_registro.año - 1
             año2 = ultimo_registro.año
-            
         else:
             año1 = 0
             año2 = 0
-            
         template = get_template('publicador/tarjeta_pub.html')
         context = {'publicador': Publicador.objects.get(pk=self.kwargs['pk']),'año1':año1,'año2':año2}
         html = template.render(context)

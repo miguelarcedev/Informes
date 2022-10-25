@@ -54,3 +54,62 @@ class FinDeSemanaPdf(View):
         response = HttpResponse(content_type='application/pdf')
         pisaStatus = pisa.CreatePDF(html, dest=response)
         return response
+
+class Tarjeta_asistencia(View):
+
+    def get(self, request,entre_fin, *args, **kwargs):
+        if entre_fin == 'entre':
+            ultimo_registro = Entre_Semana.objects.all().last()
+            año1 = ultimo_registro.año - 1
+            año2 = ultimo_registro.año
+            promedio1 = Entre_Semana.objects.filter(año=año1).aggregate(Avg('promedio'))
+            promedio2 = Entre_Semana.objects.filter(año=año2).aggregate(Avg('promedio'))
+
+            try:
+                octubre2= Entre_Semana.objects.get(año=año2, mes="Octubre")
+            except:
+                octubre2="  "
+            
+            context = {
+                'septiembre1': Entre_Semana.objects.get(año=año1, mes="Septiembre"),
+                'octubre1': Entre_Semana.objects.get(año=año1, mes="Octubre"),
+                'noviembre1': Entre_Semana.objects.get(año=año1, mes="Noviembre"),
+                'diciembre1': Entre_Semana.objects.get(año=año1, mes="Diciembre"),
+                'enero1': Entre_Semana.objects.get(año=año1, mes="Enero"),
+                'febrero1': Entre_Semana.objects.get(año=año1, mes="Febrero"),
+                'marzo1': Entre_Semana.objects.get(año=año1, mes="Marzo"),
+                'abril1': Entre_Semana.objects.get(año=año1, mes="Abril"),
+                'mayo1': Entre_Semana.objects.get(año=año1, mes="Mayo"),
+                'junio1': Entre_Semana.objects.get(año=año1, mes="Junio"),
+                'julio1': Entre_Semana.objects.get(año=año1, mes="Julio"),
+                'agosto1': Entre_Semana.objects.get(año=año1, mes="Agosto"),
+                'septiembre2': Entre_Semana.objects.get(año=año2, mes="Septiembre"),
+                'octubre2': octubre2,
+                
+                'titulo': "Reunion de entre semana",
+                'año1':año1,
+                'promedio1': promedio1,
+                'año2':año2,
+                'promedio2': promedio2
+                }
+        else:
+            ultimo_registro = Fin_De_Semana.objects.all().last()
+            año1 = ultimo_registro.año - 1
+            año2 = ultimo_registro.año
+            promedio1 = Fin_De_Semana.objects.filter(año=año1).aggregate(Avg('promedio'))
+            promedio2 = Fin_De_Semana.objects.filter(año=año2).aggregate(Avg('promedio'))
+            context = {
+                'asistencia1': Fin_De_Semana.objects.filter(año=año1),
+                'asistencia2': Fin_De_Semana.objects.filter(año=año2),
+                'titulo': "Reunion del fin de semana",
+                'año1':año1,
+                'promedio1': promedio1,
+                'año2':año2,
+                'promedio2': promedio2
+                }
+        
+        template = get_template('asistencia/tarjeta.html')
+        html = template.render(context)
+        response = HttpResponse(content_type='application/pdf')
+        pisaStatus = pisa.CreatePDF(html, dest=response)
+        return response
