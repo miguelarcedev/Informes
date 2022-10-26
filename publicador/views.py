@@ -36,11 +36,14 @@ class Irregulares(ListView):
     paginate_by = 100  # if pagination is desired
     def get_queryset(self):
         publicador = Publicador.objects.filter(estado="Activo")
-        
+        prueba = Informe.objects.filter(publicador=9999)
         for p in publicador:
-            ultimos_6 = Informe.objects.filter(publicador=p.id,horas=0)[:6]
+            informe = Informe.objects.filter(publicador=p.id).order_by('-id')[0:6]
+            for i in informe:
+                if i.horas == 0:
+                    prueba |= informe
             
-            return ultimos_6
+        return prueba
            
 class Tarjeta(View):
     def get(self, request, *args, **kwargs):
