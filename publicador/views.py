@@ -11,6 +11,7 @@ from django.urls import reverse_lazy
 from publicador.models import Publicador
 from informe.models import Informe
 from django.views.generic import  View
+
 # Create your views here.
 
 class ActivosListView(ListView):
@@ -23,13 +24,23 @@ class ActivosListView(ListView):
         
 
 class InactivosListView(ListView):
-
-    model = Publicador
+    model = Informe
     template_name = 'publicador/lista_inactivos.html'
     paginate_by = 100  # if pagination is desired
     def get_queryset(self):
         return Publicador.objects.filter(estado="Inactivo")
 
+class Irregulares(ListView):
+    model = Informe
+    template_name = 'publicador/lista_irregulares.html'
+    paginate_by = 100  # if pagination is desired
+    def get_queryset(self):
+        publicador = Publicador.objects.filter(estado="Activo")
+        
+        for p in publicador:
+            ultimos_6 = Informe.objects.filter(publicador=p.id,horas=0)[:6]
+            
+            return ultimos_6
            
 class Tarjeta(View):
     def get(self, request, *args, **kwargs):

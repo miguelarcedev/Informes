@@ -7,7 +7,7 @@
         text-align: center;
         margin: 0 auto;
     }
-
+    
     
     .head {
         text-align: center;
@@ -34,23 +34,31 @@
     .text-center{
         text-align: center;
     }
-    
+
+    p.saltodepagina
+        {
+            page-break-after: always;
+        }
 
     @page {
-        size: a5 ;
+        /*size: a6 , landscape; /* para 12 registros */
+        size: a5;
         @frame header_frame {
         left: 15pt;
         width: 370pt;
-        top: 20pt;
-        height: 40pt;
+        top: 10pt;
+        height: 20pt;
+        
         }
         @frame content_frame {
-        left: 15pt; width: 370pt; top: 50pt; height: 100vh;
+        left: 15pt; width: 370pt; top: 25pt; height: 100vh;
         }
         @frame footer_frame {
         -pdf-frame-content:footer_content;
         left: 15pt; width: 370pt; top: 772pt; height: 20pt;
         }
+        
+        
     }
 
 </style>
@@ -58,11 +66,8 @@
 <body>
 
 <h3 class="text-center">REGISTRO DE PUBLICADOR DE LA CONGREGACION</h3>
-<p>
-    <b>{{ titulo }}</b>
-    
-</p>
-<br>
+<h3 class="text-center">{{ titulo }}</h3>
+
 <table id="invoice" border="0.2">
         <thead>
             <tr>

@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block contenido %}   
+    <div class="container">
+        <h4>Publicadores irregulares</h4>
+        <table  class="table table-striped table-bordered" style="width:50%">
+            <thead align="justify">
+                <tr>
+                    <th>Nombre</th>
+                    <th>Año</th>
+                    <th>Mes</th>
+                    <th>Horas</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in object_list %}
+                <tr>
+                    <td>{{i.publicador}}</td>
+                    <td>{{i.año}}</td>
+                    <td>{{i.mes}}</td>
+                    <td>{{i.horas}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endblock %}
+
