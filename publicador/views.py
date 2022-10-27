@@ -38,12 +38,15 @@ class Irregulares(ListView):
         publicador = Publicador.objects.filter(estado="Activo")
         prueba = Informe.objects.filter(publicador=9999)
         for p in publicador:
-            informe = Informe.objects.filter(publicador=p.id).order_by('-id')[0:6]
+            informe = Informe.objects.filter(publicador=p.id).order_by('-id')[0:5]
+           
             for i in informe:
+                
                 if i.horas == 0:
                     prueba |= informe
             
         return prueba
+
            
 class Tarjeta(View):
     def get(self, request, *args, **kwargs):

@@ -14,12 +14,14 @@
             </thead>
             <tbody>
                 {% for i in object_list %}
-                <tr>
-                    <td>{{i.publicador}}</td>
-                    <td>{{i.año}}</td>
-                    <td>{{i.mes}}</td>
-                    <td>{{i.horas}}</td>
-                </tr>
+                {% if i.horas == 0 %}
+                    <tr>
+                        <td>{{i.publicador}}</td>
+                        <td>{{i.año}}</td>
+                        <td>{{i.mes}}</td>
+                        <td>{{i.horas}}</td>
+                    </tr>
+                {% endif %}
                 {% endfor %}
             </tbody>
         </table>
