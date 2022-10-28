@@ -14,38 +14,56 @@ from django.views.generic import  View
 
 # Create your views here.
 
+
+class Publicador_list(View):
+    def get(self,request,estado):
+        if estado == "activo":
+            publicador = Publicador.objects.filter(estado="Activo")
+            titulo = "PUBLICADORES ACTIVOS"
+        else:
+            publicador = Publicador.objects.filter(estado="Inactivo")
+            titulo = "PUBLICADORES INACTVOS"
+        
+        return render(request, "publicador/publicador.html",{"publicador": publicador, "titulo":titulo})
+
 class ActivosListView(ListView):
 
     model = Publicador
-    template_name = 'publicador/lista_activos.html'
+    template_name = 'publicador/publicador.html'
     paginate_by = 100  # if pagination is desired
     def get_queryset(self):
         return Publicador.objects.filter(estado="Activo")
         
 
 class InactivosListView(ListView):
-    model = Informe
+    model = Publicador
     template_name = 'publicador/lista_inactivos.html'
     paginate_by = 100  # if pagination is desired
     def get_queryset(self):
         return Publicador.objects.filter(estado="Inactivo")
 
-class Irregulares(ListView):
-    model = Informe
-    template_name = 'publicador/lista_irregulares.html'
-    paginate_by = 100  # if pagination is desired
-    def get_queryset(self):
-        publicador = Publicador.objects.filter(estado="Activo")
-        prueba = Informe.objects.filter(publicador=9999)
+class Irregulares(View):
+    def get(self,request):
+        bandera = True
+        cantidad = 0
+        key = []
+        irregulares = []
+        publicador = Publicador.objects.filter(estado="Activo").order_by('id')
         for p in publicador:
-            informe = Informe.objects.filter(publicador=p.id).order_by('-id')[0:5]
-           
-            for i in informe:
-                
-                if i.horas == 0:
-                    prueba |= informe
+            key.append(p.id)
+        informe = Informe.objects.filter(publicador=9999)
             
-        return prueba
+        for k in key:
+            informe = Informe.objects.filter(publicador=k).order_by('-id')[0:6]
+            bandera = True
+            for i in informe:
+                if i.horas == 0:
+                    irregulares.append((i.publicador,i.año,i.mes))
+                    if bandera:
+                        cantidad += 1
+                        bandera = False
+            
+        return render(request, "publicador/lista_irregulares.html",{"irregulares": irregulares,"cantidad":cantidad})   
 
            
 class Tarjeta(View):
