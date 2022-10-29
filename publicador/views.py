@@ -28,6 +28,50 @@ class Publicador_list(View):
         
         return render(request, "publicador/publicador.html",{"publicador": publicador, "titulo":titulo,"cantidad":cantidad})
 
+class Grupos(View):
+    def get(self, request, *args, **kwargs):
+        i = 0
+        grupo1=[]
+        grupo2=[]
+        grupo3=[]
+        grupos = []
+        g1 = Publicador.objects.filter(grupo=1, estado="Activo")
+        cant1 = Publicador.objects.filter(grupo=1, estado="Activo").count()
+        g2 = Publicador.objects.filter(grupo=2, estado="Activo")
+        cant2 = Publicador.objects.filter(grupo=2, estado="Activo").count()
+        g3 = Publicador.objects.filter(grupo=3, estado="Activo")
+        cant3 = Publicador.objects.filter(grupo=3, estado="Activo").count()
+        maximo =max([cant1,cant2,cant3])
+        
+        for uno in g1:
+            grupo1.append(uno.nombre)
+        dif1=len(grupo1)
+        while cant1 <= maximo:
+            grupo1.append("     ")
+            cant1 += 1
+        for dos in g2:
+            grupo2.append(dos.nombre)
+        dif2=len(grupo2)
+        while cant2 <= maximo:
+            grupo2.append("     ")
+            cant2 += 1
+        for tres in g3:
+            grupo3.append(tres.nombre)
+        dif3=len(grupo3)
+        while cant3 <= maximo:
+            grupo3.append("     ")
+            cant3 += 1
+        while i <= maximo:
+            grupos.append((i+1,grupo1[i],grupo2[i],grupo3[i]))
+            
+            i += 1
+
+        template = get_template('publicador/grupos.html')
+        context = {'grupos': grupos}
+        html = template.render(context)
+        response = HttpResponse(content_type='application/pdf')
+        pisaStatus = pisa.CreatePDF(html, dest=response)
+        return response 
 
 class Irregulares(View):
     def get(self,request):
