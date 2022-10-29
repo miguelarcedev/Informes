@@ -19,28 +19,15 @@ class Publicador_list(View):
     def get(self,request,estado):
         if estado == "activo":
             publicador = Publicador.objects.filter(estado="Activo")
-            titulo = "PUBLICADORES ACTIVOS"
+            cantidad = Publicador.objects.filter(estado="Activo").count()
+            titulo = "PUBLICADORES ACTIVOS: "
         else:
             publicador = Publicador.objects.filter(estado="Inactivo")
-            titulo = "PUBLICADORES INACTVOS"
+            cantidad = Publicador.objects.filter(estado="Inactivo").count()
+            titulo = "PUBLICADORES INACTVOS: "
         
-        return render(request, "publicador/publicador.html",{"publicador": publicador, "titulo":titulo})
+        return render(request, "publicador/publicador.html",{"publicador": publicador, "titulo":titulo,"cantidad":cantidad})
 
-class ActivosListView(ListView):
-
-    model = Publicador
-    template_name = 'publicador/publicador.html'
-    paginate_by = 100  # if pagination is desired
-    def get_queryset(self):
-        return Publicador.objects.filter(estado="Activo")
-        
-
-class InactivosListView(ListView):
-    model = Publicador
-    template_name = 'publicador/lista_inactivos.html'
-    paginate_by = 100  # if pagination is desired
-    def get_queryset(self):
-        return Publicador.objects.filter(estado="Inactivo")
 
 class Irregulares(View):
     def get(self,request):
