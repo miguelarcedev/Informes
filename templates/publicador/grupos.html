@@ -1,72 +1,21 @@
 <!DOCTYPE html>
 <html>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
 <style>
-    .img-invoice {
-        width: 50px;
-        text-align: center;
-        margin: 0 auto;
-    }
-    
-    
-    .head {
-        text-align: center;
-        text-transform: uppercase;
-    }
-
-    #invoice thead tr th {
-        text-align: center;
-        border-bottom: 0px solid black;
-        border-top: 0px solid black;
-        padding-top: 4px;
-    }
-
-    #invoice thead tr {
-        
-        margin-bottom: 1;
-        padding-bottom: 0;
-    }
-
-    #invoice tbody tr {
-        padding: 0.3;
-    }
-
-    .text-center{
-        text-align: center;
-    }
-
-    p.saltodepagina
-        {
-            page-break-after: always;
-        }
-
-    @page {
-        /*size: a6 , landscape; /* para 12 registros */
-        size: a4;
-        @frame header_frame {
-        left: 30pt;
-        width: 520pt;
-        top: 50pt;
-        height: 20pt;
-        
-        }
-        @frame content_frame {
-        left: 30pt; width: 450pt; top: 70pt; height: 1000pt;
-        }
-        @frame footer_frame {
-        -pdf-frame-content:footer_content;
-        left: 30pt; width: 450pt; top: 772pt; height: 20pt;
-        }
-        
-        
-    }
-
+    th, td {
+  padding-top: 5px;
+  padding-bottom: 2px;
+  padding-left: 1px;
+  padding-right: 1px;
+}
 </style>
+
 <body>
     
-    <table id="invoice" border="0.2">
+    <table border="0.1">
         <thead>
-            <tr>
+            <tr style="background-color: rgb(228, 228, 224)">
                 <th style="width: 4%;">N°</th>
                 <th style="width: 32%;">GRUPO 1</th>
                 <th style="width: 32%;">GRUPO 2</th>
@@ -79,10 +28,10 @@
         <tbody>
             {% for grupo in grupos %}
                     <tr>
-                            <td class="text-center">{{grupo.0}}</td>
-                            <td class="text-center">{{grupo.1 }}</td>
-                            <td class="text-center">{{grupo.2 }}</td>
-                            <td class="text-center">{{grupo.3 }}</td>
+                            <td align="center">{{grupo.0}}</td>
+                            <td>{{grupo.1 }}</td>
+                            <td>{{grupo.2 }}</td>
+                            <td>{{grupo.3 }}</td>
                             
                     </tr>
             {% endfor %}

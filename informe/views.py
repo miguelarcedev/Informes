@@ -1,5 +1,5 @@
 from urllib import response
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.db.models import Sum, Count, Max
 from django.views.generic import  View
 from django.template.loader import get_template
@@ -8,9 +8,9 @@ from django.http import HttpResponse
 from xhtml2pdf import pisa
 from publicador.models import Publicador
 from informe.models import Informe
+from django.contrib.auth.decorators import login_required
 
-# Create your views here.
-
+@login_required
 def home(request):
 
     grupos=Publicador.objects.filter(estado="Activo").values('grupo').order_by('grupo').annotate(suma=Sum('grupo'))
