@@ -18,6 +18,10 @@ class Entre_Semana(models.Model):
     def __str__(self):
         return str(self.año) +" - " + self.mes
 
+    def save(self):
+        self.promedio = self.total / self.cantidad
+        super(Entre_Semana, self).save()
+
     
 class Fin_De_Semana(models.Model):
     
@@ -35,3 +39,7 @@ class Fin_De_Semana(models.Model):
 
     def __str__(self):
         return str(self.año) +" - " + self.mes
+
+    def save(self):
+        self.promedio = self.total / self.cantidad
+        super(Entre_Semana, self).save()
