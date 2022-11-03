@@ -11,11 +11,13 @@ from django.urls import reverse_lazy
 from publicador.models import Publicador
 from informe.models import Informe
 from django.views.generic import  View
+from django.db.models import Count, Sum, Max
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 # Create your views here.
 
 
-class Publicador_list(View):
+class Publicador_list(LoginRequiredMixin,View):
     def get(self,request,estado):
         if estado == "activo":
             publicador = Publicador.objects.filter(estado="Activo")
@@ -28,7 +30,7 @@ class Publicador_list(View):
         
         return render(request, "publicador/publicador.html",{"publicador": publicador, "titulo":titulo,"cantidad":cantidad})
 
-class Grupos(View):
+class GruposP(LoginRequiredMixin,View):
     def get(self, request, *args, **kwargs):
         i = 0
         grupo1=[]
@@ -71,9 +73,36 @@ class Grupos(View):
         html = template.render(context)
         response = HttpResponse(content_type='application/pdf')
         pisaStatus = pisa.CreatePDF(html, dest=response)
+        return response
+
+class Grupos(LoginRequiredMixin,View):
+    def get(self, request, *args, **kwargs):
+        matriz = []
+        grupos = []
+        cant_x_grupo = []
+        cant_grupos=Publicador.objects.filter(estado="Activo").aggregate(cantidad=Max('grupo'))
+        for i in range(1,int(cant_grupos['cantidad'])+1):
+            grupos.append(Publicador.objects.filter(grupo=i, estado="Activo"))
+            cant_x_grupo.append(Publicador.objects.filter(grupo=i, estado="Activo").count())
+       
+        maximo = max(cant_x_grupo)
+        for i in range(int(cant_grupos['cantidad'])):
+            x = cant_x_grupo[i] 
+            while x <= maximo:
+                grupos[i][x].append("    ")
+                x += 1
+
+            
+        print(grupos[2][0])
+       
+        template = get_template('publicador/grupos.html')
+        context = {'grupos': grupos}
+        html = template.render(context)
+        response = HttpResponse(content_type='application/pdf')
+        pisaStatus = pisa.CreatePDF(html, dest=response)
         return response 
 
-class Irregulares(View):
+class Irregulares(LoginRequiredMixin,View):
     def get(self,request):
         bandera = True
         cantidad = 0
@@ -97,7 +126,7 @@ class Irregulares(View):
         return render(request, "publicador/lista_irregulares.html",{"irregulares": irregulares,"cantidad":cantidad})   
 
            
-class Tarjeta(View):
+class Tarjeta(LoginRequiredMixin,View):
     def get(self, request, *args, **kwargs):
         ultimo_registro = Informe.objects.all().last()
         año1 = ultimo_registro.año - 1
@@ -109,7 +138,7 @@ class Tarjeta(View):
         pisaStatus = pisa.CreatePDF(html, dest=response)
         return response        
        
-class Tarjeta_Inactivo(View):
+class Tarjeta_Inactivo(LoginRequiredMixin,View):
     def get(self, request,pk, *args, **kwargs):
         ultimo_registro = Informe.objects.filter(publicador=pk).last()
         if ultimo_registro:
