@@ -11,11 +11,13 @@ from django.urls import reverse_lazy
 from publicador.models import Publicador
 from informe.models import Informe
 from django.views.generic import  View
+from django.db.models import Count, Sum, Max
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 # Create your views here.
 
 
-class Publicador_list(View):
+class Publicador_list(LoginRequiredMixin,View):
     def get(self,request,estado):
         if estado == "activo":
             publicador = Publicador.objects.filter(estado="Activo")
@@ -28,8 +30,12 @@ class Publicador_list(View):
         
         return render(request, "publicador/publicador.html",{"publicador": publicador, "titulo":titulo,"cantidad":cantidad})
 
-class Grupos(View):
+class Grupos(LoginRequiredMixin,View):
     def get(self, request, *args, **kwargs):
+
+        cant_grupos=Publicador.objects.filter(estado="Activo").aggregate(cantidad=Max('grupo'))
+        cant_grupos=int(cant_grupos['cantidad'])
+        
         i = 0
         grupo1=[]
         grupo2=[]
@@ -45,19 +51,19 @@ class Grupos(View):
         
         for uno in g1:
             grupo1.append(uno.nombre)
-        dif1=len(grupo1)
+       
         while cant1 <= maximo:
             grupo1.append("     ")
             cant1 += 1
         for dos in g2:
             grupo2.append(dos.nombre)
-        dif2=len(grupo2)
+        
         while cant2 <= maximo:
             grupo2.append("     ")
             cant2 += 1
         for tres in g3:
             grupo3.append(tres.nombre)
-        dif3=len(grupo3)
+        
         while cant3 <= maximo:
             grupo3.append("     ")
             cant3 += 1
@@ -65,7 +71,36 @@ class Grupos(View):
             grupos.append((i+1,grupo1[i],grupo2[i],grupo3[i]))
             
             i += 1
+        
+        template = get_template('publicador/grupos.html')
+        context = {'grupos': grupos}
+        html = template.render(context)
+        response = HttpResponse(content_type='application/pdf')
+        pisaStatus = pisa.CreatePDF(html, dest=response)
+        return response
 
+class GruposPrueba(LoginRequiredMixin,View):
+    def get(self, request, *args, **kwargs):
+        matriz = []
+        grupos = []
+        cant_x_grupo = []
+        cant_grupos=Publicador.objects.filter(estado="Activo").aggregate(cantidad=Max('grupo'))
+        for i in range(int(cant_grupos['cantidad'])):
+            grupos.append(Publicador.objects.filter(grupo=i+1, estado="Activo"))
+            cant_x_grupo.append(Publicador.objects.filter(grupo=i+1, estado="Activo").count())
+        
+        maximo = max(cant_x_grupo)
+        for i in range(int(cant_grupos['cantidad'])):
+            print(i)
+            x = cant_x_grupo[i]
+            print(x)
+            e = 0
+            while e < maximo:
+                
+                if e <= x:
+                    matriz[i].append(grupos[i][e])
+                x += 1
+        
         template = get_template('publicador/grupos.html')
         context = {'grupos': grupos}
         html = template.render(context)
@@ -73,7 +108,7 @@ class Grupos(View):
         pisaStatus = pisa.CreatePDF(html, dest=response)
         return response 
 
-class Irregulares(View):
+class Irregulares(LoginRequiredMixin,View):
     def get(self,request):
         bandera = True
         cantidad = 0
@@ -97,7 +132,7 @@ class Irregulares(View):
         return render(request, "publicador/lista_irregulares.html",{"irregulares": irregulares,"cantidad":cantidad})   
 
            
-class Tarjeta(View):
+class Tarjeta(LoginRequiredMixin,View):
     def get(self, request, *args, **kwargs):
         ultimo_registro = Informe.objects.all().last()
         año1 = ultimo_registro.año - 1
@@ -109,7 +144,7 @@ class Tarjeta(View):
         pisaStatus = pisa.CreatePDF(html, dest=response)
         return response        
        
-class Tarjeta_Inactivo(View):
+class Tarjeta_Inactivo(LoginRequiredMixin,View):
     def get(self, request,pk, *args, **kwargs):
         ultimo_registro = Informe.objects.filter(publicador=pk).last()
         if ultimo_registro:

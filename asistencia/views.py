@@ -10,12 +10,14 @@ from django.http import  HttpResponse, HttpResponseRedirect
 from asistencia.models import *
 from django.views.generic import  View
 from django.db.models import Sum, Avg
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 # Create your views here.
 
 
 
-class Tarjeta_asistencia(View):
+class Tarjeta_asistencia(LoginRequiredMixin,View):
 
     def get(self, request,entre_fin, *args, **kwargs):
         if entre_fin == 'entre':

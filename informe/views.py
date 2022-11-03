@@ -9,6 +9,7 @@ from xhtml2pdf import pisa
 from publicador.models import Publicador
 from informe.models import Informe
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 @login_required
 def home(request):
@@ -16,7 +17,7 @@ def home(request):
     grupos=Publicador.objects.filter(estado="Activo").values('grupo').order_by('grupo').annotate(suma=Sum('grupo'))
     return render(request, "home.html",{"grupos": grupos})
 
-class Tarjeta_grupo(View):
+class Tarjeta_grupo(LoginRequiredMixin,View):
 
     def get(self, request,grupo, *args, **kwargs):
         ultimo_registro = Informe.objects.all().last()
@@ -29,7 +30,7 @@ class Tarjeta_grupo(View):
         pisaStatus = pisa.CreatePDF(html, dest=response)
         return response
 
-class Precursores(View):
+class Precursores(LoginRequiredMixin,View):
 
     def get(self, request, *args, **kwargs):
         ultimo_registro = Informe.objects.all().last()
@@ -42,7 +43,7 @@ class Precursores(View):
         pisaStatus = pisa.CreatePDF(html, dest=response)
         return response
    
-class Inactivos(View):
+class Inactivos(LoginRequiredMixin,View):
 
     def get(self, request, *args, **kwargs):
         template = get_template('informe/tarjeta_inactivos.html')
@@ -53,7 +54,7 @@ class Inactivos(View):
         return response
   
 
-class Totales(View):
+class Totales(LoginRequiredMixin,View):
 
     def get(self, request,pub_aux_reg, *args, **kwargs):
         ultimo_registro = Informe.objects.all().last()
