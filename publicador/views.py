@@ -28,61 +28,9 @@ class Publicador_list(LoginRequiredMixin,View):
             cantidad = Publicador.objects.filter(estado="Inactivo").count()
             titulo = "PUBLICADORES INACTVOS: "
         
-        return render(request, "publicador/publicador.html",{"publicador": publicador, "titulo":titulo,"cantidad":cantidad})
+        return render(request, "publicador/publicador.html",{"publicador": publicador, "titulo":titulo,"cantidad":cantidad,"estado":estado})
 
 class Grupos(LoginRequiredMixin,View):
-    def get(self, request, *args, **kwargs):
-<<<<<<< HEAD
-
-        cant_grupos=Publicador.objects.filter(estado="Activo").aggregate(cantidad=Max('grupo'))
-        cant_grupos=int(cant_grupos['cantidad'])
-=======
->>>>>>> e7cfd9409d60067d4dd8d4a9ef8c244e78969825
-        
-        i = 0
-        grupo1=[]
-        grupo2=[]
-        grupo3=[]
-        grupos = []
-        g1 = Publicador.objects.filter(grupo=1, estado="Activo")
-        cant1 = Publicador.objects.filter(grupo=1, estado="Activo").count()
-        g2 = Publicador.objects.filter(grupo=2, estado="Activo")
-        cant2 = Publicador.objects.filter(grupo=2, estado="Activo").count()
-        g3 = Publicador.objects.filter(grupo=3, estado="Activo")
-        cant3 = Publicador.objects.filter(grupo=3, estado="Activo").count()
-        maximo =max([cant1,cant2,cant3])
-        
-        for uno in g1:
-            grupo1.append(uno.nombre)
-       
-        while cant1 <= maximo:
-            grupo1.append("     ")
-            cant1 += 1
-        for dos in g2:
-            grupo2.append(dos.nombre)
-        
-        while cant2 <= maximo:
-            grupo2.append("     ")
-            cant2 += 1
-        for tres in g3:
-            grupo3.append(tres.nombre)
-        
-        while cant3 <= maximo:
-            grupo3.append("     ")
-            cant3 += 1
-        while i <= maximo:
-            grupos.append((i+1,grupo1[i],grupo2[i],grupo3[i]))
-            
-            i += 1
-        
-        template = get_template('publicador/grupos.html')
-        context = {'grupos': grupos}
-        html = template.render(context)
-        response = HttpResponse(content_type='application/pdf')
-        pisaStatus = pisa.CreatePDF(html, dest=response)
-        return response
-
-class GruposPrueba(LoginRequiredMixin,View):
     def get(self, request, *args, **kwargs):
         matriz_1 = []
         matriz_2 = []
@@ -135,7 +83,6 @@ class GruposPrueba(LoginRequiredMixin,View):
             while x <= maximo:
                 grupo_x[8].append("     ")
                 x += 1
-        
 
         i = 0
         while i <= maximo:
@@ -183,7 +130,7 @@ class Irregulares(LoginRequiredMixin,View):
         return render(request, "publicador/lista_irregulares.html",{"irregulares": irregulares,"cantidad":cantidad})   
 
            
-class Tarjeta(LoginRequiredMixin,View):
+class Tarjeta_Activo(LoginRequiredMixin,View):
     def get(self, request, *args, **kwargs):
         ultimo_registro = Informe.objects.all().last()
         año1 = ultimo_registro.año - 1

@@ -11,11 +11,20 @@
                 </tr>
             </thead>
             <tbody>
-                {% for publicador in publicador %}
-                <tr>
-                    <td class="small"><a href="{% url 'tarjeta' publicador.id %}">{{publicador.nombre}}</a></td>
-                </tr>
-                {% endfor %}
+                {% if estado == "Activo" %}
+                    {% for publicador in publicador %}
+                    <tr>
+                        <td class="small"><a href="{% url 'tarjeta_activo' publicador.id %}">{{publicador.nombre}}</a></td>
+                    </tr>
+                    {% endfor %}
+                {% else %}
+                    {% for publicador in publicador %}
+                    <tr>
+                        <td class="small"><a href="{% url 'tarjeta_inactivo' publicador.id %}">{{publicador.nombre}}</a></td>
+                    </tr>
+                    {% endfor %}
+
+                {% endif %}
             </tbody>
         </table>
     </div>
