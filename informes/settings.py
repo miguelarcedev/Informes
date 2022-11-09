@@ -11,9 +11,8 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
-
 import os
-from django.test.runner import DiscoverRunner
+
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -145,11 +144,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
-
-
 # Test Runner Config
-
-
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
@@ -159,3 +154,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_URL = '/admin/login/?next=/admin/'
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# Update database configuration with $DATABASE_URL.
+import dj_database_url  
+db_from_env = dj_database_url.config(conn_max_age=500)  
+DATABASES['default'].update(db_from_env)
+
