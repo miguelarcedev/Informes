@@ -10,10 +10,12 @@ cryptography==38.0.3
 cssselect2==0.7.0
 defusedxml==0.7.1
 diff-match-patch==20200713
+dj-database-url==1.0.0
 Django==4.1.3
 -e git+https://github.com/django-import-export/django-import-export.git@905839290016850327658bbee790314d4854f8a6#egg=django_import_export
 et-xmlfile==1.1.0
 future==0.18.2
+gunicorn==20.1.0
 html5lib==1.1
 idna==3.4
 import-export==0.2.67.dev6
@@ -23,11 +25,13 @@ odfpy==1.4.1
 openpyxl==3.0.10
 oscrypto==1.3.0
 Pillow==9.3.0
+psycopg2==2.9.5
 pycparser==2.21
 pyHanko==0.15.1
 pyhanko-certvalidator==0.19.6
 PyPDF3==1.0.6
 python-bidi==0.4.2
+python-decouple==3.6
 pytz==2022.6
 pytz-deprecation-shim==0.1.0.post0
 PyYAML==6.0
@@ -45,6 +49,7 @@ tzlocal==4.2
 uritools==4.0.0
 urllib3==1.26.12
 webencodings==0.5.1
+whitenoise==6.2.0
 xhtml2pdf==0.2.8
 xlrd==2.0.1
 xlwt==1.3.0
