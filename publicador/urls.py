@@ -1,6 +1,5 @@
 from django.contrib import admin
 from django.urls import path
-from . import views
 
 from publicador.views import Tarjeta_Activo, Tarjeta_Inactivo,Irregulares,Publicador_list, Grupos
 
