@@ -11,13 +11,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
-<<<<<<< HEAD
 import django_heroku
-=======
-import os
-
-
->>>>>>> b3b8e99c86d61a85bdb85c1855bd67f665cca938
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -157,14 +151,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_URL = '/admin/login/?next=/admin/'
 
-<<<<<<< HEAD
 django_heroku.settings(locals())
-=======
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
-# Update database configuration with $DATABASE_URL.
-import dj_database_url  
-db_from_env = dj_database_url.config(conn_max_age=500)  
-DATABASES['default'].update(db_from_env)
-
->>>>>>> b3b8e99c86d61a85bdb85c1855bd67f665cca938
