@@ -13,12 +13,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 @login_required
 def home(request):
-    #grupos=Publicador.objects.filter(estado="Activo").values('grupo').order_by('grupo').annotate(suma=Sum('grupo'))
-    grupos = []
-    cantidad=Publicador.objects.filter(estado="Activo").aggregate(cantidad=Max('grupo'))
-    cantidad=(cantidad['cantidad'])
-    for i in range(1,cantidad+1):
-        grupos.append(Publicador.objects.filter(grupo=i, estado="Activo"))
+    grupos=Publicador.objects.filter(estado="Activo").values('grupo').order_by('grupo').annotate(suma=Sum('grupo'))
     return render(request, "home.html",{"grupos": grupos})
 
 class Tarjeta_grupo(LoginRequiredMixin,View):
