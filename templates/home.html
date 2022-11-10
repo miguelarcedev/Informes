@@ -81,7 +81,7 @@
             </div>
             <div class="card-body" style="text-align: center ;">
               {% for i in grupos %}
-                <a href="{% url 'tarjeta_grupo' i %}" > Grupo {{ i }}</a>
+                <a href="{% url 'tarjeta_grupo' i.grupo %}" > Grupo {{ i.grupo }}</a>
                 <h1> </h1>
               {% endfor %}
               <a href="{% url 'precursores' %}" >Precursores</a>
