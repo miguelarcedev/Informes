@@ -42,4 +42,4 @@ class Fin_De_Semana(models.Model):
 
     def save(self):
         self.promedio = self.total / self.cantidad
-        super(Entre_Semana, self).save()
+        super(Fin_De_Semana, self).save()
