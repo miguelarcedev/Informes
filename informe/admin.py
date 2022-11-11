@@ -16,5 +16,6 @@ class Informe_Admin(ImportExportModelAdmin):
     
 
 admin.site.register(Informe, Informe_Admin)
+admin.site.site_header = "Panel de Administracion"
 
 
