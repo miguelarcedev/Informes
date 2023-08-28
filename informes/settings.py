@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 from pathlib import Path
 import os
 # Esta linea se habilita para deployar en heroku
-import django_heroku
+
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -40,21 +40,28 @@ DEBUG = True
 
 # Application definition
 
-INSTALLED_APPS = [
+SHARED_APPS = [
+    'django_tenants',
+    'shared',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
+    'django.contrib.staticfiles',  
+]
+
+TENANT_APPS = [
     'publicador',
     'informe',
     'asistencia',
-    'import_export',
-    
+    'import_export',   
 ]
 
+INSTALLED_APPS = list(SHARED_APPS) + [app for app in TENANT_APPS if app not in SHARED_APPS]
+
 MIDDLEWARE = [
+    'django_tenants.middleware.main.TenantMainMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -74,8 +81,8 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
-                'django.template.context_processors.debug',
                 'django.template.context_processors.request',
+                'django.template.context_processors.debug',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
@@ -90,14 +97,31 @@ WSGI_APPLICATION = 'informes.wsgi.application'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
 
-DATABASES = {
+""" DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
+} """
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django_tenants.postgresql_backend',
+        'NAME': 'informes_db',
+        'USER': 'postgres',
+        'PASSWORD': 'superadmin',
+        'HOST': 'localhost',
+        'PORT': '',
+        'CHARSET': 'UTF8',
+    }
 }
 
+DATABASE_ROUTERS = (
+    'django_tenants.routers.TenantSyncRouter',
+)
 
+TENANT_MODEL = "shared.Congregacion"
+TENANT_DOMAIN_MODEL = "shared.Domain"
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
@@ -156,4 +180,4 @@ LOGIN_URL = '/admin/login/?next=/admin/'
 
 # Esta linea se habilita para deployar en heroku
 
-django_heroku.settings(locals())
+

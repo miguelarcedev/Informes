@@ -21,8 +21,9 @@ def home(request):
     grupos = []
     cantidad=Publicador.objects.filter(estado="Activo").aggregate(cantidad=Max('grupo'))
     cantidad=int(cantidad['cantidad'])
-    for i in range(1,cantidad+1):
-        grupos.append(i)
+    if cantidad > 0:
+        for i in range(1,cantidad+1):
+            grupos.append(i)
             
     
     return render(request, "home.html",{"grupos": grupos})

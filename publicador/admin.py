@@ -14,7 +14,7 @@ class PubResource(resources.ModelResource):
 
 class PubAdmin(ImportExportModelAdmin):
     resource_class = PubResource
-    list_display = ('nombre', 'nacimiento','bautismo','sexo','grupo','estado','u_oo')
+    list_display = ('nombre', 'nacimiento','bautismo','sexo','u_oo','a_sm','regular','grupo','estado')
     list_filter = ['estado','grupo','regular']
     search_fields = ['nombre']
 
