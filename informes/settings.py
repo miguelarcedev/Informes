@@ -181,3 +181,4 @@ LOGIN_URL = '/admin/login/?next=/admin/'
 # Esta linea se habilita para deployar en heroku
 
 
+IMPORT_EXPORT_USE_TRANSACTIONS = True
