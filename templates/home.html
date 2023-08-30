@@ -8,80 +8,50 @@
 <div class="container">
 
   <div class="row">
-
-    <div class="col-md-3">
-      <div class="card" style="width: 100%; margin: 5px 5px;">
-
-        <div class="card-header text-center">
-          <h4 class="card-title">Asistencia</h4>
-        </div>
-        <div class="card-body" style="text-align: center ;">
-
-          <a href="{% url 'asistencia' 'entre' %}">Entre Semana</a>
-          <h1> </h1>
-          <a href="{% url 'asistencia' 'fin' %}">Fin de Semana</a>
-        </div>
+    
+      <div class="div-margen">
+        <ul>
+          <li><a class="active" href="#home">Asistencia</a></li>
+          <li><a href="{% url 'asistencia' 'entre' %}">Entre semana</a></li>
+          <li><a href="{% url 'asistencia' 'fin' %}">Fin de semana</a></li>
+        </ul>
       </div>
-    </div>
-
-    <div class="col-md-3">
-      <div class="card" style="width: 100%; margin: 5px 5px;">
-
-        <div class="card-header text-center">
-          <h4 class="card-title">Totales</h4>
-        </div>
-        <div class="card-body" style="text-align: center ;">
-
-
-          <a href="{% url 'totales' 'pub' %}">Publicadores</a>
-          <h1> </h1>
-
-          <a href="{% url 'totales' 'aux' %}">Auxiliares</a>
-          <h1> </h1>
-
-          <a href="{% url 'totales' 'reg' %}">Regulares</a>
-        </div>
+    
+      <div class="div-margen">
+        <ul>
+          <li><a class="active" href="#home">Totales</a></li>
+          <li><a href="{% url 'totales' 'pub' %}">Publicadores</a></li>
+          <li><a href="{% url 'totales' 'aux' %}">Auxiliares</a></li>
+          <li><a href="{% url 'totales' 'reg' %}">Regulares</a></li>
+        </ul>
       </div>
-    </div>
-
-    <div class="col-md-3">
-      <div class="card" style="width: 100%; margin: 5px 5px;">
-
-        <div class="card-header text-center">
-          <h4 class="card-title">Publicadores</h4>
-        </div>
-        <div class="card-body" style="text-align: center ;">
-
-          <a href="{% url 'publicador' 'activo' %}">Activos</a>
-          <h1> </h1>
-          <a href="{% url 'publicador' 'inactivo' %}">Inactivos</a>
-          <h1> </h1>
-          <a href="{% url 'irregulares-list' %}">Irregulares</a>
-          <h1> </h1>
-          <a href="{% url 'grupos' %}">Grupos de predicación</a>
-        </div>
+    
+      <div class="div-margen">
+        <ul>
+          <li><a class="active" href="#home">Publicadores</a></li>
+          <li><a href="{% url 'publicador' 'activo' %}">Activos</a></li>
+          <li><a href="{% url 'publicador' 'inactivo' %}">Inactivos</a></li>
+          <li><a href="{% url 'irregulares-list' %}">Irregulares</a></li>
+          <li><a href="{% url 'grupos' %}">Lista de grupos</a></li>
+        </ul>
       </div>
-    </div>
-
-    <div class="col-md-3">
-      <div class="card" style="width: 100%; margin: 5px 5px;">
-
-        <div class="card-header text-center">
-          <h4 class="card-title">Tarjetas por Grupo</h4>
-        </div>
-        <div class="card-body" style="text-align: center ;">
+    
+      <div class="div-margen">
+        <ul>
+          <li><a class="active" href="#home">Tarjetas por grupo</a></li>
           {% for i in grupos %}
-          <a href="{% url 'tarjeta_grupo' i %}"> Grupo {{ i }}</a>
-          <h1> </h1>
+          <li><a href="{% url 'tarjeta_grupo' i %}"> Grupo {{ i }}</a></li>
           {% endfor %}
-          <a href="{% url 'precursores' %}">Precursores</a>
-          <h1> </h1>
-          <a href="{% url 'inactivos' %}">Inactivos</a>
-        </div>
+          <li><a href="{% url 'precursores' %}">Precursores</a></li>
+          <li><a href="{% url 'inactivos' %}">Inactivos</a></li>
+    
+        </ul>
       </div>
-    </div>
+    
   </div>
 
 </div>
+
+
 
 {% endblock %}
