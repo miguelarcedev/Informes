@@ -56,3 +56,42 @@ class Tarjeta_asistencia(LoginRequiredMixin,View):
         response = HttpResponse(content_type='application/pdf')
         pisaStatus = pisa.CreatePDF(html, dest=response)
         return response
+    
+
+class Asistencia_pantalla(LoginRequiredMixin,View):
+
+    def get(self, request,entre_fin, *args, **kwargs):
+        if entre_fin == 'entre':
+            ultimo_registro = Entre_Semana.objects.all().last()
+            año1 = ultimo_registro.año - 1
+            año2 = ultimo_registro.año
+            promedio1 = Entre_Semana.objects.filter(año=año1).aggregate(Avg('promedio'))
+            promedio2 = Entre_Semana.objects.filter(año=año2).aggregate(Avg('promedio'))
+            
+            context = {
+                'asistencia1': Entre_Semana.objects.filter(año=año1),
+                'asistencia2': Entre_Semana.objects.filter(año=año2),
+                'titulo': "Reunion entre semana",
+                'año1':año1,
+                'promedio1': promedio1,
+                'año2':año2,
+                'promedio2': promedio2
+                }
+            
+        else:
+            ultimo_registro = Fin_De_Semana.objects.all().last()
+            año1 = ultimo_registro.año - 1
+            año2 = ultimo_registro.año
+            promedio1 = Fin_De_Semana.objects.filter(año=año1).aggregate(Avg('promedio'))
+            promedio2 = Fin_De_Semana.objects.filter(año=año2).aggregate(Avg('promedio'))
+            context = {
+                'asistencia1': Fin_De_Semana.objects.filter(año=año1),
+                'asistencia2': Fin_De_Semana.objects.filter(año=año2),
+                'titulo': "Reunion del fin de semana",
+                'año1':año1,
+                'promedio1': promedio1,
+                'año2':año2,
+                'promedio2': promedio2
+                }
+        
+        return render(request, "asistencia/pantalla.html",context= context)
