@@ -1,4 +1,4 @@
-/***********  barra horizontal ****************/ 
+
 
 
 /***********  barra vertical ****************/ 
@@ -7,6 +7,7 @@
 .div-margen {
     margin-left: auto;
     margin-right: auto;
+    margin-bottom: 15px;
     
   }
 
@@ -14,7 +15,7 @@ ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
-    width: 200px;
+    width: 250px;
     background-color: #f1f1f1;
     border: 1px solid #555;
     
@@ -46,4 +47,44 @@ ul {
     color: white;
   }
 
+  /***********  tablas  ****************/ 
+
+  #customers {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 50%;
+    font-size: small;
+  }
   
+  #customers td, #customers th {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+  }
+  
+  #customers tr:nth-child(even){background-color: #f2f2f2;}
+  
+  #customers tr:hover {background-color: #ddd;}
+  
+  #customers th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: center;
+    background-color: #E36600;
+    color: white;
+  }
+
+  .contenedor-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Crea columnas flexibles */
+    gap: 10px;
+    justify-items: center; /* Alinea los elementos en el centro horizontal */
+    
+}
+
+.elemento {
+  display:inline-block;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
