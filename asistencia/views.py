@@ -75,8 +75,8 @@ class Asistencia_pantalla(LoginRequiredMixin,View):
                 'año1':año1,
                 'promedio1': promedio1,
                 'año2':año2,
-                'promedio2': promedio2
-                }
+                'promedio2': promedio2,
+                'reunion': 'entre'                }
             
         else:
             ultimo_registro = Fin_De_Semana.objects.all().last()
@@ -91,7 +91,8 @@ class Asistencia_pantalla(LoginRequiredMixin,View):
                 'año1':año1,
                 'promedio1': promedio1,
                 'año2':año2,
-                'promedio2': promedio2
+                'promedio2': promedio2,
+                'reunion': 'fin'
                 }
         
         return render(request, "asistencia/pantalla.html",context= context)

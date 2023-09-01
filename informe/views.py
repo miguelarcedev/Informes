@@ -66,7 +66,7 @@ class Inactivos(LoginRequiredMixin,View):
         return response
   
 
-class Totales(LoginRequiredMixin,View):
+class TotalesPdf(LoginRequiredMixin,View):
 
     def get(self, request,pub_aux_reg, *args, **kwargs):
         ultimo_registro = Informe.objects.all().last()
@@ -241,3 +241,37 @@ class Totales(LoginRequiredMixin,View):
         response = HttpResponse(content_type='application/pdf')
         pisaStatus = pisa.CreatePDF(html, dest=response)
         return response
+    
+class Totales(LoginRequiredMixin,View):
+
+    def get(self, request,pub_aux_reg, *args, **kwargs):
+        ultimo_registro = Informe.objects.all().last()
+        año1 = ultimo_registro.año - 1
+        año2 = ultimo_registro.año
+        if pub_aux_reg == "pub":
+            informe1 = Informe.objects.filter(año=año1,servicio="Publicador")
+            print(informe1)
+            context = {
+            
+            'titulo': "PUBLICADORES - TOTALES",
+            'año1': año1,
+            'año2': año2
+            }
+            
+        if pub_aux_reg == "aux":
+            context = {
+            
+            'titulo': "AUXILIARES - TOTALES",
+            'año1': año1,
+            'año2': año2
+            }
+                
+        if pub_aux_reg == "reg":
+            context = {
+            
+            'titulo': "REGULARES - TOTALES",
+            'año1': año1,
+            'año2': año2
+            }
+        
+        return render(request, "informe/pantalla.html",context= context)
