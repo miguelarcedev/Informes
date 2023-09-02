@@ -12,25 +12,25 @@
       <div class="div-margen">
         <ul>
           <li><a class="active" href="#home">Asistencia</a></li>
-          <li><a href="{% url 'asistencia_pantalla' 'entre' %}">Entre semana</a></li>
-          <li><a href="{% url 'asistencia_pantalla' 'fin' %}">Fin de semana</a></li>
+          <li><a href="{% url 'asistencia' 'entre' %}">Entre semana</a></li>
+          <li><a href="{% url 'asistencia' 'fin' %}">Fin de semana</a></li>
         </ul>
       </div>
     
       <div class="div-margen">
         <ul>
           <li><a class="active" href="#home">Totales</a></li>
-          <li><a href="{% url 'totales' 'pub' %}">Publicadores</a></li>
-          <li><a href="{% url 'totales' 'aux' %}">Auxiliares</a></li>
-          <li><a href="{% url 'totales' 'reg' %}">Regulares</a></li>
+          <li><a href="{% url 'totales' 'Publicador' %}">Publicadores</a></li>
+          <li><a href="{% url 'totales' 'Auxiliar' %}">Auxiliares</a></li>
+          <li><a href="{% url 'totales' 'Regular' %}">Regulares</a></li>
         </ul>
       </div>
     
       <div class="div-margen">
         <ul>
           <li><a class="active" href="#home">Publicadores</a></li>
-          <li><a href="{% url 'publicador' 'activo' %}">Activos</a></li>
-          <li><a href="{% url 'publicador' 'inactivo' %}">Inactivos</a></li>
+          <li><a href="{% url 'publicador' 'Activo' %}">Activos</a></li>
+          <li><a href="{% url 'publicador' 'Inactivo' %}">Inactivos</a></li>
           <li><a href="{% url 'irregulares-list' %}">Irregulares</a></li>
           <li><a href="{% url 'grupos' %}">Lista de grupos</a></li>
         </ul>

@@ -17,7 +17,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 
-class Tarjeta_asistencia(LoginRequiredMixin,View):
+class Asistencia_pdf(LoginRequiredMixin,View):
 
     def get(self, request,entre_fin, *args, **kwargs):
         if entre_fin == 'entre':

@@ -248,30 +248,75 @@ class Totales(LoginRequiredMixin,View):
         ultimo_registro = Informe.objects.all().last()
         año1 = ultimo_registro.año - 1
         año2 = ultimo_registro.año
-        if pub_aux_reg == "pub":
-            informe1 = Informe.objects.filter(año=año1,servicio="Publicador")
-            print(informe1)
-            context = {
-            
-            'titulo': "PUBLICADORES - TOTALES",
-            'año1': año1,
-            'año2': año2
-            }
-            
-        if pub_aux_reg == "aux":
-            context = {
-            
-            'titulo': "AUXILIARES - TOTALES",
-            'año1': año1,
-            'año2': año2
-            }
-                
-        if pub_aux_reg == "reg":
-            context = {
-            
-            'titulo': "REGULARES - TOTALES",
-            'año1': año1,
-            'año2': año2
-            }
+        if pub_aux_reg == "Publicador":
+            titulo = "TOTALES PUBLICADORES"
+        if pub_aux_reg == "Auxiliar":
+            titulo = "TOTALES AUXILIARES"
+        if pub_aux_reg == "Regular":
+            titulo = "TOTALES REGULARES"    
         
-        return render(request, "informe/pantalla.html",context= context)
+        totales1 = {
+            'Septiembre': Informe.objects.filter(año=año1,mes="Septiembre",horas__gt = 0,servicio=pub_aux_reg).
+            aggregate(Sum('publicaciones'),Sum('videos'),Sum('horas'),Sum('revisitas'),Sum('estudios'),Count('id')),
+            'Octubre': Informe.objects.filter(año=año1,mes="Octubre",horas__gt = 0,servicio=pub_aux_reg).
+            aggregate(Sum('publicaciones'),Sum('videos'),Sum('horas'),Sum('revisitas'),Sum('estudios'),Count('id')),
+            'Noviembre': Informe.objects.filter(año=año1,mes="Noviembre",horas__gt = 0,servicio=pub_aux_reg).
+            aggregate(Sum('publicaciones'),Sum('videos'),Sum('horas'),Sum('revisitas'),Sum('estudios'),Count('id')),
+            'Diciembre': Informe.objects.filter(año=año1,mes="Diciembre",horas__gt = 0,servicio=pub_aux_reg).
+            aggregate(Sum('publicaciones'),Sum('videos'),Sum('horas'),Sum('revisitas'),Sum('estudios'),Count('id')),
+            'Enero': Informe.objects.filter(año=año1,mes="Enero",horas__gt = 0,servicio=pub_aux_reg).
+            aggregate(Sum('publicaciones'),Sum('videos'),Sum('horas'),Sum('revisitas'),Sum('estudios'),Count('id')),
+            'Febrero': Informe.objects.filter(año=año1,mes="Febrero",horas__gt = 0,servicio=pub_aux_reg).
+            aggregate(Sum('publicaciones'),Sum('videos'),Sum('horas'),Sum('revisitas'),Sum('estudios'),Count('id')),
+            'Marzo': Informe.objects.filter(año=año1,mes="Marzo",horas__gt = 0,servicio=pub_aux_reg).
+            aggregate(Sum('publicaciones'),Sum('videos'),Sum('horas'),Sum('revisitas'),Sum('estudios'),Count('id')),
+            'Abril': Informe.objects.filter(año=año1,mes="Abril",horas__gt = 0,servicio=pub_aux_reg).
+            aggregate(Sum('publicaciones'),Sum('videos'),Sum('horas'),Sum('revisitas'),Sum('estudios'),Count('id')),
+            'Mayo': Informe.objects.filter(año=año1,mes="Mayo",horas__gt = 0,servicio=pub_aux_reg).
+            aggregate(Sum('publicaciones'),Sum('videos'),Sum('horas'),Sum('revisitas'),Sum('estudios'),Count('id')),
+            'Junio': Informe.objects.filter(año=año1,mes="Junio",horas__gt = 0,servicio=pub_aux_reg).
+            aggregate(Sum('publicaciones'),Sum('videos'),Sum('horas'),Sum('revisitas'),Sum('estudios'),Count('id')),
+            'Julio': Informe.objects.filter(año=año1,mes="Julio",horas__gt = 0,servicio=pub_aux_reg).
+            aggregate(Sum('publicaciones'),Sum('videos'),Sum('horas'),Sum('revisitas'),Sum('estudios'),Count('id')),
+            'Agosto': Informe.objects.filter(año=año1,mes="Agosto",horas__gt = 0,servicio=pub_aux_reg).
+            aggregate(Sum('publicaciones'),Sum('videos'),Sum('horas'),Sum('revisitas'),Sum('estudios'),Count('id')),
+        }
+        totales2 = {
+            'Septiembre': Informe.objects.filter(año=año2,mes="Septiembre",horas__gt = 0,servicio=pub_aux_reg).
+            aggregate(Sum('publicaciones'),Sum('videos'),Sum('horas'),Sum('revisitas'),Sum('estudios'),Count('id')),
+            'Octubre': Informe.objects.filter(año=año2,mes="Octubre",horas__gt = 0,servicio=pub_aux_reg).
+            aggregate(Sum('publicaciones'),Sum('videos'),Sum('horas'),Sum('revisitas'),Sum('estudios'),Count('id')),
+            'Noviembre': Informe.objects.filter(año=año2,mes="Noviembre",horas__gt = 0,servicio=pub_aux_reg).
+            aggregate(Sum('publicaciones'),Sum('videos'),Sum('horas'),Sum('revisitas'),Sum('estudios'),Count('id')),
+            'Diciembre': Informe.objects.filter(año=año2,mes="Diciembre",horas__gt = 0,servicio=pub_aux_reg).
+            aggregate(Sum('publicaciones'),Sum('videos'),Sum('horas'),Sum('revisitas'),Sum('estudios'),Count('id')),
+            'Enero': Informe.objects.filter(año=año2,mes="Enero",horas__gt = 0,servicio=pub_aux_reg).
+            aggregate(Sum('publicaciones'),Sum('videos'),Sum('horas'),Sum('revisitas'),Sum('estudios'),Count('id')),
+            'Febrero': Informe.objects.filter(año=año2,mes="Febrero",horas__gt = 0,servicio=pub_aux_reg).
+            aggregate(Sum('publicaciones'),Sum('videos'),Sum('horas'),Sum('revisitas'),Sum('estudios'),Count('id')),
+            'Marzo': Informe.objects.filter(año=año2,mes="Marzo",horas__gt = 0,servicio=pub_aux_reg).
+            aggregate(Sum('publicaciones'),Sum('videos'),Sum('horas'),Sum('revisitas'),Sum('estudios'),Count('id')),
+            'Abril': Informe.objects.filter(año=año2,mes="Abril",horas__gt = 0,servicio=pub_aux_reg).
+            aggregate(Sum('publicaciones'),Sum('videos'),Sum('horas'),Sum('revisitas'),Sum('estudios'),Count('id')),
+            'Mayo': Informe.objects.filter(año=año2,mes="Mayo",horas__gt = 0,servicio=pub_aux_reg).
+            aggregate(Sum('publicaciones'),Sum('videos'),Sum('horas'),Sum('revisitas'),Sum('estudios'),Count('id')),
+            'Junio': Informe.objects.filter(año=año2,mes="Junio",horas__gt = 0,servicio=pub_aux_reg).
+            aggregate(Sum('publicaciones'),Sum('videos'),Sum('horas'),Sum('revisitas'),Sum('estudios'),Count('id')),
+            'Julio': Informe.objects.filter(año=año2,mes="Julio",horas__gt = 0,servicio=pub_aux_reg).
+            aggregate(Sum('publicaciones'),Sum('videos'),Sum('horas'),Sum('revisitas'),Sum('estudios'),Count('id')),
+            'Agosto': Informe.objects.filter(año=año2,mes="Agosto",horas__gt = 0,servicio=pub_aux_reg).
+            aggregate(Sum('publicaciones'),Sum('videos'),Sum('horas'),Sum('revisitas'),Sum('estudios'),Count('id')),
+        }
+        datos = {
+            'titulo': titulo,
+            'año1': año1,
+            'año2': año2,
+            'pub_aux_reg': pub_aux_reg,
+            }
+        context = {
+            'totales1':totales1,
+            'totales2':totales2,
+            'datos':datos
+        }
+            
+        return render(request, "informe/pantalla.html", context=context)

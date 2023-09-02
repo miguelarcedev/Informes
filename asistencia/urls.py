@@ -9,7 +9,7 @@ from . import views
 
 urlpatterns = [
     
-    path('asistencia/<str:entre_fin>/', Tarjeta_asistencia.as_view(), name='asistencia'),
-    path('asistencia_pantalla/<str:entre_fin>/', Asistencia_pantalla.as_view(), name='asistencia_pantalla'),
+    path('asistencia_pdf/<str:entre_fin>/', Asistencia_pdf.as_view(), name='asistencia_pdf'),
+    path('asistencia/<str:entre_fin>/', Asistencia_pantalla.as_view(), name='asistencia'),
     
 ]

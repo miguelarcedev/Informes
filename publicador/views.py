@@ -19,13 +19,11 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 class Publicador_list(LoginRequiredMixin,View):
     def get(self,request,estado):
-        if estado == "activo":
-            publicador = Publicador.objects.filter(estado="Activo")
-            cantidad = Publicador.objects.filter(estado="Activo").count()
+        publicador = Publicador.objects.filter(estado=estado)
+        cantidad = Publicador.objects.filter(estado=estado).count()
+        if estado == "Activo":
             titulo = "PUBLICADORES ACTIVOS: "
-        else:
-            publicador = Publicador.objects.filter(estado="Inactivo")
-            cantidad = Publicador.objects.filter(estado="Inactivo").count()
+        else:        
             titulo = "PUBLICADORES INACTVOS: "
         
         return render(request, "publicador/publicador.html",{"publicador": publicador, "titulo":titulo,"cantidad":cantidad,"estado":estado})
