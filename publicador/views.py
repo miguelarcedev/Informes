@@ -37,68 +37,77 @@ class Grupos(LoginRequiredMixin,View):
         grupo_x = []
         cantidades = []
         cantidad=Publicador.objects.filter(estado="Activo").aggregate(cantidad=Max('grupo'))
-        cantidad=int(cantidad['cantidad'])
-        for i in range(1,cantidad+1):
-            grupos.append(Publicador.objects.filter(grupo=i, estado="Activo"))
-            cantidades.append(Publicador.objects.filter(grupo=i, estado="Activo").count())
-        maximo = max(cantidades)
-        for i in range(9):
-            grupo_x.append([])
-        
-        for i in range(cantidad):
-            for g in grupos[i]:
-                grupo_x[i].append(g.nombre)
-        for i in range(cantidad):
-            x = cantidades[i]
-            while x <= maximo:
-                grupo_x[i].append("     ")
-                x += 1
-        
-        if cantidad == 2:
-            x = 0
-            while x <= maximo:
-                grupo_x[2].append("     ")
-                x += 1
-        if cantidad == 4:
-            x = 0
-            while x <= maximo:
-                grupo_x[4].append("     ")
-                grupo_x[5].append("     ")
-                x += 1
-        if cantidad == 5:
-            x = 0
-            while x <= maximo:
-                grupo_x[5].append("     ")
-                x += 1 
-        if cantidad == 7:
-            x = 0
-            while x <= maximo:
-                grupo_x[7].append("     ")
-                grupo_x[8].append("     ")
-                x += 1
-        if cantidad == 8:
-            x = 0
-            while x <= maximo:
-                grupo_x[8].append("     ")
-                x += 1
 
-        i = 0
-        while i <= maximo:
-            matriz_1.append((i+1,grupo_x[0][i],grupo_x[1][i],grupo_x[2][i]))
-            i += 1
-        if cantidad > 3 and cantidad < 7:
+        try:
+            cantidad=int(cantidad['cantidad'])
+
+            for i in range(1,cantidad+1):
+                grupos.append(Publicador.objects.filter(grupo=i, estado="Activo"))
+                cantidades.append(Publicador.objects.filter(grupo=i, estado="Activo").count())
+            maximo = max(cantidades)
+            for i in range(9):
+                grupo_x.append([])
+            
+            for i in range(cantidad):
+                for g in grupos[i]:
+                    grupo_x[i].append(g.nombre)
+            for i in range(cantidad):
+                x = cantidades[i]
+                while x <= maximo:
+                    grupo_x[i].append("     ")
+                    x += 1
+            
+            if cantidad == 2:
+                x = 0
+                while x <= maximo:
+                    grupo_x[2].append("     ")
+                    x += 1
+            if cantidad == 4:
+                x = 0
+                while x <= maximo:
+                    grupo_x[4].append("     ")
+                    grupo_x[5].append("     ")
+                    x += 1
+            if cantidad == 5:
+                x = 0
+                while x <= maximo:
+                    grupo_x[5].append("     ")
+                    x += 1 
+            if cantidad == 7:
+                x = 0
+                while x <= maximo:
+                    grupo_x[7].append("     ")
+                    grupo_x[8].append("     ")
+                    x += 1
+            if cantidad == 8:
+                x = 0
+                while x <= maximo:
+                    grupo_x[8].append("     ")
+                    x += 1
+
             i = 0
             while i <= maximo:
-                matriz_2.append((i+1,grupo_x[3][i],grupo_x[4][i],grupo_x[5][i]))
+                matriz_1.append((i+1,grupo_x[0][i],grupo_x[1][i],grupo_x[2][i]))
                 i += 1
-        if cantidad > 6:
-            i = 0
-            while i <= maximo:
-                matriz_3.append((i+1,grupo_x[6][i],grupo_x[7][i],grupo_x[8][i]))
-                i += 1
+            if cantidad > 3 and cantidad < 7:
+                i = 0
+                while i <= maximo:
+                    matriz_2.append((i+1,grupo_x[3][i],grupo_x[4][i],grupo_x[5][i]))
+                    i += 1
+            if cantidad > 6:
+                i = 0
+                while i <= maximo:
+                    matriz_3.append((i+1,grupo_x[6][i],grupo_x[7][i],grupo_x[8][i]))
+                    i += 1
+        except:
+            cantidad = 0
 
         template = get_template('publicador/grupos.html')
-        context = {'matriz_1': matriz_1,'matriz_2': matriz_2,'matriz_3': matriz_3, 'cantidad':cantidad}
+        context = {
+            'matriz_1': matriz_1,
+            'matriz_2': matriz_2,
+            'matriz_3': matriz_3,
+            'cantidad':cantidad}
         html = template.render(context)
         response = HttpResponse(content_type='application/pdf')
         pisaStatus = pisa.CreatePDF(html, dest=response)
