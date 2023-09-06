@@ -91,7 +91,7 @@
             <td>{% if publicador.regular != NULL %}{{ publicador.regular}}{% endif %}</td>
         </tr>
     </table>  <br>  
-    
+    {% if año1 > 0 %}
     <table id="invoice" border="0.2">
         <thead>
             <tr>
@@ -125,6 +125,8 @@
             {% endfor %}
         </tbody>
     </table><br><br>
+
+    {% endif %}
     
     <table id="invoice" border="0.2">
         <tbody>

@@ -152,12 +152,11 @@ class Tarjeta_Activo(LoginRequiredMixin,View):
 class Tarjeta_Inactivo(LoginRequiredMixin,View):
     def get(self, request,pk, *args, **kwargs):
         ultimo_registro = Informe.objects.filter(publicador=pk).last()
+        año1 = 0
+        año2 = 0
         if ultimo_registro:
-            año1 = ultimo_registro.año - 1
             año2 = ultimo_registro.año
-        else:
-            año1 = 0
-            año2 = 0
+            
         template = get_template('publicador/tarjeta_pub.html')
         context = {'publicador': Publicador.objects.get(pk=self.kwargs['pk']),'año1':año1,'año2':año2}
         html = template.render(context)

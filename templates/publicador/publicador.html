@@ -5,12 +5,9 @@
         <div class="contenedor-grid">
             <div class="elemento">
                 <table id="customers" style="width:100%">
+                    
                     <tr>
-                        <th colspan="2"> {{titulo}}  {{cantidad}}</th>
-                        
-                    </tr>
-                    <tr>
-                        <th>Publicador</th>
+                        <th>{{titulo}}  {{cantidad}}</th>
                         <th>Tarjeta</th>
                         
                     </tr>
@@ -18,12 +15,12 @@
                     {% for c in publicador %}
     
                         <tr>
-                            <td class="small">{{c.nombre}}</td>
+                            <td>{{c.nombre}}</td>
                             {% if estado == "Activo" %}
-                                <td class="small"><a href="{% url 'tarjeta_activo' c.id %}"><i class="fa-sharp fa-solid fa-file-pdf fa-2xl" style="color:red;"></i></a></td>
+                                <td><a href="{% url 'tarjeta_activo' c.id %}"><i class="fa-sharp fa-solid fa-file-pdf fa-2xl" style="color:red;"></i></a></td>
                                 
                             {% else %}
-                                <td class="small"><a href="{% url 'tarjeta_inactivo' c.id %}"><i class="fa-sharp fa-solid fa-file-pdf fa-2xl" style="color:red;"></i></a></td>
+                                <td><a href="{% url 'tarjeta_inactivo' c.id %}"><i class="fa-sharp fa-solid fa-file-pdf fa-2xl" style="color:red;"></i></a></td>
                             {% endif %}
                         </tr>
                     {% endfor %}                        

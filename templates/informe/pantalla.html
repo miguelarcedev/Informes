@@ -6,8 +6,8 @@
             <div class="elemento">
                 <table id="customers">
                     <tr>
-                        <th colspan="5">{{datos.titulo}}</th>
-                        <th>{{datos.año1}}</th>
+                        <th colspan="6">{{datos.titulo}}</th>
+                        
                         {% if datos.pub_aux_reg == 'Publicador' %}
                             <th><a href="{% url 'totales_pdf' 'pub' %}"><i class="fa-sharp fa-solid fa-file-pdf fa-2xl" style="color:white;"></i></a></th>
                         {% endif %}
@@ -19,7 +19,7 @@
                         {% endif %}
                     </tr>
                     <tr>
-                        <th>Mes</th>
+                        <th>{{datos.año1}}</th>
                         <th>Pub</th>
                         <th>Videos</th>
                         <th>Horas</th>
@@ -50,8 +50,8 @@
     
                 <table id="customers">
                     <tr>
-                        <th colspan="5">{{datos.titulo}}</th>
-                        <th>{{datos.año2}}</th>
+                        <th colspan="6">{{datos.titulo}}</th>
+                        
                         {% if datos.pub_aux_reg == 'Publicador' %}
                             <th><a href="{% url 'totales_pdf' 'pub' %}"><i class="fa-sharp fa-solid fa-file-pdf fa-2xl" style="color:white;"></i></a></th>
                         {% endif %}
@@ -64,7 +64,7 @@
                     </tr>
     
                     <tr>
-                        <th>Mes</th>
+                        <th>{{datos.año2}}</th>
                         <th>Pub</th>
                         <th>Videos</th>
                         <th>Horas</th>

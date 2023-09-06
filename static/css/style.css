@@ -1,13 +1,10 @@
 
 
 
-/***********  barra vertical ****************/ 
-
-
 .div-margen {
     margin-left: auto;
     margin-right: auto;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
     
   }
 
@@ -15,7 +12,7 @@ ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
-    width: 250px;
+    width: 200px;
     background-color: #f1f1f1;
     border: 1px solid #555;
     
