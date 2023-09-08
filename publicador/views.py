@@ -13,12 +13,14 @@ from informe.models import Informe
 from django.views.generic import  View
 from django.db.models import Count, Sum, Max
 from django.contrib.auth.mixins import LoginRequiredMixin
+from informe.utils import get_schema_name
 
 # Create your views here.
 
 
 class Publicador_list(LoginRequiredMixin,View):
     def get(self,request,estado):
+        nombre_cong = get_schema_name()
         publicador = Publicador.objects.filter(estado=estado)
         cantidad = Publicador.objects.filter(estado=estado).count()
         if estado == "Activo":
@@ -26,7 +28,7 @@ class Publicador_list(LoginRequiredMixin,View):
         else:        
             titulo = "PUBLICADORES INACTVOS: "
         
-        return render(request, "publicador/publicador.html",{"publicador": publicador, "titulo":titulo,"cantidad":cantidad,"estado":estado})
+        return render(request, "publicador/publicador.html",{"publicador": publicador, "titulo":titulo,"cantidad":cantidad,"estado":estado,'nombre_cong':nombre_cong[0]})
 
 class Grupos(LoginRequiredMixin,View):
     def get(self, request, *args, **kwargs):

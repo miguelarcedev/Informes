@@ -32,19 +32,21 @@ def home(request):
         for i in range(1,cantidad+1):
             grupos.append(i)
     
-    nombre = get_schema_name() # se llama a la función para obtener el nombre del esquema actual
-
-      
-    return render(request, "home.html",{"grupos":grupos,'nombre':nombre[0]})
+    nombre_cong = get_schema_name() # se llama a la función para obtener el nombre del esquema actual  
+    return render(request, "home.html",{"grupos":grupos,'nombre_cong':nombre_cong[0]})
 
 class Tarjeta_grupo(LoginRequiredMixin,View):
 
     def get(self, request,grupo, *args, **kwargs):
+        
         ultimo_registro = Informe.objects.all().last()
         año1 = ultimo_registro.año - 1
         año2 = ultimo_registro.año
         template = get_template('informe/tarjeta_grupo.html')
-        context = {'publicador': Publicador.objects.filter(grupo=grupo).filter(estado="Activo").filter(regular__isnull=True),'año1':año1,'año2':año2}
+        context = {'publicador': Publicador.objects.filter(grupo=grupo).filter(estado="Activo").filter(regular__isnull=True),
+                   'año1':año1,
+                   'año2':año2,
+                   }
         html = template.render(context)
         response = HttpResponse(content_type='application/pdf')
         pisaStatus = pisa.CreatePDF(html, dest=response)
