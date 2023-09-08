@@ -6,9 +6,9 @@
 
 <div class="container">
 
-  <div class="row">
+  <div class="flex-container">
     
-      <div class="div-margen">
+      <div>
         <ul>
           <li><a class="active" href="#home">Asistencia</a></li>
           <li><a href="{% url 'asistencia' 'entre' %}">Entre semana</a></li>
@@ -16,7 +16,7 @@
         </ul>
       </div>
     
-      <div class="div-margen">
+      <div>
         <ul>
           <li><a class="active" href="#home">Totales</a></li>
           <li><a href="{% url 'totales' 'Publicador' %}">Publicadores</a></li>
@@ -25,7 +25,7 @@
         </ul>
       </div>
     
-      <div class="div-margen">
+      <div>
         <ul>
           <li><a class="active" href="#home">Publicadores</a></li>
           <li><a href="{% url 'publicador' 'Activo' %}">Activos</a></li>
@@ -35,7 +35,7 @@
         </ul>
       </div>
     
-      <div class="div-margen">
+      <div>
         <ul>
           <li><a class="active" href="#home">Tarjetas por grupo</a></li>
           {% for i in grupos %}
@@ -47,7 +47,7 @@
         </ul>
       </div>
 
-      <div class="div-margen">
+      <div>
         <ul>
           <li><a class="active" href="#home">Otros documentos</a></li>
           <li><a href="{% url 'grupos' %}">Lista de grupos</a></li>

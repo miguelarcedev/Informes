@@ -1,18 +1,23 @@
 
+.flex-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.flex-container > div {
+  width: 200px;
+  margin: 10px;
+  text-align: center;
+}
 
 
-.div-margen {
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 20px;
-    
-  }
-
+  /*********** listas ******************************/
 ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
-    width: 200px;
+    
     background-color: #f1f1f1;
     border: 1px solid #555;
     
@@ -49,7 +54,7 @@ ul {
   #customers {
     font-family: Arial, Helvetica, sans-serif;
     border-collapse: collapse;
-    width: 50%;
+  
     font-size: small;
   }
   
@@ -71,18 +76,45 @@ ul {
     color: white;
   }
 
-
+/***********  GRID  ****************/ 
   .contenedor-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Crea columnas flexibles */
-    gap: 10px;
-    justify-items: center; /* Alinea los elementos en el centro horizontal */
+   
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    justify-content: center; /* Alinea los elementos en el centro horizontal */
     
 }
 
-.elemento {
-  display:inline-block;
-  margin-top: 10px;
-  margin-bottom: 10px;
+/***********  GRID - TARJETAS  ****************/ 
+
+.grid-header {
+  background-color: #E36600; 
+  color: white; 
 }
 
+.grid-cabecera {
+  background-color: #E36600;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px; 
+  justify-content: center; /* Alinea los elementos en el centro horizontal */
+  color: white;
+  height: 40px; 
+}
+
+.grid-tarjetas {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr); /* Define 3 columnas con el mismo ancho */
+  grid-gap: 5px; /* Espacio entre las celdas */
+  
+  padding: 5px;
+  background-color: rgb(204, 204, 198);
+}
+
+.grid-tarjetas > div {
+ 
+  padding: 5px;
+  text-align: center;
+  font-size: 10px;
+}
