@@ -345,4 +345,4 @@ class Totales(LoginRequiredMixin,View):
             'datos':datos
         }
             
-        return render(request, "informe/pantalla.html", context=context)
+        return render(request, "informe/pantalla-grid.html", context=context)
