@@ -93,23 +93,13 @@ ul {
   color: white; 
 }
 
-.grid-cabecera {
-  background-color: #E36600;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 40px; 
-  justify-content: center; /* Alinea los elementos en el centro horizontal */
-  color: white;
-  height: 40px; 
-}
-
 .grid-tarjetas {
   display: grid;
   grid-template-columns: repeat(7, 1fr); /* Define 3 columnas con el mismo ancho */
-  grid-gap: 5px; /* Espacio entre las celdas */
+  grid-gap: 1px; /* Espacio entre las celdas */
   
   padding: 5px;
-  background-color: rgb(204, 204, 198);
+  background-color: #f1f1f1;
 }
 
 .grid-tarjetas > div {
