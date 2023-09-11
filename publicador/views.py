@@ -13,7 +13,7 @@ from informe.models import Informe
 from django.views.generic import  View
 from django.db.models import Count, Sum, Max
 from django.contrib.auth.mixins import LoginRequiredMixin
-from informe.utils import get_schema_name
+from informe.utils import get_schema_name, calculo_irregulares
 
 # Create your views here.
 
@@ -117,26 +117,10 @@ class Grupos(LoginRequiredMixin,View):
 
 class Irregulares(LoginRequiredMixin,View):
     def get(self,request):
-        bandera = True
-        cantidad = 0
-        key = []
-        irregulares = []
-        publicador = Publicador.objects.filter(estado="Activo").order_by('id')
-        for p in publicador:
-            key.append(p.id)
-        informe = Informe.objects.filter(publicador=9999)
-            
-        for k in key:
-            informe = Informe.objects.filter(publicador=k).order_by('-id')[0:6]
-            bandera = True
-            for i in informe:
-                if i.horas == 0:
-                    irregulares.append((i.publicador,i.año,i.mes))
-                    if bandera:
-                        cantidad += 1
-                        bandera = False
-            
-        return render(request, "publicador/lista_irregulares.html",{"irregulares": irregulares,"cantidad":cantidad})   
+       calculos = calculo_irregulares()
+       irregulares = calculos[0]
+       cantidad = calculos[1]
+       return render(request, "publicador/lista_irregulares.html",{"irregulares": irregulares,"cantidad": cantidad})   
 
            
 class Tarjeta_Activo(LoginRequiredMixin,View):
@@ -165,3 +149,14 @@ class Tarjeta_Inactivo(LoginRequiredMixin,View):
         response = HttpResponse(content_type='application/pdf')
         pisaStatus = pisa.CreatePDF(html, dest=response)
         return response        
+
+
+class Estadisticas(LoginRequiredMixin,View):
+    def get(self,request):
+
+        calculos = calculo_irregulares()
+        irregulares = calculos[1]
+        context = {
+            'irregulares': irregulares,
+        }
+        return render(request, "publicador/lista_irregulares.html",context=context)  
