@@ -13,7 +13,7 @@ from informe.models import Informe
 from django.views.generic import  View
 from django.db.models import Count, Sum, Max
 from django.contrib.auth.mixins import LoginRequiredMixin
-from informe.utils import get_schema_name, calculo_irregulares
+from informe.utils import get_schema_name, calculo_irregulares, calculo_inactivos
 
 # Create your views here.
 
@@ -154,9 +154,14 @@ class Tarjeta_Inactivo(LoginRequiredMixin,View):
 class Estadisticas(LoginRequiredMixin,View):
     def get(self,request):
 
-        calculos = calculo_irregulares()
-        irregulares = calculos[1]
+        irregulares = calculo_irregulares()
+        inactivos = calculo_inactivos()
+
+        
         context = {
-            'irregulares': irregulares,
+            'irregulares': irregulares[1],
+            'inactivos': inactivos,
         }
-        return render(request, "publicador/lista_irregulares.html",context=context)  
+
+        print(context)
+        return render(request, "publicador/estadisticas.html",context=context)  
