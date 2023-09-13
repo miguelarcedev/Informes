@@ -4,16 +4,13 @@
     <div class="container">
         <div class="contenedor-grid">
             <div class="elemento">
-                <table id="customers" style="width:100%">
-                    
+                <table id="customers" style="width:100%">    
                     <tr>
                         <th>{{titulo}}  {{cantidad}}</th>
                         <th>Tarjeta</th>
                         
                     </tr>
-    
                     {% for c in publicador %}
-    
                         <tr>
                             <td>{{c.nombre}}</td>
                             {% if estado == "Activo" %}

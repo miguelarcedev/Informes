@@ -1,97 +1,101 @@
 {% extends "base.html" %}
 
-{% block contenido %}   
-    <div class="container">
-        <div class="contenedor-grid">
-            <div>
-                <table id="customers">
-                    <tr>
-                        <th colspan="6">{{datos.titulo}}</th>
-                        
-                        {% if datos.pub_aux_reg == 'Publicador' %}
-                            <th><a href="{% url 'totales_pdf' 'pub' %}"><i class="fa-sharp fa-solid fa-file-pdf fa-2xl" style="color:white;"></i></a></th>
-                        {% endif %}
-                        {% if datos.pub_aux_reg == 'Auxiliar' %}
-                            <th><a href="{% url 'totales_pdf' 'aux' %}"><i class="fa-sharp fa-solid fa-file-pdf fa-2xl" style="color:white;"></i></a></th>
-                        {% endif %}
-                        {% if datos.pub_aux_reg == 'Regular' %}
-                            <th><a href="{% url 'totales_pdf' 'reg' %}"><i class="fa-sharp fa-solid fa-file-pdf fa-2xl" style="color:white;"></i></a></th>
-                        {% endif %}
-                    </tr>
-                    <tr>
-                        <th>{{datos.año1}}</th>
-                        <th>Pub</th>
-                        <th>Videos</th>
-                        <th>Horas</th>
-                        <th>Revisitas</th>
-                        <th>Estudios</th>
-                        <th>Informan</th>
-                        
-                    </tr>
-    
-                    {% for clave, valor in totales1.items %}
-    
-                    <tr>
-                        <td>{{clave}}</td>
-                        <td>{{valor.publicaciones__sum}}</td>
-                        <td>{{valor.videos__sum}}</td>
-                        <td>{{valor.horas__sum}}</td>
-                        <td>{{valor.revisitas__sum}}</td>
-                        <td>{{valor.estudios__sum}}</td>
-                        <td>{{valor.id__count}}</td>
-                    </tr>
-                        
-                    {% endfor %}
-                    
-                </table>
-            </div>
-    
-            <div>
-    
-                <table id="customers">
-                    <tr>
-                        <th colspan="6">{{datos.titulo}}</th>
-                        
-                        {% if datos.pub_aux_reg == 'Publicador' %}
-                            <th><a href="{% url 'totales_pdf' 'pub' %}"><i class="fa-sharp fa-solid fa-file-pdf fa-2xl" style="color:white;"></i></a></th>
-                        {% endif %}
-                        {% if datos.pub_aux_reg == 'Auxiliar' %}
-                            <th><a href="{% url 'totales_pdf' 'aux' %}"><i class="fa-sharp fa-solid fa-file-pdf fa-2xl" style="color:white;"></i></a></th>
-                        {% endif %}
-                        {% if datos.pub_aux_reg == 'Regular' %}
-                            <th><a href="{% url 'totales_pdf' 'reg' %}"><i class="fa-sharp fa-solid fa-file-pdf fa-2xl" style="color:white;"></i></a></th>
-                        {% endif %}
-                    </tr>
-    
-                    <tr>
-                        <th>{{datos.año2}}</th>
-                        <th>Pub</th>
-                        <th>Videos</th>
-                        <th>Horas</th>
-                        <th>Revisitas</th>
-                        <th>Estudios</th>
-                        <th>Informan</th>
-                        
-                    </tr>
-    
-                    {% for clave, valor in totales2.items %}
-    
-                    <tr>
-                        <td>{{clave}}</td>
-                        <td>{{valor.publicaciones__sum}}</td>
-                        <td>{{valor.videos__sum}}</td>
-                        <td>{{valor.horas__sum}}</td>
-                        <td>{{valor.revisitas__sum}}</td>
-                        <td>{{valor.estudios__sum}}</td>
-                        <td>{{valor.id__count}}</td>
-                    </tr>
-                        
-                    {% endfor %}
-    
-                </table>
-            </div>
-        </div>
-    </div>
+{% block contenido %}
+<div class="flex-container">
 
-    {% endblock %}
+    <table id="customers">
+        <tr>
+            <th colspan="6">{{datos.titulo}}</th>
 
+            {% if datos.pub_aux_reg == 'Publicador' %}
+            <th><a href="{% url 'totales_pdf' 'pub' %}"><i class="fa-sharp fa-solid fa-file-pdf fa-2xl"
+                        style="color:white;"></i></a></th>
+            {% endif %}
+            {% if datos.pub_aux_reg == 'Auxiliar' %}
+            <th><a href="{% url 'totales_pdf' 'aux' %}"><i class="fa-sharp fa-solid fa-file-pdf fa-2xl"
+                        style="color:white;"></i></a></th>
+            {% endif %}
+            {% if datos.pub_aux_reg == 'Regular' %}
+            <th><a href="{% url 'totales_pdf' 'reg' %}"><i class="fa-sharp fa-solid fa-file-pdf fa-2xl"
+                        style="color:white;"></i></a></th>
+            {% endif %}
+        </tr>
+        <tr>
+            <th>{{datos.año1}}</th>
+            <th>Pub</th>
+            <th>Videos</th>
+            <th>Horas</th>
+            <th>Revisitas</th>
+            <th>Estudios</th>
+            <th>Informan</th>
+
+        </tr>
+
+        {% for clave, valor in totales1.items %}
+
+        <tr>
+            <td>{{clave}}</td>
+            <td>{{valor.publicaciones__sum}}</td>
+            <td>{{valor.videos__sum}}</td>
+            <td>{{valor.horas__sum}}</td>
+            <td>{{valor.revisitas__sum}}</td>
+            <td>{{valor.estudios__sum}}</td>
+            <td>{{valor.id__count}}</td>
+        </tr>
+
+        {% endfor %}
+
+    </table>
+
+
+
+
+    <table id="customers">
+        <tr>
+            <th colspan="6">{{datos.titulo}}</th>
+
+            {% if datos.pub_aux_reg == 'Publicador' %}
+            <th><a href="{% url 'totales_pdf' 'pub' %}"><i class="fa-sharp fa-solid fa-file-pdf fa-2xl"
+                        style="color:white;"></i></a></th>
+            {% endif %}
+            {% if datos.pub_aux_reg == 'Auxiliar' %}
+            <th><a href="{% url 'totales_pdf' 'aux' %}"><i class="fa-sharp fa-solid fa-file-pdf fa-2xl"
+                        style="color:white;"></i></a></th>
+            {% endif %}
+            {% if datos.pub_aux_reg == 'Regular' %}
+            <th><a href="{% url 'totales_pdf' 'reg' %}"><i class="fa-sharp fa-solid fa-file-pdf fa-2xl"
+                        style="color:white;"></i></a></th>
+            {% endif %}
+        </tr>
+
+        <tr>
+            <th>{{datos.año2}}</th>
+            <th>Pub</th>
+            <th>Videos</th>
+            <th>Horas</th>
+            <th>Revisitas</th>
+            <th>Estudios</th>
+            <th>Informan</th>
+
+        </tr>
+
+        {% for clave, valor in totales2.items %}
+
+        <tr>
+            <td>{{clave}}</td>
+            <td>{{valor.publicaciones__sum}}</td>
+            <td>{{valor.videos__sum}}</td>
+            <td>{{valor.horas__sum}}</td>
+            <td>{{valor.revisitas__sum}}</td>
+            <td>{{valor.estudios__sum}}</td>
+            <td>{{valor.id__count}}</td>
+        </tr>
+
+        {% endfor %}
+
+    </table>
+</div>
+
+</div>
+
+{% endblock %}
