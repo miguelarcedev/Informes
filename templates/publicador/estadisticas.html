@@ -1,23 +1,50 @@
 {% extends "base.html" %}
 
 {% block contenido %}   
-    <div class="container" style="background-color:#ffffff;">
-        
-        
-        <table  class="table table-striped table-bordered" style="width:100%">
-            <thead align="justify">
-                <tr>
-                    <th style="width: 70%;">IRREGULARES: {{cantidad}}</th>
-                    <th style="width: 10%;">Año</th>
-                    <th style="width: 20%;">Mes</th>
-                    
-                </tr>
-            </thead>
-            <tbody>
-                
-            </tbody>
-        </table>
+    <div class="flex-container">
+        <div class="grid-container">
+            <div class="grid-item item1">Totales</div>
+            <div class="grid-item item3">Activos</div>  
+            <div class="grid-item item4">{{tot_activos}}</div>
+            <div class="grid-item item3">Inactivos</div>  
+            <div class="grid-item item4">{{tot_inactivos}}</div>
+            <div class="grid-item item3">Bautizados</div>  
+            <div class="grid-item item4">{{tot_bautizados}}</div>
+            <div class="grid-item item3">No bautizados</div>  
+            <div class="grid-item item4">{{tot_no_bautizados}}</div>
+            <div class="grid-item item3">Ancianos</div>  
+            <div class="grid-item item4">{{tot_ancianos}}</div>
+            <div class="grid-item item3">Mimisteriales</div>  
+            <div class="grid-item item4">{{tot_ministeriales}}</div>
+            <div class="grid-item item3">Precursores R.</div>  
+            <div class="grid-item item4">{{tot_regulares}}</div>
+            <div class="grid-item item3">Hombres</div>  
+            <div class="grid-item item4">{{tot_hombres}}</div>
+            <div class="grid-item item3">Mujeres</div>  
+            <div class="grid-item item4">{{tot_mujeres}}</div>
+            <div class="grid-item item3">Otras Ovejas</div>  
+            <div class="grid-item item4">{{tot_otras_ovejas}}</div>
+            <div class="grid-item item3">Ungidos</div>  
+            <div class="grid-item item4">{{tot_ungidos}}</div>
+          </div>
+          <div class="grid-container">
+            <div class="grid-item item1">Ultimos seis meses</div>
+            <div class="grid-item item3">Inactivos</div>  
+            <div class="grid-item item4">{{inactivos}}</div>
+            <div class="grid-item item3">Irregulares</div>  
+            <div class="grid-item item4">{{irregulares}}</div>
+            <div class="grid-item item3">Nuevos publicadores</div>  
+            <div class="grid-item item4">{{nuevos_publicadores}}</div>
+            <div class="grid-item item3">No bautizados</div>  
+            <div class="grid-item item4">{{nuevos_bautizados}}</div>
+            <div class="grid-item item3">Reactivados</div>  
+            <div class="grid-item item4">{{reactivados}}</div>
+            <div class="grid-item item3">Readmitidos</div>  
+            <div class="grid-item item4">{{readmitidos}}</div>
+          </div>
     </div>
+
+    
     
     {% endblock %}
 

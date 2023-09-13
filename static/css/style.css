@@ -108,3 +108,34 @@ ul {
   text-align: center;
   font-size: 10px;
 }
+
+/***********  GRID - ESTADISTICAS  ****************/ 
+.grid-container {
+  display: grid;
+  gap: 5px;
+  background-color: #2196F3;
+  padding: 5px;
+ 
+}
+
+.grid-item {
+  background-color: rgba(255, 255, 255, 0.8);
+  text-align: center;
+  padding: 10px;
+  font-size: 15px;
+}
+
+.item1 {
+  grid-column: 1 / span 2;
+  grid-row: 1;
+}
+
+.item2 {
+  grid-column: 3;
+  grid-row: 1 / span 2;
+}
+
+.item5 {
+  grid-column: 1 / span 3;
+  grid-row: 3;
+}
