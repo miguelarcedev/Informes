@@ -113,13 +113,13 @@ ul {
   #customers {
     font-family: Arial, Helvetica, sans-serif;
     border-collapse: collapse;
-    width: 40%;
-    font-size: small;
+   
+    font-size:small;
   }
   
   #customers td, #customers th {
     border: 1px solid #ddd;
-    padding: 8px;
+    padding: 5px;
     text-align: center;
   }
   
@@ -128,8 +128,8 @@ ul {
   #customers tr:hover {background-color: #ddd;}
   
   #customers th {
-    padding-top: 12px;
-    padding-bottom: 12px;
+    padding-top: 10px;
+    padding-bottom: 10px;
     text-align: center;
     background-color: #E36600;
     color: white;
