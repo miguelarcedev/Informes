@@ -1,32 +1,30 @@
 {% extends "base.html" %}
 
-{% block contenido %}   
-    <div class="container">
-        <div class="contenedor-grid">
-            <div class="elemento">
-                <table id="customers" style="width:100%">    
-                    <tr>
-                        <th>{{titulo}}  {{cantidad}}</th>
-                        <th>Tarjeta</th>
-                        
-                    </tr>
-                    {% for c in publicador %}
-                        <tr>
-                            <td>{{c.nombre}}</td>
-                            {% if estado == "Activo" %}
-                                <td><a href="{% url 'tarjeta_activo' c.id %}"><i class="fa-sharp fa-solid fa-file-pdf fa-2xl" style="color:red;"></i></a></td>
-                                
-                            {% else %}
-                                <td><a href="{% url 'tarjeta_inactivo' c.id %}"><i class="fa-sharp fa-solid fa-file-pdf fa-2xl" style="color:red;"></i></a></td>
-                            {% endif %}
-                        </tr>
-                    {% endfor %}                        
-                </table>
-            </div>
-    
-            
-        </div>
-    </div>
+{% block contenido %}
 
-    {% endblock %}
+<div class="flex-container">
 
+    <table id="customers">
+        <tr>
+            <th>{{titulo}} {{cantidad}}</th>
+            <th>Tarjeta</th>
+
+        </tr>
+        {% for c in publicador %}
+        <tr>
+            <td><a href="{% url 'publicador_activo' c.id %}">{{c.nombre}}</a></td>
+            {% if estado == "Activo" %}
+            <td><a href="{% url 'tarjeta_activo' c.id %}"><i class="fa-sharp fa-solid fa-file-pdf fa-2xl"
+                        style="color:red;"></i></a></td>
+
+            {% else %}
+            <td><a href="{% url 'tarjeta_inactivo' c.id %}"><i class="fa-sharp fa-solid fa-file-pdf fa-2xl"
+                        style="color:red;"></i></a></td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+
+
+{% endblock %}

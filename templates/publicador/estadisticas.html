@@ -1,52 +1,91 @@
 {% extends "base.html" %}
 
-{% block contenido %}  
+{% block contenido %}
 
-    <div class="flex-container">
-      
-        <div class="grid-container">
-            <div class="grid-item item1">Totales</div>
-            <div class="grid-item item3">Activos</div>  
-            <div class="grid-item item4">{{tot_activos}}</div>
-            <div class="grid-item item3">Inactivos</div>  
-            <div class="grid-item item4">{{tot_inactivos}}</div>
-            <div class="grid-item item3">Bautizados</div>  
-            <div class="grid-item item4">{{tot_bautizados}}</div>
-            <div class="grid-item item3">No bautizados</div>  
-            <div class="grid-item item4">{{tot_no_bautizados}}</div>
-            <div class="grid-item item3">Ancianos</div>  
-            <div class="grid-item item4">{{tot_ancianos}}</div>
-            <div class="grid-item item3">Mimisteriales</div>  
-            <div class="grid-item item4">{{tot_ministeriales}}</div>
-            <div class="grid-item item3">Precursores R.</div>  
-            <div class="grid-item item4">{{tot_regulares}}</div>
-            <div class="grid-item item3">Hombres</div>  
-            <div class="grid-item item4">{{tot_hombres}}</div>
-            <div class="grid-item item3">Mujeres</div>  
-            <div class="grid-item item4">{{tot_mujeres}}</div>
-            <div class="grid-item item3">Otras Ovejas</div>  
-            <div class="grid-item item4">{{tot_otras_ovejas}}</div>
-            <div class="grid-item item3">Ungidos</div>  
-            <div class="grid-item item4">{{tot_ungidos}}</div>
-          </div>
-          <div class="grid-container">
-            <div class="grid-item item1">Ultimos seis meses</div>
-            <div class="grid-item item3">Inactivos</div>  
-            <div class="grid-item item4">{{inactivos}}</div>
-            <div class="grid-item item3">Irregulares</div>  
-            <div class="grid-item item4">{{irregulares}}</div>
-            <div class="grid-item item3">Nuevos publicadores</div>  
-            <div class="grid-item item4">{{nuevos_publicadores}}</div>
-            <div class="grid-item item3">No bautizados</div>  
-            <div class="grid-item item4">{{nuevos_bautizados}}</div>
-            <div class="grid-item item3">Reactivados</div>  
-            <div class="grid-item item4">{{reactivados}}</div>
-            <div class="grid-item item3">Readmitidos</div>  
-            <div class="grid-item item4">{{readmitidos}}</div>
-          </div>
-    </div>
+<div class="flex-container">
+
+  <table id="customers">
+
+    <tr>
+      <th colspan="2">TOTALES</th>
+      <th>ULTIMOS SEIS MESES</th>
+    </tr>
+
+    <tr>
+      <td>Activos</td>
+      <td>{{tot_activos}}</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Inactivos</td>
+      <td>{{tot_inactivos}}</td>
+      <td>{{inactivos}}</td>
+    </tr>
+    <tr>
+      <td>Irregulares</td>
+      <td></td>
+      <td>{{irregulares}}</td>
+    </tr>
+    <tr>
+      <td>Reactivados</td>
+      <td></td>
+      <td>{{reactivados}}</td>
+    </tr>
+    <tr>
+      <td>Readmitidos</td>
+      <td></td>
+      <td>{{readmitidos}}</td>
+    </tr>
+    <tr>
+      <td>Bautizados</td>
+      <td>{{tot_bautizados}}</td>
+      <td>{{nuevos_bautizados}}</td>
+    </tr>
+    <tr>
+      <td>No bautizados</td>
+      <td>{{tot_no_bautizados}}</td>
+      <td>{{nuevos_publicadores}}</td>
+    </tr>
+    <tr>
+      <td>Ancianos</td>
+      <td>{{tot_ancianos}}</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Mimisteriales</td>
+      <td>{{tot_ministeriales}}</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Precursores R.</td>
+      <td>{{tot_regulares}}</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Hombres</td>
+      <td>{{tot_hombres}}</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Mujeres</td>
+      <td>{{tot_mujeres}}</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Otras Ovejas</td>
+      <td>{{tot_otras_ovejas}}</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Ungidos</td>
+      <td>{{tot_ungidos}}</td>
+      <td></td>
+    </tr>
+
+  </table>
+
+</div>
 
 
-    
-    {% endblock %}
 
+{% endblock %}

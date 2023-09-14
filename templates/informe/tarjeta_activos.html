@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block contenido %}
+<div class="flex-container">
+
+    <table id="customers">
+        <tr>
+            <th colspan="7">{{publicador}}</th>
+        </tr>
+        <tr>
+            <th>{{año1}}</th>
+            <th>Pub</th>
+            <th>Videos</th>
+            <th>Horas</th>
+            <th>Revisitas</th>
+            <th>Estudios</th>
+            <th>Notas</th>
+
+        </tr>
+
+        {% for c in informe1 %}
+
+        <tr>
+            <td>{{c.mes}}</td>
+            <td>{{cpublicaciones}}</td>
+            <td>{{c.videos}}</td>
+            <td>{{c.horas}}</td>
+            <td>{{c.revisitas}}</td>
+            <td>{{c.estudios}}</td>
+            <td>{{c.notas}}</td>
+        </tr>
+
+        {% endfor %}
+
+    </table>
+
+
+
+
+    <table id="customers">
+        <tr>
+            <th colspan="7">{{publicador}}</th>
+        </tr>
+
+        <tr>
+            <th>{{año2}}</th>
+            <th>Pub</th>
+            <th>Videos</th>
+            <th>Horas</th>
+            <th>Revisitas</th>
+            <th>Estudios</th>
+            <th>Notas</th>
+
+        </tr>
+
+        {% for c in informe2 %}
+
+        <tr>
+            <td>{{c.mes}}</td>
+            <td>{{cpublicaciones}}</td>
+            <td>{{c.videos}}</td>
+            <td>{{c.horas}}</td>
+            <td>{{c.revisitas}}</td>
+            <td>{{c.estudios}}</td>
+            <td>{{c.notas}}</td>
+        </tr>
+
+        {% endfor %}
+
+    </table>
+</div>
+
+</div>
+
+{% endblock %}
