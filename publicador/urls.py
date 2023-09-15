@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.urls import path
 
-from publicador.views import Tarjeta_Activo, Tarjeta_Inactivo,Irregulares,Publicador_list, Grupos, Estadisticas, PublicadorActivo
+from publicador.views import Tarjeta_Activo, Tarjeta_Inactivo,Irregulares,Publicador_list, Grupos, Estadisticas, PublicadorActivo, S10
 
 
 
@@ -13,4 +13,5 @@ urlpatterns = [
     path('tarjeta_inactivo/<int:pk>/', Tarjeta_Inactivo.as_view(), name='tarjeta_inactivo'),
     path('estadisticas/', Estadisticas.as_view(), name='estadisticas'),
     path('publicador_activo/<int:pk>/', PublicadorActivo.as_view(), name='publicador_activo'),
+    path('S10/', S10.as_view(), name='S10'),
 ]

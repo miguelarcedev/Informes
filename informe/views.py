@@ -10,7 +10,6 @@ from publicador.models import Publicador
 from informe.models import Informe
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from informe.utils import get_schema_name
 
 
 # @login_required
@@ -18,6 +17,7 @@ from informe.utils import get_schema_name
 #     grupos=Publicador.objects.filter(estado="Activo").values('grupo').order_by('grupo').annotate(suma=Sum('grupo'))
 #     return render(request, "home.html",{"grupos": grupos})
 
+    
 @login_required
 def home(request):
     grupos = []
@@ -31,9 +31,8 @@ def home(request):
     if cantidad > 0:
         for i in range(1,cantidad+1):
             grupos.append(i)
-    
-    nombre_cong = get_schema_name() # se llama a la función para obtener el nombre del esquema actual  
-    return render(request, "home.html",{"grupos":grupos,'nombre_cong':nombre_cong[0]})
+     
+    return render(request, "home.html",{"grupos":grupos})
 
 class Tarjeta_grupo(LoginRequiredMixin,View):
 
