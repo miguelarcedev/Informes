@@ -50,6 +50,7 @@ def calculo_inactivos():
                 if contador == 6:
                     cantidad += 1             
         return(cantidad)
+
     
 def nuevo(notas):
        

@@ -9,9 +9,10 @@ from django.views.generic.list import ListView
 from django.http import  HttpResponse
 from django.urls import reverse_lazy
 from publicador.models import Publicador
+from asistencia.models import Entre_Semana, Fin_De_Semana
 from informe.models import Informe
 from django.views.generic import  View
-from django.db.models import Count, Sum, Max
+from django.db.models import Count, Sum, Max, Avg
 from django.contrib.auth.mixins import LoginRequiredMixin
 from informe.utils import *
 
@@ -217,46 +218,28 @@ class PublicadorActivo(LoginRequiredMixin,View):
     
 class S10(LoginRequiredMixin,View):
     def get(self,request):
-        tot_activos = Publicador.objects.filter(estado="Activo").count()
-        tot_inactivos = Publicador.objects.filter(estado="Inactivo").count()
-        tot_no_bautizados = Publicador.objects.filter(estado="Activo", bautismo__isnull=True).count()
-        tot_bautizados = tot_activos - tot_no_bautizados
-        tot_hombres = Publicador.objects.filter(estado="Activo", sexo="Hombre").count()   
-        tot_mujeres = tot_activos - tot_hombres
-        tot_ancianos = Publicador.objects.filter(estado="Activo", a_sm="Anciano").count()
-        tot_ministeriales = Publicador.objects.filter(estado="Activo", a_sm="Siervo Ministerial").count()
-        tot_regulares = Publicador.objects.filter(estado="Activo", regular="Precursor Regular").count()
-        tot_ungidos = Publicador.objects.filter(estado="Activo", u_oo="Ungido").count()
-        tot_otras_ovejas = tot_activos - tot_ungidos
-        irregulares = calculo_irregulares()
-        inactivos = calculo_inactivos()
-        notas = "Nuevo Publicador"
-        nuevos_publicadores = nuevo(notas)
-        notas = "Bautismo"
-        nuevos_bautizados = nuevo(notas)
-        notas = "Reactivado"
-        reactivados = nuevo(notas)
-        notas = "Readmitido"
-        readminitidos = nuevo(notas)   
-        context = {
-            'inactivos': inactivos,
-            'irregulares': irregulares[1],
-            'nuevos_publicadores': nuevos_publicadores,
-            'nuevos_bautizados': nuevos_bautizados,
-            'reactivados': reactivados,
-            'readminitidos': readminitidos,
-            'tot_inactivos': tot_inactivos,
-            'tot_activos': tot_activos,
-            'tot_inactivos': tot_inactivos,
-            'tot_bautizados': tot_bautizados,
-            'tot_no_bautizados': tot_no_bautizados,
-            'tot_hombres': tot_hombres,
-            'tot_mujeres': tot_mujeres,
-            'tot_ancianos': tot_ancianos,
-            'tot_ministeriales': tot_ministeriales,
-            'tot_regulares': tot_regulares,
-            'tot_ungidos': tot_ungidos,
-            'tot_otras_ovejas': tot_otras_ovejas,
-        }
+
+        try:
+                ultimo_registro = Informe.objects.all().last()
+                año = ultimo_registro.año
+                prom_entre = Entre_Semana.objects.filter(año=año).aggregate(Avg('promedio'))
+                prom_fin = Fin_De_Semana.objects.filter(año=año).aggregate(Avg('promedio'))
+                tot_activos = Publicador.objects.filter(estado="Activo").count()
+                tot_inactivos = Informe.objects.filter(año=año, notas="Inactivo").count()
+                tot_reactivados = Informe.objects.filter(año=año, notas="Reactivado").count()
+                tot_sordos = 0
+                tot_ciegos = 0
+                context = {
+                    'prom_entre': prom_entre,
+                    'prom_fin': prom_fin,
+                    'tot_activos': tot_activos,
+                    'tot_inactivos': tot_inactivos,
+                    'tot_reactivados': tot_reactivados,
+                    'tot_sordos': tot_sordos,
+                    'tot_ciegos': tot_ciegos,
+                    'año': año,
+                    }
+        except:
+                context = {}
 
         return render(request, "publicador/s10.html",context=context)
