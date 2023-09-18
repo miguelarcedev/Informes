@@ -259,4 +259,4 @@ class S10(LoginRequiredMixin,View):
             'tot_otras_ovejas': tot_otras_ovejas,
         }
 
-        return render(request, "publicador/estadisticas.html",context=context)
+        return render(request, "publicador/s10.html",context=context)

@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block contenido %}
+
+<div class="flex-container">
+
+  <table id="customers">
+
+    <tr>
+      <th colspan="2">TOTALES</th>
+      <th>ULTIMOS SEIS MESES</th>
+    </tr>
+
+    <tr>
+      <td>Activos</td>
+      <td>{{tot_activos}}</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Inactivos</td>
+      <td>{{tot_inactivos}}</td>
+      <td>{{inactivos}}</td>
+    </tr>
+    <tr>
+      <td>Irregulares</td>
+      <td></td>
+      <td>{{irregulares}}</td>
+    </tr>
+    <tr>
+      <td>Reactivados</td>
+      <td></td>
+      <td>{{reactivados}}</td>
+    </tr>
+    <tr>
+      <td>Readmitidos</td>
+      <td></td>
+      <td>{{readmitidos}}</td>
+    </tr>
+    <tr>
+      <td>Bautizados</td>
+      <td>{{tot_bautizados}}</td>
+      <td>{{nuevos_bautizados}}</td>
+    </tr>
+    <tr>
+      <td>No bautizados</td>
+      <td>{{tot_no_bautizados}}</td>
+      <td>{{nuevos_publicadores}}</td>
+    </tr>
+    <tr>
+      <td>Ancianos</td>
+      <td>{{tot_ancianos}}</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Mimisteriales</td>
+      <td>{{tot_ministeriales}}</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Precursores R.</td>
+      <td>{{tot_regulares}}</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Hombres</td>
+      <td>{{tot_hombres}}</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Mujeres</td>
+      <td>{{tot_mujeres}}</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Otras Ovejas</td>
+      <td>{{tot_otras_ovejas}}</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Ungidos</td>
+      <td>{{tot_ungidos}}</td>
+      <td></td>
+    </tr>
+
+  </table>
+
+</div>
+
+
+
+{% endblock %}
