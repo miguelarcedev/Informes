@@ -1,28 +1,27 @@
 {% extends "base.html" %}
 
 {% block contenido %}
-<div class="flex-container">
-    <table id="customers">
+<div class="row justify-content-center">
+    <div class="m-3">
+        <table id="customers">
 
-        <tr>
-            <th>IRREGULARES: {{cantidad}}</th>
-            <th>Año</th>
-            <th>Mes</th>
+            <tr>
+                <th>IRREGULARES: {{cantidad}}</th>
+                <th>Año</th>
+                <th>Mes</th>
+            </tr>
 
-        </tr>
+            {% for i in irregulares %}
 
-        {% for i in irregulares %}
+            <tr>
+                <td>{{i.0}}</td>
+                <td>{{i.1}}</td>
+                <td>{{i.2}}</td>
+            </tr>
 
-        <tr>
-            <td>{{i.0}}</td>
-            <td>{{i.1}}</td>
-            <td>{{i.2}}</td>
-        </tr>
-
-        {% endfor %}
-
-
-    </table>
+            {% endfor %}
+        </table>
+    </div>
 </div>
 
 {% endblock %}

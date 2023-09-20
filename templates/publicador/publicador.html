@@ -2,28 +2,31 @@
 
 {% block contenido %}
 
-<div class="flex-container">
+<div class="row justify-content-center">
 
-    <table id="customers">
-        <tr>
-            <th>{{titulo}} {{cantidad}}</th>
-            <th>Tarjeta</th>
+    <div class="m-3">
 
-        </tr>
-        {% for c in publicador %}
-        <tr>
-            <td><a href="{% url 'publicador_activo' c.id %}">{{c.nombre}}</a></td>
-            {% if estado == "Activo" %}
-            <td><a href="{% url 'tarjeta_activo' c.id %}"><i class="fa-sharp fa-solid fa-file-pdf fa-2xl"
-                        style="color:red;"></i></a></td>
+        <table id="customers">
+            <tr>
+                <th>{{titulo}} {{cantidad}}</th>
+                <th>Tarjeta</th>
 
-            {% else %}
-            <td><a href="{% url 'tarjeta_inactivo' c.id %}"><i class="fa-sharp fa-solid fa-file-pdf fa-2xl"
-                        style="color:red;"></i></a></td>
-            {% endif %}
-        </tr>
-        {% endfor %}
-    </table>
+            </tr>
+            {% for c in publicador %}
+            <tr>
+                <td><a href="{% url 'publicador_activo' c.id %}">{{c.nombre}}</a></td>
+                {% if estado == "Activo" %}
+                <td><a href="{% url 'tarjeta_activo' c.id %}"><i class="fa-sharp fa-solid fa-file-pdf fa-2xl"
+                            style="color:red;"></i></a></td>
+
+                {% else %}
+                <td><a href="{% url 'tarjeta_inactivo' c.id %}"><i class="fa-sharp fa-solid fa-file-pdf fa-2xl"
+                            style="color:red;"></i></a></td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
 </div>
 
 
