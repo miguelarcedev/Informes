@@ -28,7 +28,11 @@
                     <td>{{c.horas}}</td>
                     <td>{{c.revisitas}}</td>
                     <td>{{c.estudios}}</td>
+                    {% if c.notas != NULL %}
                     <td>{{c.notas}}</td>
+                    {% else %}
+                    <td></td>
+                    {% endif %}
                 </tr>
 
                 {% endfor %}
@@ -61,7 +65,11 @@
                     <td>{{c.horas}}</td>
                     <td>{{c.revisitas}}</td>
                     <td>{{c.estudios}}</td>
+                    {% if c.notas != NULL %}
                     <td>{{c.notas}}</td>
+                    {% else %}
+                    <td></td>
+                    {% endif %}
                 </tr>
 
                 {% endfor %}

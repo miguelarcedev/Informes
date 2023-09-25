@@ -215,7 +215,29 @@ class PublicadorActivo(LoginRequiredMixin,View):
          }
        
         return render(request, "informe/tarjeta_activos.html",context=context)      
-    
+
+
+class PublicadorInactivo(LoginRequiredMixin,View):
+    def get(self, request, *args, **kwargs):
+        informe = {}
+        año = 0
+        publicador = Publicador.objects.get(pk=self.kwargs['pk'])
+        try:
+            ultimo_registro = Informe.objects.filter(publicador=self.kwargs['pk']).last()
+            año = ultimo_registro.año   
+
+            informe = Informe.objects.filter(publicador=publicador.id, año=año)
+        except:
+            pass
+        context = {
+            'informe': informe,
+            'año':año,
+            'publicador': publicador.nombre,
+         }
+       
+        return render(request, "informe/inactivos.html",context=context) 
+
+
 class S10(LoginRequiredMixin,View):
     def get(self,request):
 
