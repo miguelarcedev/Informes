@@ -4,6 +4,7 @@ from informes.choices import *
 
 
 class Publicador(models.Model):
+    apellido = models.CharField(max_length=50,null=True, blank=True)
     nombre = models.CharField(max_length=50)
     nacimiento = models.DateField(null=True, blank=True) 
     bautismo = models.DateField(null=True, blank=True)
@@ -13,12 +14,14 @@ class Publicador(models.Model):
     regular = models.CharField(max_length=20, choices=PR, null=True, blank=True)
     grupo = models.CharField(max_length=1, choices=GRUPO)
     estado = models.CharField(max_length=10, choices=ESTADO)
-    
+    telefono = models.CharField(max_length=12, default=388)
+    contacto = models.CharField(max_length=50, null=True, blank=True)
+    telefono_contacto = models.CharField(max_length=12, default=388)
 
     class Meta():
         verbose_name='publicador'
         verbose_name_plural='publicadores'
-        ordering=['nombre']
+        ordering=['apellido']
 
     def __str__(self):
         return self.nombre

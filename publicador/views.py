@@ -265,3 +265,33 @@ class S10(LoginRequiredMixin,View):
                 context = {}
 
         return render(request, "publicador/s10.html",context=context)
+    
+class Telefonos(LoginRequiredMixin,View):
+    def get(self, request, *args, **kwargs):
+        
+        telefonos = Publicador.objects.filter(estado="Activo")
+        
+        context = {
+            'telefonos': telefonos,
+         }
+       
+        return render(request, "informe/telefonos.html",context=context)
+    
+class TelefonosContactos(LoginRequiredMixin,View):
+    def get(self, request, *args, **kwargs):
+        ultimo_registro = Informe.objects.all().last()
+        año1 = ultimo_registro.año - 1
+        año2 = ultimo_registro.año
+        publicador = Publicador.objects.get(pk=self.kwargs['pk'])
+        informe1 = Informe.objects.filter(publicador=publicador.id, año=año1)
+        informe2 = Informe.objects.filter(publicador=publicador.id, año=año2)
+        
+        context = {
+            'informe1': informe1,
+            'informe2': informe2,
+            'año1':año1,
+            'año2':año2,
+            'publicador': publicador.nombre,
+         }
+       
+        return render(request, "informe/tarjeta_activos.html",context=context)      
