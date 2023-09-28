@@ -1,7 +1,4 @@
 from django.contrib import admin
-
-# Register your models here.
-from django.contrib import admin
 from django_tenants.admin import TenantAdminMixin
 
 from shared.models import Congregacion, Domain
@@ -9,8 +6,9 @@ from shared.models import Congregacion, Domain
 
 @admin.register(Congregacion)
 class CongregacionAdmin(TenantAdminMixin, admin.ModelAdmin):
-        list_display = ('nombre', 'paid_until')
+        list_display = ('nombre', 'paid_until', 'on_trial', 'created_on', 'auto_create_schema')
+
 
 @admin.register(Domain)
 class DomainAdmin(TenantAdminMixin, admin.ModelAdmin):
-        list_display = ()
+        list_display = ('domain','is_primary', 'tenant_id')
