@@ -6,17 +6,19 @@
 
     <div class="m-3">
 
-        <table id="customers" style="width: 300px;">
+        <table id="customers">
             <tr>
                 <th>Publicador</th>
-                <th>Teléfono</th>
+                <th>Contacto</th>
+                <th>Teléfono contacto</th>
 
             </tr>
-            {% for c in telefonos %}
+            {% for c in contactos %}
             <tr>
 
                 <td>{{c.apellido}} {{c.nombre}}</td>
-                <td>{{c.telefono}}</td>
+                <td>{{c.contacto}}</td>
+                <td>{{c.telefono_contacto}}</td>
 
             </tr>
             {% endfor %}

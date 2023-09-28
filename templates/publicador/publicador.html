@@ -6,7 +6,7 @@
 
     <div class="m-3">
 
-        <table id="customers">
+        <table id="customers" style="width: 300px;">
             <tr>
                 <th>{{titulo}} {{cantidad}}</th>
                 <th>Tarjeta</th>
@@ -16,11 +16,11 @@
             <tr>
                 
                 {% if estado == "Activo" %}
-                    <td><a href="{% url 'publicador_activo' c.id %}">{{c.nombre}}</a></td>
+                    <td><a href="{% url 'publicador_activo' c.id %}">{{c.apellido}} {{c.nombre}}</a></td>
                     <td><a href="{% url 'tarjeta_activo' c.id %}"><i class="fa-sharp fa-solid fa-file-pdf fa-2xl"
                                 style="color:red;"></i></a></td>
                 {% else %}
-                    <td><a href="{% url 'publicador_inactivo' c.id %}">{{c.nombre}}</a></td>
+                    <td><a href="{% url 'publicador_inactivo' c.id %}">{{c.apellido}} {{c.nombre}}</a></td>
                     <td><a href="{% url 'tarjeta_inactivo' c.id %}"><i class="fa-sharp fa-solid fa-file-pdf fa-2xl"
                                 style="color:red;"></i></a></td>
                 {% endif %}

@@ -24,4 +24,4 @@ class Publicador(models.Model):
         ordering=['apellido']
 
     def __str__(self):
-        return self.nombre
+         return f'{self.apellido} {self.nombre}'

@@ -101,14 +101,13 @@ ul {
   #customers {
     font-family: Arial, Helvetica, sans-serif;
     border-collapse: collapse;
-   
-    font-size:small;
+    font-size:10px;
   }
   
   #customers td, #customers th {
     border: 1px solid #ddd;
     padding: 5px;
-    text-align: center;
+    
   }
   
   #customers tr:nth-child(even){background-color: #f2f2f2;}

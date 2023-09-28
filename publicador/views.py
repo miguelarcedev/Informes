@@ -52,7 +52,7 @@ class Grupos(LoginRequiredMixin,View):
             
             for i in range(cantidad):
                 for g in grupos[i]:
-                    grupo_x[i].append(g.nombre)
+                    grupo_x[i].append(g.apellido +" "+ g.nombre)
             for i in range(cantidad):
                 x = cantidades[i]
                 while x <= maximo:
@@ -211,7 +211,8 @@ class PublicadorActivo(LoginRequiredMixin,View):
             'informe2': informe2,
             'año1':año1,
             'año2':año2,
-            'publicador': publicador.nombre,
+            'nombre': publicador.nombre,
+            'apellido': publicador.apellido,
          }
        
         return render(request, "informe/tarjeta_activos.html",context=context)      
@@ -232,7 +233,8 @@ class PublicadorInactivo(LoginRequiredMixin,View):
         context = {
             'informe': informe,
             'año':año,
-            'publicador': publicador.nombre,
+            'nombre': publicador.nombre,
+            'apellido': publicador.apellido,
          }
        
         return render(request, "informe/inactivos.html",context=context) 
@@ -270,28 +272,18 @@ class Telefonos(LoginRequiredMixin,View):
     def get(self, request, *args, **kwargs):
         
         telefonos = Publicador.objects.filter(estado="Activo")
-        
         context = {
             'telefonos': telefonos,
          }
        
         return render(request, "informe/telefonos.html",context=context)
     
-class TelefonosContactos(LoginRequiredMixin,View):
+class Contactos(LoginRequiredMixin,View):
     def get(self, request, *args, **kwargs):
-        ultimo_registro = Informe.objects.all().last()
-        año1 = ultimo_registro.año - 1
-        año2 = ultimo_registro.año
-        publicador = Publicador.objects.get(pk=self.kwargs['pk'])
-        informe1 = Informe.objects.filter(publicador=publicador.id, año=año1)
-        informe2 = Informe.objects.filter(publicador=publicador.id, año=año2)
-        
+        contactos = Publicador.objects.filter(estado__contains='ctivo').values()
         context = {
-            'informe1': informe1,
-            'informe2': informe2,
-            'año1':año1,
-            'año2':año2,
-            'publicador': publicador.nombre,
-         }
+            'contactos': contactos,
+        }
+        
        
-        return render(request, "informe/tarjeta_activos.html",context=context)      
+        return render(request, "informe/contactos.html",context=context)      

@@ -6,6 +6,7 @@ from django_tenants.admin import TenantAdminMixin
 
 from shared.models import Congregacion, Domain
 
+
 @admin.register(Congregacion)
 class CongregacionAdmin(TenantAdminMixin, admin.ModelAdmin):
         list_display = ('nombre', 'paid_until')
