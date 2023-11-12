@@ -11,7 +11,7 @@ class Publicador(models.Model):
     sexo = models.CharField(max_length=10, choices=SEXO)
     u_oo = models.CharField(max_length=15, choices=UOO, default='Otras Ovejas')
     a_sm = models.CharField(max_length=20, choices=ASM, null=True, blank=True)
-    regular = models.CharField(max_length=20, choices=PR, null=True, blank=True)
+    servicio = models.CharField(max_length=20, choices=SERVICIO, null=True, blank=True)
     grupo = models.CharField(max_length=1, choices=GRUPO)
     estado = models.CharField(max_length=10, choices=ESTADO)
     telefono = models.CharField(max_length=12, default=388)

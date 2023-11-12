@@ -9,13 +9,12 @@ class Informe(models.Model):
     publicador=models.ForeignKey(Publicador, on_delete=models.CASCADE)
     año = models.IntegerField()
     mes = models.CharField(max_length=10, choices=MES) 
-    publicaciones = models.IntegerField(null=True, blank=True,default=0)
-    videos = models.IntegerField(null=True, blank=True,default=0)
-    horas = models.IntegerField(null=True, blank=True,default=0)
-    revisitas = models.IntegerField(null=True, blank=True,default=0)
+    participacion = models.CharField(max_length=10, choices=SINO,default=" ")
     estudios = models.IntegerField(null=True, blank=True,default=0)
+    auxiliar = models.CharField(max_length=10, choices=SINO,default=" ")
+    horas = models.IntegerField(null=True, blank=True,default=0)
     notas = models.CharField(max_length=20, choices=NOTAS, blank=True, null=True)
-    servicio = models.CharField(max_length=10, choices=SERVICIO,default="Publicador")    
+    servicio = models.CharField(max_length=10, choices=APR,default="Publicador")    
 
     class Meta():
         verbose_name='informe'

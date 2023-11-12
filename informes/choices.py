@@ -14,7 +14,6 @@ MES = [
 ]
 
 NOTAS = [
-        ('Auxiliar', 'Auxiliar'),
         ('Inactivo', 'Inactivo'),
         ('Mudado', 'Mudado'),
         ('Construccion', 'Construccion'),
@@ -46,8 +45,10 @@ ASM = [
         ('Siervo Ministerial', 'Siervo Ministerial'),
     ]
 
-PR = [
+SERVICIO = [
         ('Precursor Regular', 'Precursor Regular'),
+        ('Precursor Especial', 'Precursor Especial'),
+        ('Misionero', 'Misionero'),
         
     ]
 
@@ -72,9 +73,18 @@ ESTADO = [
         
     ]
 
-SERVICIO = [
+APR = [
         ('Auxiliar', 'Auxiliar'),
         ('Publicador', 'Publicador'),
         ('Regular', 'Regular'),
+        ('Especial', 'Especial'),
+        ('Misionero', 'Misionero'),
+        
+    ]
+
+SINO = [
+              
+        (' ', ' '),
+        ('Si', 'Si'),
         
     ]

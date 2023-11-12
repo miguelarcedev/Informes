@@ -68,7 +68,7 @@
 <h2 class="text-center">REGISTRO DE PUBLICADOR DE LA CONGREGACION</h2><br>
     <table>
         <tr>
-            <td style="width: 60%;"><b>Nombre: </b><strong>{{ publicador.nombre }}</strong></td>
+            <td style="width: 60%;"><b>Nombre: </b><strong>{{ publicador.apellido }} {{ publicador.nombre }}</strong></td>
             <td><strong></strong></td>
             <td>{{ publicador.sexo }}</td>
         </tr>
@@ -96,12 +96,11 @@
         <thead>
             <tr>
                 <th style="width: 15%;">{{año1}}</th>
-                <th style="width: 15%;">Publicaciones</th>
-                <th style="width: 10%;">Videos</th>
-                <th style="width: 10%;">Horas</th>
-                <th style="width: 10%;">Revisitas</th>
+                <th style="width: 15%;">Participación</th>
                 <th style="width: 10%;">Estudios</th>
-                <th style="width: 30%;">Notas</th>
+                <th style="width: 10%;">Auxiliar</th>
+                <th style="width: 10%;">Horas</th>
+                <th style="width: 40%;">Notas</th>
                 
             </tr>
         </thead>
@@ -111,11 +110,10 @@
                 {% if i.año == año1 %}
                     <tr>
                         <td class="text-center">{{ i.mes }}</td>
-                        <td class="text-center">{{ i.publicaciones }}</td>
-                        <td class="text-center">{{ i.videos }}</td>
-                        <td class="text-center">{{ i.horas }}</td>
-                        <td class="text-center">{{ i.revisitas }}</td>
+                        <td class="text-center">{{ i.participacion }}</td>
                         <td class="text-center">{{ i.estudios }}</td>
+                        <td class="text-center">{{ i.auxiliar }}</td>
+                        <td class="text-center">{{ i.horas }}</td>
                         {% if i.notas != NULL %}
                             <td class="text-center">  {{ i.notas }}</td>
                         
@@ -132,12 +130,11 @@
         <tbody>
             <tr>
                 <th style="width: 15%;">{{año2}}</th>
-                <th style="width: 15%;">Publicaciones</th>
-                <th style="width: 10%;">Videos</th>
-                <th style="width: 10%;">Horas</th>
-                <th style="width: 10%;">Revisitas</th>
+                <th style="width: 15%;">Participación</th>
                 <th style="width: 10%;">Estudios</th>
-                <th style="width: 30%;">Notas</th>
+                <th style="width: 10%;">Auxiliar</th>
+                <th style="width: 10%;">Horas</th>
+                <th style="width: 40%;">Notas</th>
                 
             </tr>
             {% for i in publicador.informe_set.all %}
@@ -145,11 +142,10 @@
                 {% if i.año == año2 %}
                     <tr>
                         <td class="text-center">{{ i.mes }}</td>
-                        <td class="text-center">{{ i.publicaciones }}</td>
-                        <td class="text-center">{{ i.videos }}</td>
-                        <td class="text-center">{{ i.horas }}</td>
-                        <td class="text-center">{{ i.revisitas }}</td>
+                        <td class="text-center">{{ i.participacion }}</td>
                         <td class="text-center">{{ i.estudios }}</td>
+                        <td class="text-center">{{ i.auxiliar }}</td>
+                        <td class="text-center">{{ i.horas }}</td>
                         {% if i.notas != NULL %}
                             <td class="text-center">  {{ i.notas }}</td>
                         
