@@ -63,7 +63,7 @@ class Precursores(LoginRequiredMixin,View):
             año2 = 2
         template = get_template('informe/tarjeta_grupo.html')
         context = {
-            'publicador': Publicador.objects.filter(regular="Precursor Regular").filter(estado="Activo"),
+            'publicador': Publicador.objects.filter(servicio="Precursor Regular").filter(estado="Activo"),
             'año1':año1,
             'año2':año2
             }
@@ -76,7 +76,7 @@ class Precursores(LoginRequiredMixin,View):
 class Inactivos(LoginRequiredMixin,View):
 
     def get(self, request, *args, **kwargs):
-        template = get_template('informe/tarjeta_inactivos.html')
+        template = get_template('grupo-inactivos-pdf.html')
         context = {'publicador': Publicador.objects.filter(estado="Inactivo")}
         html = template.render(context)
         response = HttpResponse(content_type='application/pdf')
@@ -254,7 +254,7 @@ class TotalesPdf(LoginRequiredMixin,View):
             'año1': año1,
             'año2': año2
             }
-        template = get_template('informe/totales.html')
+        template = get_template('totales-pdf.html')
         html = template.render(context)
         response = HttpResponse(content_type='application/pdf')
         pisaStatus = pisa.CreatePDF(html, dest=response)
@@ -346,4 +346,4 @@ class Totales(LoginRequiredMixin,View):
             'datos':datos
         }
             
-        return render(request, "informe/pantalla.html", context=context)
+        return render(request, "totales.html", context=context)

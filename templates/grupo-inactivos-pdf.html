@@ -97,12 +97,12 @@
             {% if inactivo.notas == "Inactivo" %}
             <tr>
                 <th style="width: 15%;">{{inactivo.año}}</th>
-                <th style="width: 15%;">Publicaciones</th>
-                <th style="width: 10%;">Videos</th>
-                <th style="width: 10%;">Horas</th>
-                <th style="width: 10%;">Revisitas</th>
+                <th style="width: 15%;">Participación</th>
                 <th style="width: 10%;">Estudios</th>
-                <th style="width: 30%;">Notas</th>
+                <th style="width: 10%;">Auxiliar</th>
+                <th style="width: 10%;">Horas</th>
+                <th style="width: 40%;">Notas</th>
+
                 
             </tr>
             {% endif %}
@@ -118,15 +118,16 @@
                     {% if inactivo.año == i.año %}
                         <tr>
                             <td class="text-center">{{ i.mes }}</td>
-                            <td class="text-center">{{ i.publicaciones }}</td>
-                            <td class="text-center">{{ i.videos }}</td>
-                            <td class="text-center">{{ i.horas }}</td>
-                            <td class="text-center">{{ i.revisitas }}</td>
+                            <td class="text-center">{{ i.participacion }}</td>
                             <td class="text-center">{{ i.estudios }}</td>
+                            <td class="text-center">{{ i.auxiliar }}</td>
+                            <td class="text-center">{{ i.horas }}</td>
                             {% if i.notas != NULL %}
-                            <td class="text-center">  {{ i.notas }}</td>
-                            
+                                <td class="text-center">  {{ i.notas }}</td>
+                        
                             {% endif %}
+
+                        
                         </tr>
                     {% endif %}
                 {% endfor %}

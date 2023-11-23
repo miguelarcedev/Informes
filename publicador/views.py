@@ -28,7 +28,7 @@ class Publicador_list(LoginRequiredMixin,View):
         else:        
             titulo = "PUBLICADORES INACTVOS: "
         
-        return render(request, "publicador/publicador.html",{"publicador": publicador, "titulo":titulo,"cantidad":cantidad,"estado":estado})
+        return render(request, "publicadores.html",{"publicador": publicador, "titulo":titulo,"cantidad":cantidad})
 
 class Grupos(LoginRequiredMixin,View):
     def get(self, request, *args, **kwargs):
@@ -121,35 +121,31 @@ class Irregulares(LoginRequiredMixin,View):
        irregulares = calculos[0]
        cantidad = calculos[1]
        return render(request, "publicador/lista_irregulares.html",{"irregulares": irregulares,"cantidad": cantidad})   
+      
 
-           
-class Tarjeta_Activo(LoginRequiredMixin,View):
-    def get(self, request, *args, **kwargs):
-        ultimo_registro = Informe.objects.all().last()
-        año1 = ultimo_registro.año - 1
-        año2 = ultimo_registro.año
-        template = get_template('publicador/tarjeta_pub.html')
-        context = {'publicador': Publicador.objects.get(pk=self.kwargs['pk']),'año1':año1,'año2':año2}
-        html = template.render(context)
-        response = HttpResponse(content_type='application/pdf')
-        pisaStatus = pisa.CreatePDF(html, dest=response)
-        return response        
-       
-class Tarjeta_Inactivo(LoginRequiredMixin,View):
+class Tarjeta(LoginRequiredMixin,View):
     def get(self, request,pk, *args, **kwargs):
-        ultimo_registro = Informe.objects.filter(publicador=pk).last()
         año1 = 0
         año2 = 0
-        if ultimo_registro:
+        publicador = Publicador.objects.get(pk=self.kwargs['pk'])
+        estado = publicador.estado
+        if estado == "Activo":
+
+            ultimo_registro = Informe.objects.all().last()
+            año1 = ultimo_registro.año - 1
             año2 = ultimo_registro.año
+        else:
+            ultimo_registro = Informe.objects.filter(publicador=pk).last()
             
-        template = get_template('publicador/tarjeta_pub.html')
-        context = {'publicador': Publicador.objects.get(pk=self.kwargs['pk']),'año1':año1,'año2':año2}
+            if ultimo_registro:
+                año1 = ultimo_registro.año
+
+        template = get_template('s-21-pdf.html')
+        context = {'publicador': Publicador.objects.get(pk=self.kwargs['pk']),'año1':año1,'año2':año2,'estado':estado}
         html = template.render(context)
         response = HttpResponse(content_type='application/pdf')
         pisaStatus = pisa.CreatePDF(html, dest=response)
-        return response        
-
+        return response   
 
 class Estadisticas(LoginRequiredMixin,View):
     def get(self,request):
@@ -197,14 +193,30 @@ class Estadisticas(LoginRequiredMixin,View):
 
         return render(request, "publicador/estadisticas.html",context=context)  
     
-class PublicadorActivo(LoginRequiredMixin,View):
+
+
+class Publicado(LoginRequiredMixin,View):
     def get(self, request, *args, **kwargs):
-        ultimo_registro = Informe.objects.all().last()
-        año1 = ultimo_registro.año - 1
-        año2 = ultimo_registro.año
+        informe1 = {}
+        informe2 = {}
+        año1 = 0
+        año2 = 0
         publicador = Publicador.objects.get(pk=self.kwargs['pk'])
-        informe1 = Informe.objects.filter(publicador=publicador.id, año=año1)
-        informe2 = Informe.objects.filter(publicador=publicador.id, año=año2)
+        estado = publicador.estado
+        if estado == "Activo":
+        
+            ultimo_registro = Informe.objects.all().last()
+            año1 = ultimo_registro.año - 1
+            año2 = ultimo_registro.año
+            informe1 = Informe.objects.filter(publicador=publicador.id, año=año1)
+            informe2 = Informe.objects.filter(publicador=publicador.id, año=año2)
+        else:
+            try:
+                ultimo_registro = Informe.objects.filter(publicador=self.kwargs['pk']).last()
+                año1 = ultimo_registro.año   
+                informe1 = Informe.objects.filter(publicador=publicador.id, año=año1)
+            except:
+                pass
         
         context = {
             'informe1': informe1,
@@ -213,31 +225,10 @@ class PublicadorActivo(LoginRequiredMixin,View):
             'año2':año2,
             'nombre': publicador.nombre,
             'apellido': publicador.apellido,
+            'estado' : estado,
          }
        
-        return render(request, "informe/tarjeta_activos.html",context=context)      
-
-
-class PublicadorInactivo(LoginRequiredMixin,View):
-    def get(self, request, *args, **kwargs):
-        informe = {}
-        año = 0
-        publicador = Publicador.objects.get(pk=self.kwargs['pk'])
-        try:
-            ultimo_registro = Informe.objects.filter(publicador=self.kwargs['pk']).last()
-            año = ultimo_registro.año   
-
-            informe = Informe.objects.filter(publicador=publicador.id, año=año)
-        except:
-            pass
-        context = {
-            'informe': informe,
-            'año':año,
-            'nombre': publicador.nombre,
-            'apellido': publicador.apellido,
-         }
-       
-        return render(request, "informe/inactivos.html",context=context) 
+        return render(request, "s-21.html",context=context) 
 
 
 class S10(LoginRequiredMixin,View):
