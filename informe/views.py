@@ -92,53 +92,53 @@ class TotalesPdf(LoginRequiredMixin,View):
         año2 = ultimo_registro.año 
         if pub_aux_reg == "pub":
             context = {
-            'septiembre1': Informe.objects.filter(año=año1,mes="Septiembre",horas__gt = 0,servicio="Publicador").
+            'septiembre1': Informe.objects.filter(año=año1,mes="Septiembre",participacion = "Si",servicio="Publicador").
             aggregate(Sum('horas'),Sum('estudios'),Count('id')),
-            'octubre1': Informe.objects.filter(año=año1,mes="Octubre",horas__gt = 0,servicio="Publicador").
+            'octubre1': Informe.objects.filter(año=año1,mes="Octubre",participacion = "Si",servicio="Publicador").
             aggregate(Sum('horas'),Sum('estudios'),Count('id')),
-            'noviembre1': Informe.objects.filter(año=año1,mes="Noviembre",horas__gt = 0,servicio="Publicador").
+            'noviembre1': Informe.objects.filter(año=año1,mes="Noviembre",participacion = "Si",servicio="Publicador").
             aggregate(Sum('horas'),Sum('estudios'),Count('id')),
-            'diciembre1': Informe.objects.filter(año=año1,mes="Diciembre",horas__gt = 0,servicio="Publicador").
+            'diciembre1': Informe.objects.filter(año=año1,mes="Diciembre",participacion = "Si",servicio="Publicador").
             aggregate(Sum('horas'),Sum('estudios'),Count('id')),
-            'enero1': Informe.objects.filter(año=año1,mes="Enero",horas__gt = 0,servicio="Publicador").
+            'enero1': Informe.objects.filter(año=año1,mes="Enero",participacion = "Si",servicio="Publicador").
             aggregate(Sum('horas'),Sum('estudios'),Count('id')),
-            'febrero1': Informe.objects.filter(año=año1,mes="Febrero",horas__gt = 0,servicio="Publicador").
+            'febrero1': Informe.objects.filter(año=año1,mes="Febrero",participacion = "Si",servicio="Publicador").
             aggregate(Sum('horas'),Sum('estudios'),Count('id')),
-            'marzo1': Informe.objects.filter(año=año1,mes="Marzo",horas__gt = 0,servicio="Publicador").
+            'marzo1': Informe.objects.filter(año=año1,mes="Marzo",participacion = "Si",servicio="Publicador").
             aggregate(Sum('horas'),Sum('estudios'),Count('id')),
-            'abril1': Informe.objects.filter(año=año1,mes="Abril",horas__gt = 0,servicio="Publicador").
+            'abril1': Informe.objects.filter(año=año1,mes="Abril",participacion = "Si",servicio="Publicador").
             aggregate(Sum('horas'),Sum('estudios'),Count('id')),
-            'mayo1': Informe.objects.filter(año=año1,mes="Mayo",horas__gt = 0,servicio="Publicador").
+            'mayo1': Informe.objects.filter(año=año1,mes="Mayo",participacion = "Si",servicio="Publicador").
             aggregate(Sum('horas'),Sum('estudios'),Count('id')),
-            'junio1': Informe.objects.filter(año=año1,mes="Junio",horas__gt = 0,servicio="Publicador").
+            'junio1': Informe.objects.filter(año=año1,mes="Junio",participacion = "Si",servicio="Publicador").
             aggregate(Sum('horas'),Sum('estudios'),Count('id')),
-            'julio1': Informe.objects.filter(año=año1,mes="Julio",horas__gt = 0,servicio="Publicador").
+            'julio1': Informe.objects.filter(año=año1,mes="Julio",participacion = "Si",servicio="Publicador").
             aggregate(Sum('horas'),Sum('estudios'),Count('id')),
-            'agosto1': Informe.objects.filter(año=año1,mes="Agosto",horas__gt = 0,servicio="Publicador").
+            'agosto1': Informe.objects.filter(año=año1,mes="Agosto",participacion = "Si",servicio="Publicador").
             aggregate(Sum('horas'),Sum('estudios'),Count('id')),
-            'septiembre2': Informe.objects.filter(año=año2,mes="Septiembre",horas__gt = 0,servicio="Publicador").
+            'septiembre2': Informe.objects.filter(año=año2,mes="Septiembre",participacion = "Si",servicio="Publicador").
             aggregate(Sum('horas'),Sum('estudios'),Count('id')),
-            'octubre2': Informe.objects.filter(año=año2,mes="Octubre",horas__gt = 0,servicio="Publicador").
+            'octubre2': Informe.objects.filter(año=año2,mes="Octubre",participacion = "Si",servicio="Publicador").
             aggregate(Sum('horas'),Sum('estudios'),Count('id')),
-            'noviembre2': Informe.objects.filter(año=año2,mes="Noviembre",horas__gt = 0,servicio="Publicador").
+            'noviembre2': Informe.objects.filter(año=año2,mes="Noviembre",participacion = "Si",servicio="Publicador").
             aggregate(Sum('horas'),Sum('estudios'),Count('id')),
-            'diciembre2': Informe.objects.filter(año=año2,mes="Diciembre",horas__gt = 0,servicio="Publicador").
+            'diciembre2': Informe.objects.filter(año=año2,mes="Diciembre",participacion = "Si",servicio="Publicador").
             aggregate(Sum('horas'),Sum('estudios'),Count('id')),
-            'enero2': Informe.objects.filter(año=año2,mes="Enero",horas__gt = 0,servicio="Publicador").
+            'enero2': Informe.objects.filter(año=año2,mes="Enero",participacion = "Si",servicio="Publicador").
             aggregate(Sum('horas'),Sum('estudios'),Count('id')),
-            'febrero2': Informe.objects.filter(año=año2,mes="Febrero",horas__gt = 0,servicio="Publicador").
+            'febrero2': Informe.objects.filter(año=año2,mes="Febrero",participacion = "Si",servicio="Publicador").
             aggregate(Sum('horas'),Sum('estudios'),Count('id')),
-            'marzo2': Informe.objects.filter(año=año2,mes="Marzo",horas__gt = 0,servicio="Publicador").
+            'marzo2': Informe.objects.filter(año=año2,mes="Marzo",participacion = "Si",servicio="Publicador").
             aggregate(Sum('horas'),Sum('estudios'),Count('id')),
-            'abril2': Informe.objects.filter(año=año2,mes="Abril",horas__gt = 0,servicio="Publicador").
+            'abril2': Informe.objects.filter(año=año2,mes="Abril",participacion = "Si",servicio="Publicador").
             aggregate(Sum('horas'),Sum('estudios'),Count('id')),
-            'mayo2': Informe.objects.filter(año=año2,mes="Mayo",horas__gt = 0,servicio="Publicador").
+            'mayo2': Informe.objects.filter(año=año2,mes="Mayo",participacion = "Si",servicio="Publicador").
             aggregate(Sum('horas'),Sum('estudios'),Count('id')),
-            'junio2': Informe.objects.filter(año=año2,mes="Junio",horas__gt = 0,servicio="Publicador").
+            'junio2': Informe.objects.filter(año=año2,mes="Junio",participacion = "Si",servicio="Publicador").
             aggregate(Sum('horas'),Sum('estudios'),Count('id')),
-            'julio2': Informe.objects.filter(año=año2,mes="Julio",horas__gt = 0,servicio="Publicador").
+            'julio2': Informe.objects.filter(año=año2,mes="Julio",participacion = "Si",servicio="Publicador").
             aggregate(Sum('horas'),Sum('estudios'),Count('id')),
-            'agosto2': Informe.objects.filter(año=año2,mes="Agosto",horas__gt = 0,servicio="Publicador").
+            'agosto2': Informe.objects.filter(año=año2,mes="Agosto",participacion = "Si",servicio="Publicador").
             aggregate(Sum('horas'),Sum('estudios'),Count('id')),
             'titulo': "PUBLICADORES - TOTALES",
             'año1': año1,
@@ -147,53 +147,53 @@ class TotalesPdf(LoginRequiredMixin,View):
             
         if pub_aux_reg == "aux":
             context = {
-            'septiembre1': Informe.objects.filter(año=año1,mes="Septiembre",horas__gt = 0,servicio="Auxiliar").
+            'septiembre1': Informe.objects.filter(año=año1,mes="Septiembre",participacion = "Si",servicio="Auxiliar").
             aggregate(Sum('horas'),Sum('estudios'),Count('id')),
-            'octubre1': Informe.objects.filter(año=año1,mes="Octubre",horas__gt = 0,servicio="Auxiliar").
+            'octubre1': Informe.objects.filter(año=año1,mes="Octubre",participacion = "Si",servicio="Auxiliar").
             aggregate(Sum('horas'),Sum('estudios'),Count('id')),
-            'noviembre1': Informe.objects.filter(año=año1,mes="Noviembre",horas__gt = 0,servicio="Auxiliar").
+            'noviembre1': Informe.objects.filter(año=año1,mes="Noviembre",participacion = "Si",servicio="Auxiliar").
             aggregate(Sum('horas'),Sum('estudios'),Count('id')),
-            'diciembre1': Informe.objects.filter(año=año1,mes="Diciembre",horas__gt = 0,servicio="Auxiliar").
+            'diciembre1': Informe.objects.filter(año=año1,mes="Diciembre",participacion = "Si",servicio="Auxiliar").
             aggregate(Sum('horas'),Sum('estudios'),Count('id')),
-            'enero1': Informe.objects.filter(año=año1,mes="Enero",horas__gt = 0,servicio="Auxiliar").
+            'enero1': Informe.objects.filter(año=año1,mes="Enero",participacion = "Si",servicio="Auxiliar").
             aggregate(Sum('horas'),Sum('estudios'),Count('id')),
-            'febrero1': Informe.objects.filter(año=año1,mes="Febrero",horas__gt = 0,servicio="Auxiliar").
+            'febrero1': Informe.objects.filter(año=año1,mes="Febrero",participacion = "Si",servicio="Auxiliar").
             aggregate(Sum('horas'),Sum('estudios'),Count('id')),
-            'marzo1': Informe.objects.filter(año=año1,mes="Marzo",horas__gt = 0,servicio="Auxiliar").
+            'marzo1': Informe.objects.filter(año=año1,mes="Marzo",participacion = "Si",servicio="Auxiliar").
             aggregate(Sum('horas'),Sum('estudios'),Count('id')),
-            'abril1': Informe.objects.filter(año=año1,mes="Abril",horas__gt = 0,servicio="Auxiliar").
+            'abril1': Informe.objects.filter(año=año1,mes="Abril",participacion = "Si",servicio="Auxiliar").
             aggregate(Sum('horas'),Sum('estudios'),Count('id')),
-            'mayo1': Informe.objects.filter(año=año1,mes="Mayo",horas__gt = 0,servicio="Auxiliar").
+            'mayo1': Informe.objects.filter(año=año1,mes="Mayo",participacion = "Si",servicio="Auxiliar").
             aggregate(Sum('horas'),Sum('estudios'),Count('id')),
-            'junio1': Informe.objects.filter(año=año1,mes="Junio",horas__gt = 0,servicio="Auxiliar").
+            'junio1': Informe.objects.filter(año=año1,mes="Junio",participacion = "Si",servicio="Auxiliar").
             aggregate(Sum('horas'),Sum('estudios'),Count('id')),
-            'julio1': Informe.objects.filter(año=año1,mes="Julio",horas__gt = 0,servicio="Auxiliar").
+            'julio1': Informe.objects.filter(año=año1,mes="Julio",participacion = "Si",servicio="Auxiliar").
             aggregate(Sum('horas'),Sum('estudios'),Count('id')),
-            'agosto1': Informe.objects.filter(año=año1,mes="Agosto",horas__gt = 0,servicio="Auxiliar").
+            'agosto1': Informe.objects.filter(año=año1,mes="Agosto",participacion = "Si",servicio="Auxiliar").
             aggregate(Sum('horas'),Sum('estudios'),Count('id')),
-            'septiembre2': Informe.objects.filter(año=año2,mes="Septiembre",horas__gt = 0,servicio="Auxiliar").
+            'septiembre2': Informe.objects.filter(año=año2,mes="Septiembre",participacion = "Si",servicio="Auxiliar").
             aggregate(Sum('horas'),Sum('estudios'),Count('id')),
-            'octubre2': Informe.objects.filter(año=año2,mes="Octubre",horas__gt = 0,servicio="Auxiliar").
+            'octubre2': Informe.objects.filter(año=año2,mes="Octubre",participacion = "Si",servicio="Auxiliar").
             aggregate(Sum('horas'),Sum('estudios'),Count('id')),
-            'noviembre2': Informe.objects.filter(año=año2,mes="Noviembre",horas__gt = 0,servicio="Auxiliar").
+            'noviembre2': Informe.objects.filter(año=año2,mes="Noviembre",participacion = "Si",servicio="Auxiliar").
             aggregate(Sum('horas'),Sum('estudios'),Count('id')),
-            'diciembre2': Informe.objects.filter(año=año2,mes="Diciembre",horas__gt = 0,servicio="Auxiliar").
+            'diciembre2': Informe.objects.filter(año=año2,mes="Diciembre",participacion = "Si",servicio="Auxiliar").
             aggregate(Sum('horas'),Sum('estudios'),Count('id')),
-            'enero2': Informe.objects.filter(año=año2,mes="Enero",horas__gt = 0,servicio="Auxiliar").
+            'enero2': Informe.objects.filter(año=año2,mes="Enero",participacion = "Si",servicio="Auxiliar").
             aggregate(Sum('horas'),Sum('estudios'),Count('id')),
-            'febrero2': Informe.objects.filter(año=año2,mes="Febrero",horas__gt = 0,servicio="Auxiliar").
+            'febrero2': Informe.objects.filter(año=año2,mes="Febrero",participacion = "Si",servicio="Auxiliar").
             aggregate(Sum('horas'),Sum('estudios'),Count('id')),
-            'marzo2': Informe.objects.filter(año=año2,mes="Marzo",horas__gt = 0,servicio="Auxiliar").
+            'marzo2': Informe.objects.filter(año=año2,mes="Marzo",participacion = "Si",servicio="Auxiliar").
             aggregate(Sum('horas'),Sum('estudios'),Count('id')),
-            'abril2': Informe.objects.filter(año=año2,mes="Abril",horas__gt = 0,servicio="Auxiliar").
+            'abril2': Informe.objects.filter(año=año2,mes="Abril",participacion = "Si",servicio="Auxiliar").
             aggregate(Sum('horas'),Sum('estudios'),Count('id')),
-            'mayo2': Informe.objects.filter(año=año2,mes="Mayo",horas__gt = 0,servicio="Auxiliar").
+            'mayo2': Informe.objects.filter(año=año2,mes="Mayo",participacion = "Si",servicio="Auxiliar").
             aggregate(Sum('horas'),Sum('estudios'),Count('id')),
-            'junio2': Informe.objects.filter(año=año2,mes="Junio",horas__gt = 0,servicio="Auxiliar").
+            'junio2': Informe.objects.filter(año=año2,mes="Junio",participacion = "Si",servicio="Auxiliar").
             aggregate(Sum('horas'),Sum('estudios'),Count('id')),
-            'julio2': Informe.objects.filter(año=año2,mes="Julio",horas__gt = 0,servicio="Auxiliar").
+            'julio2': Informe.objects.filter(año=año2,mes="Julio",participacion = "Si",servicio="Auxiliar").
             aggregate(Sum('horas'),Sum('estudios'),Count('id')),
-            'agosto2': Informe.objects.filter(año=año2,mes="Agosto",horas__gt = 0,servicio="Auxiliar").
+            'agosto2': Informe.objects.filter(año=año2,mes="Agosto",participacion = "Si",servicio="Auxiliar").
             aggregate(Sum('horas'),Sum('estudios'),Count('id')),
             'titulo': "AUXILIARES - TOTALES",
             'año1': año1,
@@ -202,53 +202,53 @@ class TotalesPdf(LoginRequiredMixin,View):
                 
         if pub_aux_reg == "reg":
             context = {
-            'septiembre1': Informe.objects.filter(año=año1,mes="Septiembre",horas__gt = 0,servicio="Regular").
+            'septiembre1': Informe.objects.filter(año=año1,mes="Septiembre",participacion = "Si",servicio="Regular").
             aggregate(Sum('horas'),Sum('estudios'),Count('id')),
-            'octubre1': Informe.objects.filter(año=año1,mes="Octubre",horas__gt = 0,servicio="Regular").
+            'octubre1': Informe.objects.filter(año=año1,mes="Octubre",participacion = "Si",servicio="Regular").
             aggregate(Sum('horas'),Sum('estudios'),Count('id')),
-            'noviembre1': Informe.objects.filter(año=año1,mes="Noviembre",horas__gt = 0,servicio="Regular").
+            'noviembre1': Informe.objects.filter(año=año1,mes="Noviembre",participacion = "Si",servicio="Regular").
             aggregate(Sum('horas'),Sum('estudios'),Count('id')),
-            'diciembre1': Informe.objects.filter(año=año1,mes="Diciembre",horas__gt = 0,servicio="Regular").
+            'diciembre1': Informe.objects.filter(año=año1,mes="Diciembre",participacion = "Si",servicio="Regular").
             aggregate(Sum('horas'),Sum('estudios'),Count('id')),
-            'enero1': Informe.objects.filter(año=año1,mes="Enero",horas__gt = 0,servicio="Regular").
+            'enero1': Informe.objects.filter(año=año1,mes="Enero",participacion = "Si",servicio="Regular").
             aggregate(Sum('horas'),Sum('estudios'),Count('id')),
-            'febrero1': Informe.objects.filter(año=año1,mes="Febrero",horas__gt = 0,servicio="Regular").
+            'febrero1': Informe.objects.filter(año=año1,mes="Febrero",participacion = "Si",servicio="Regular").
             aggregate(Sum('horas'),Sum('estudios'),Count('id')),
-            'marzo1': Informe.objects.filter(año=año1,mes="Marzo",horas__gt = 0,servicio="Regular").
+            'marzo1': Informe.objects.filter(año=año1,mes="Marzo",participacion = "Si",servicio="Regular").
             aggregate(Sum('horas'),Sum('estudios'),Count('id')),
-            'abril1': Informe.objects.filter(año=año1,mes="Abril",horas__gt = 0,servicio="Regular").
+            'abril1': Informe.objects.filter(año=año1,mes="Abril",participacion = "Si",servicio="Regular").
             aggregate(Sum('horas'),Sum('estudios'),Count('id')),
-            'mayo1': Informe.objects.filter(año=año1,mes="Mayo",horas__gt = 0,servicio="Regular").
+            'mayo1': Informe.objects.filter(año=año1,mes="Mayo",participacion = "Si",servicio="Regular").
             aggregate(Sum('horas'),Sum('estudios'),Count('id')),
-            'junio1': Informe.objects.filter(año=año1,mes="Junio",horas__gt = 0,servicio="Regular").
+            'junio1': Informe.objects.filter(año=año1,mes="Junio",participacion = "Si",servicio="Regular").
             aggregate(Sum('horas'),Sum('estudios'),Count('id')),
-            'julio1': Informe.objects.filter(año=año1,mes="Julio",horas__gt = 0,servicio="Regular").
+            'julio1': Informe.objects.filter(año=año1,mes="Julio",participacion = "Si",servicio="Regular").
             aggregate(Sum('horas'),Sum('estudios'),Count('id')),
-            'agosto1': Informe.objects.filter(año=año1,mes="Agosto",horas__gt = 0,servicio="Regular").
+            'agosto1': Informe.objects.filter(año=año1,mes="Agosto",participacion = "Si",servicio="Regular").
             aggregate(Sum('horas'),Sum('estudios'),Count('id')),
-            'septiembre2': Informe.objects.filter(año=año2,mes="Septiembre",horas__gt = 0,servicio="Regular").
+            'septiembre2': Informe.objects.filter(año=año2,mes="Septiembre",participacion = "Si",servicio="Regular").
             aggregate(Sum('horas'),Sum('estudios'),Count('id')),
-            'octubre2': Informe.objects.filter(año=año2,mes="Octubre",horas__gt = 0,servicio="Regular").
+            'octubre2': Informe.objects.filter(año=año2,mes="Octubre",participacion = "Si",servicio="Regular").
             aggregate(Sum('horas'),Sum('estudios'),Count('id')),
-            'noviembre2': Informe.objects.filter(año=año2,mes="Noviembre",horas__gt = 0,servicio="Regular").
+            'noviembre2': Informe.objects.filter(año=año2,mes="Noviembre",participacion = "Si",servicio="Regular").
             aggregate(Sum('horas'),Sum('estudios'),Count('id')),
-            'diciembre2': Informe.objects.filter(año=año2,mes="Diciembre",horas__gt = 0,servicio="Regular").
+            'diciembre2': Informe.objects.filter(año=año2,mes="Diciembre",participacion = "Si",servicio="Regular").
             aggregate(Sum('horas'),Sum('estudios'),Count('id')),
-            'enero2': Informe.objects.filter(año=año2,mes="Enero",horas__gt = 0,servicio="Regular").
+            'enero2': Informe.objects.filter(año=año2,mes="Enero",participacion = "Si",servicio="Regular").
             aggregate(Sum('horas'),Sum('estudios'),Count('id')),
-            'febrero2': Informe.objects.filter(año=año2,mes="Febrero",horas__gt = 0,servicio="Regular").
+            'febrero2': Informe.objects.filter(año=año2,mes="Febrero",participacion = "Si",servicio="Regular").
             aggregate(Sum('horas'),Sum('estudios'),Count('id')),
-            'marzo2': Informe.objects.filter(año=año2,mes="Marzo",horas__gt = 0,servicio="Regular").
+            'marzo2': Informe.objects.filter(año=año2,mes="Marzo",participacion = "Si",servicio="Regular").
             aggregate(Sum('horas'),Sum('estudios'),Count('id')),
-            'abril2': Informe.objects.filter(año=año2,mes="Abril",horas__gt = 0,servicio="Regular").
+            'abril2': Informe.objects.filter(año=año2,mes="Abril",participacion = "Si",servicio="Regular").
             aggregate(Sum('horas'),Sum('estudios'),Count('id')),
-            'mayo2': Informe.objects.filter(año=año2,mes="Mayo",horas__gt = 0,servicio="Regular").
+            'mayo2': Informe.objects.filter(año=año2,mes="Mayo",participacion = "Si",servicio="Regular").
             aggregate(Sum('horas'),Sum('estudios'),Count('id')),
-            'junio2': Informe.objects.filter(año=año2,mes="Junio",horas__gt = 0,servicio="Regular").
+            'junio2': Informe.objects.filter(año=año2,mes="Junio",participacion = "Si",servicio="Regular").
             aggregate(Sum('horas'),Sum('estudios'),Count('id')),
-            'julio2': Informe.objects.filter(año=año2,mes="Julio",horas__gt = 0,servicio="Regular").
+            'julio2': Informe.objects.filter(año=año2,mes="Julio",participacion = "Si",servicio="Regular").
             aggregate(Sum('horas'),Sum('estudios'),Count('id')),
-            'agosto2': Informe.objects.filter(año=año2,mes="Agosto",horas__gt = 0,servicio="Regular").
+            'agosto2': Informe.objects.filter(año=año2,mes="Agosto",participacion = "Si",servicio="Regular").
             aggregate(Sum('horas'),Sum('estudios'),Count('id')),
             'titulo': "REGULARES - TOTALES",
             'año1': año1,
@@ -277,55 +277,55 @@ class Totales(LoginRequiredMixin,View):
             año2 = ultimo_registro.año
 
             totales1 = {
-                'Septiembre': Informe.objects.filter(año=año1,mes="Septiembre",horas__gt = 0,servicio=pub_aux_reg).
+                'Septiembre': Informe.objects.filter(año=año1,mes="Septiembre",participacion = "Si",servicio=pub_aux_reg).
                 aggregate(Sum('horas'),Sum('estudios'),Count('id')),
-                'Octubre': Informe.objects.filter(año=año1,mes="Octubre",horas__gt = 0,servicio=pub_aux_reg).
+                'Octubre': Informe.objects.filter(año=año1,mes="Octubre",participacion = "Si",servicio=pub_aux_reg).
                 aggregate(Sum('horas'),Sum('estudios'),Count('id')),
-                'Noviembre': Informe.objects.filter(año=año1,mes="Noviembre",horas__gt = 0,servicio=pub_aux_reg).
+                'Noviembre': Informe.objects.filter(año=año1,mes="Noviembre",participacion = "Si",servicio=pub_aux_reg).
                 aggregate(Sum('horas'),Sum('estudios'),Count('id')),
-                'Diciembre': Informe.objects.filter(año=año1,mes="Diciembre",horas__gt = 0,servicio=pub_aux_reg).
+                'Diciembre': Informe.objects.filter(año=año1,mes="Diciembre",participacion = "Si",servicio=pub_aux_reg).
                 aggregate(Sum('horas'),Sum('estudios'),Count('id')),
-                'Enero': Informe.objects.filter(año=año1,mes="Enero",horas__gt = 0,servicio=pub_aux_reg).
+                'Enero': Informe.objects.filter(año=año1,mes="Enero",participacion = "Si",servicio=pub_aux_reg).
                 aggregate(Sum('horas'),Sum('estudios'),Count('id')),
-                'Febrero': Informe.objects.filter(año=año1,mes="Febrero",horas__gt = 0,servicio=pub_aux_reg).
+                'Febrero': Informe.objects.filter(año=año1,mes="Febrero",participacion = "Si",servicio=pub_aux_reg).
                 aggregate(Sum('horas'),Sum('estudios'),Count('id')),
-                'Marzo': Informe.objects.filter(año=año1,mes="Marzo",horas__gt = 0,servicio=pub_aux_reg).
+                'Marzo': Informe.objects.filter(año=año1,mes="Marzo",participacion = "Si",servicio=pub_aux_reg).
                 aggregate(Sum('horas'),Sum('estudios'),Count('id')),
-                'Abril': Informe.objects.filter(año=año1,mes="Abril",horas__gt = 0,servicio=pub_aux_reg).
+                'Abril': Informe.objects.filter(año=año1,mes="Abril",participacion = "Si",servicio=pub_aux_reg).
                 aggregate(Sum('horas'),Sum('estudios'),Count('id')),
-                'Mayo': Informe.objects.filter(año=año1,mes="Mayo",horas__gt = 0,servicio=pub_aux_reg).
+                'Mayo': Informe.objects.filter(año=año1,mes="Mayo",participacion = "Si",servicio=pub_aux_reg).
                 aggregate(Sum('horas'),Sum('estudios'),Count('id')),
-                'Junio': Informe.objects.filter(año=año1,mes="Junio",horas__gt = 0,servicio=pub_aux_reg).
+                'Junio': Informe.objects.filter(año=año1,mes="Junio",participacion = "Si",servicio=pub_aux_reg).
                 aggregate(Sum('horas'),Sum('estudios'),Count('id')),
-                'Julio': Informe.objects.filter(año=año1,mes="Julio",horas__gt = 0,servicio=pub_aux_reg).
+                'Julio': Informe.objects.filter(año=año1,mes="Julio",participacion = "Si",servicio=pub_aux_reg).
                 aggregate(Sum('horas'),Sum('estudios'),Count('id')),
-                'Agosto': Informe.objects.filter(año=año1,mes="Agosto",horas__gt = 0,servicio=pub_aux_reg).
+                'Agosto': Informe.objects.filter(año=año1,mes="Agosto",participacion = "Si",servicio=pub_aux_reg).
                 aggregate(Sum('horas'),Sum('estudios'),Count('id')),
             }
             totales2 = {
-                'Septiembre': Informe.objects.filter(año=año2,mes="Septiembre",horas__gt = 0,servicio=pub_aux_reg).
+                'Septiembre': Informe.objects.filter(año=año2,mes="Septiembre",participacion = "Si",servicio=pub_aux_reg).
                 aggregate(Sum('horas'),Sum('estudios'),Count('id')),
-                'Octubre': Informe.objects.filter(año=año2,mes="Octubre",horas__gt = 0,servicio=pub_aux_reg).
+                'Octubre': Informe.objects.filter(año=año2,mes="Octubre",participacion = "Si",servicio=pub_aux_reg).
                 aggregate(Sum('horas'),Sum('estudios'),Count('id')),
-                'Noviembre': Informe.objects.filter(año=año2,mes="Noviembre",horas__gt = 0,servicio=pub_aux_reg).
+                'Noviembre': Informe.objects.filter(año=año2,mes="Noviembre",participacion = "Si",servicio=pub_aux_reg).
                 aggregate(Sum('horas'),Sum('estudios'),Count('id')),
-                'Diciembre': Informe.objects.filter(año=año2,mes="Diciembre",horas__gt = 0,servicio=pub_aux_reg).
+                'Diciembre': Informe.objects.filter(año=año2,mes="Diciembre",participacion = "Si",servicio=pub_aux_reg).
                 aggregate(Sum('horas'),Sum('estudios'),Count('id')),
-                'Enero': Informe.objects.filter(año=año2,mes="Enero",horas__gt = 0,servicio=pub_aux_reg).
+                'Enero': Informe.objects.filter(año=año2,mes="Enero",participacion = "Si",servicio=pub_aux_reg).
                 aggregate(Sum('horas'),Sum('estudios'),Count('id')),
-                'Febrero': Informe.objects.filter(año=año2,mes="Febrero",horas__gt = 0,servicio=pub_aux_reg).
+                'Febrero': Informe.objects.filter(año=año2,mes="Febrero",participacion = "Si",servicio=pub_aux_reg).
                 aggregate(Sum('horas'),Sum('estudios'),Count('id')),
-                'Marzo': Informe.objects.filter(año=año2,mes="Marzo",horas__gt = 0,servicio=pub_aux_reg).
+                'Marzo': Informe.objects.filter(año=año2,mes="Marzo",participacion = "Si",servicio=pub_aux_reg).
                 aggregate(Sum('horas'),Sum('estudios'),Count('id')),
-                'Abril': Informe.objects.filter(año=año2,mes="Abril",horas__gt = 0,servicio=pub_aux_reg).
+                'Abril': Informe.objects.filter(año=año2,mes="Abril",participacion = "Si",servicio=pub_aux_reg).
                 aggregate(Sum('horas'),Sum('estudios'),Count('id')),
-                'Mayo': Informe.objects.filter(año=año2,mes="Mayo",horas__gt = 0,servicio=pub_aux_reg).
+                'Mayo': Informe.objects.filter(año=año2,mes="Mayo",participacion = "Si",servicio=pub_aux_reg).
                 aggregate(Sum('horas'),Sum('estudios'),Count('id')),
-                'Junio': Informe.objects.filter(año=año2,mes="Junio",horas__gt = 0,servicio=pub_aux_reg).
+                'Junio': Informe.objects.filter(año=año2,mes="Junio",participacion = "Si",servicio=pub_aux_reg).
                 aggregate(Sum('horas'),Sum('estudios'),Count('id')),
-                'Julio': Informe.objects.filter(año=año2,mes="Julio",horas__gt = 0,servicio=pub_aux_reg).
+                'Julio': Informe.objects.filter(año=año2,mes="Julio",participacion = "Si",servicio=pub_aux_reg).
                 aggregate(Sum('horas'),Sum('estudios'),Count('id')),
-                'Agosto': Informe.objects.filter(año=año2,mes="Agosto",horas__gt = 0,servicio=pub_aux_reg).
+                'Agosto': Informe.objects.filter(año=año2,mes="Agosto",participacion = "Si",servicio=pub_aux_reg).
                 aggregate(Sum('horas'),Sum('estudios'),Count('id')),
             }
         except:
