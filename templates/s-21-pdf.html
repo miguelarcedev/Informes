@@ -64,31 +64,31 @@
 </style>
 <body>
     
-
+{% for p in publicador %}
 <h2 class="text-center">REGISTRO DE PUBLICADOR DE LA CONGREGACION</h2><br>
     <table>
         <tr>
-            <td style="width: 60%;"><b>Nombre: </b><strong>{{ publicador.apellido }} {{ publicador.nombre }}</strong></td>
+            <td style="width: 60%;"><b>Nombre: </b><strong>{{ p.apellido }} {{ p.nombre }}</strong></td>
             <td><strong></strong></td>
-            <td>{{ publicador.sexo }}</td>
+            <td>{{ p.sexo }}</td>
         </tr>
 
         <tr>
-            <td><b>Fecha de nacimiento:</b> {{ publicador.nacimiento }}</td>
+            <td><b>Fecha de nacimiento:</b> {{ p.nacimiento }}</td>
             <td></td>
-            <td>{{ publicador.u_oo }}</td>
+            <td>{{ p.u_oo }}</td>
         </tr>
 
         <tr>
-            <td><b>Fecha de bautismo:</b> {{ publicador.bautismo}}</td>
+            <td><b>Fecha de bautismo:</b> {{ p.bautismo}}</td>
             <td></td>
-            <td>{% if publicador.a_sm != NULL %}{{ publicador.a_sm}}{% endif %}</td>
+            <td>{% if p.a_sm != NULL %}{{ p.a_sm}}{% endif %}</td>
         </tr>
 
         <tr>
             <td></td>
             <td></td>
-            <td>{% if publicador.regular != NULL %}{{ publicador.regular}}{% endif %}</td>
+            <td>{% if p.servicio != NULL %}{{ p.servicio}}{% endif %}</td>
         </tr>
     </table>  <br>  
     
@@ -106,7 +106,7 @@
         </thead>
         
         <tbody>
-            {% for i in publicador.informe_set.all %}
+            {% for i in p.informe_set.all %}
                 {% if i.año == año1 %}
                     <tr>
                         <td class="text-center">{{ i.mes }}</td>
@@ -123,9 +123,6 @@
             {% endfor %}
         </tbody>
     </table><br><br>
-
-    {% if estado == "Activo" %}
-    
     
     <table id="invoice" border="0.2">
         <tbody>
@@ -138,7 +135,7 @@
                 <th style="width: 40%;">Notas</th>
                 
             </tr>
-            {% for i in publicador.informe_set.all %}
+            {% for i in p.informe_set.all %}
 
                 {% if i.año == año2 %}
                     <tr>
@@ -158,9 +155,9 @@
             
         </tbody>
     </table>
-    {% endif %}
+    <p class="saltodepagina" />
 
-
+{% endfor %}
 
 </body>
 </html>

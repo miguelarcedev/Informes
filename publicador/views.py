@@ -104,7 +104,7 @@ class Grupos(LoginRequiredMixin,View):
         except:
             cantidad = 0
 
-        template = get_template('publicador/grupos.html')
+        template = get_template('grupos.html')
         context = {
             'matriz_1': matriz_1,
             'matriz_2': matriz_2,
@@ -120,7 +120,7 @@ class Irregulares(LoginRequiredMixin,View):
        calculos = calculo_irregulares()
        irregulares = calculos[0]
        cantidad = calculos[1]
-       return render(request, "publicador/lista_irregulares.html",{"irregulares": irregulares,"cantidad": cantidad})   
+       return render(request, "irregulares.html",{"irregulares": irregulares,"cantidad": cantidad})   
       
 
 class Tarjeta(LoginRequiredMixin,View):
@@ -141,7 +141,7 @@ class Tarjeta(LoginRequiredMixin,View):
                 año1 = ultimo_registro.año
 
         template = get_template('s-21-pdf.html')
-        context = {'publicador': Publicador.objects.get(pk=self.kwargs['pk']),'año1':año1,'año2':año2,'estado':estado}
+        context = {'publicador': Publicador.objects.filter(pk=self.kwargs['pk']),'año1':año1,'año2':año2,'estado':estado}
         html = template.render(context)
         response = HttpResponse(content_type='application/pdf')
         pisaStatus = pisa.CreatePDF(html, dest=response)
@@ -157,7 +157,7 @@ class Estadisticas(LoginRequiredMixin,View):
         tot_mujeres = tot_activos - tot_hombres
         tot_ancianos = Publicador.objects.filter(estado="Activo", a_sm="Anciano").count()
         tot_ministeriales = Publicador.objects.filter(estado="Activo", a_sm="Siervo Ministerial").count()
-        tot_regulares = Publicador.objects.filter(estado="Activo", regular="Precursor Regular").count()
+        tot_regulares = Publicador.objects.filter(estado="Activo", servicio="Precursor Regular").count()
         tot_ungidos = Publicador.objects.filter(estado="Activo", u_oo="Ungido").count()
         tot_otras_ovejas = tot_activos - tot_ungidos
         irregulares = calculo_irregulares()
@@ -191,7 +191,7 @@ class Estadisticas(LoginRequiredMixin,View):
             'tot_otras_ovejas': tot_otras_ovejas,
         }
 
-        return render(request, "publicador/estadisticas.html",context=context)  
+        return render(request, "estadisticas.html",context=context)  
     
 
 
@@ -257,7 +257,7 @@ class S10(LoginRequiredMixin,View):
         except:
                 context = {}
 
-        return render(request, "publicador/s10.html",context=context)
+        return render(request, "s-10.html",context=context)
     
 class Telefonos(LoginRequiredMixin,View):
     def get(self, request, *args, **kwargs):
@@ -267,7 +267,7 @@ class Telefonos(LoginRequiredMixin,View):
             'telefonos': telefonos,
          }
        
-        return render(request, "informe/telefonos.html",context=context)
+        return render(request, "telefonos.html",context=context)
     
 class Contactos(LoginRequiredMixin,View):
     def get(self, request, *args, **kwargs):
@@ -277,4 +277,4 @@ class Contactos(LoginRequiredMixin,View):
         }
         
        
-        return render(request, "informe/contactos.html",context=context)      
+        return render(request, "contactos.html",context=context)      

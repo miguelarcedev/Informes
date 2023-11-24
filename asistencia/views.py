@@ -51,7 +51,7 @@ class Asistencia_pdf(LoginRequiredMixin,View):
                 'promedio2': promedio2
                 }
         
-        template = get_template('asistencia/tarjeta.html')
+        template = get_template('asistencia-pdf.html')
         html = template.render(context)
         response = HttpResponse(content_type='application/pdf')
         pisaStatus = pisa.CreatePDF(html, dest=response)
@@ -101,4 +101,4 @@ class Asistencia_pantalla(LoginRequiredMixin,View):
             except:
                 context = {}
         
-        return render(request, "asistencia/pantalla.html",context= context)
+        return render(request, "asistencia.html",context= context)
