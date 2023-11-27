@@ -34,8 +34,14 @@
                 </tr>
 
                 {% endfor %}
+                <td colspan="3"></td>
+                <td>Total</td>
+                <td>{{total_horas1.horas__sum}}</td>
+                <td></td>
 
             </table>
+            
+            
         </div>
 
         {% if estado == "Activo" %}
@@ -72,6 +78,10 @@
                 </tr>
 
                 {% endfor %}
+                <td colspan="3"></td>
+                <td>Total</td>
+                <td>{{total_horas2.horas__sum}}</td>
+                <td></td>
 
             </table>
         </div>

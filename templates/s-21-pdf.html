@@ -29,6 +29,7 @@
 
     #invoice tbody tr {
         padding: 0.2;
+        height: 15pt;
     }
 
     .text-center{
@@ -108,12 +109,14 @@
         <tbody>
             {% for i in p.informe_set.all %}
                 {% if i.año == año1 %}
+                
                     <tr>
                         <td class="text-center">{{ i.mes }}</td>
                         <td class="text-center">{{ i.participacion }}</td>
                         <td class="text-center">{{ i.estudios }}</td>
                         <td class="text-center">{{ i.auxiliar }}</td>
                         <td class="text-center">{{ i.horas }}</td>
+                        
                         {% if i.notas != NULL %}
                             <td class="text-center">  {{ i.notas }}</td>
                         
@@ -121,9 +124,15 @@
                     </tr>
                 {% endif %}
             {% endfor %}
+            <td colspan="3"></td>
+            <td class="text-center">Total</td>
+            <td class="text-center">{{ total_horas1.horas__sum }}</td>
+            
         </tbody>
-    </table><br><br>
-    
+       
+    </table> 
+    <br> <br>
+   
     <table id="invoice" border="0.1">
         <tbody>
             <tr>
@@ -152,9 +161,13 @@
                 {% endif %}
             
             {% endfor %}
+            <td colspan="3"></td>
+            <td class="text-center">Total</td>
+            <td class="text-center">{{ total_horas2.horas__sum }}</td>
             
         </tbody>
     </table>
+
     <p class="saltodepagina" />
 
 {% endfor %}

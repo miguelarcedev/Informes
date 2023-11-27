@@ -15,7 +15,7 @@ def calculo_irregulares():
             informe = Informe.objects.filter(publicador=k).order_by('-id')[0:6]
             bandera = True
             for i in informe:
-                if i.horas == 0:
+                if i.participacion != "Si":
                     irregulares.append((i.publicador,i.año,i.mes))
                     if bandera:
                         cantidad += 1

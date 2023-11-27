@@ -127,6 +127,8 @@ class Tarjeta(LoginRequiredMixin,View):
     def get(self, request,pk, *args, **kwargs):
         año1 = 0
         año2 = 0
+        total_horas1 = 0
+        total_horas2 = 0
         publicador = Publicador.objects.get(pk=self.kwargs['pk'])
         estado = publicador.estado
         if estado == "Activo":
@@ -134,18 +136,66 @@ class Tarjeta(LoginRequiredMixin,View):
             ultimo_registro = Informe.objects.all().last()
             año1 = ultimo_registro.año - 1
             año2 = ultimo_registro.año
+            total_horas1 = Informe.objects.filter(publicador=pk, año=año1).aggregate(Sum('horas'))
+            total_horas2 = Informe.objects.filter(publicador=pk, año=año2).aggregate(Sum('horas'))
+            template = get_template('s-21-pdf.html')
+    
         else:
             ultimo_registro = Informe.objects.filter(publicador=pk).last()
+            template = get_template('s-21-inactivos-pdf.html')
             
             if ultimo_registro:
                 año1 = ultimo_registro.año
-
-        template = get_template('s-21-pdf.html')
-        context = {'publicador': Publicador.objects.filter(pk=self.kwargs['pk']),'año1':año1,'año2':año2,'estado':estado}
+            total_horas1 = Informe.objects.filter(publicador=publicador.id, año=año1).aggregate(Sum('horas'))
+        publicador = Publicador.objects.filter(pk=self.kwargs['pk'])
+       
+        context = {'publicador': publicador ,'año1':año1,'año2':año2,'total_horas1':total_horas1,'total_horas2':total_horas2,'estado':estado}
         html = template.render(context)
         response = HttpResponse(content_type='application/pdf')
         pisaStatus = pisa.CreatePDF(html, dest=response)
-        return response   
+        return response 
+    
+class Publicado(LoginRequiredMixin,View):
+    def get(self, request, *args, **kwargs):
+        informe1 = {}
+        informe2 = {}
+        año1 = 0
+        año2 = 0
+        total_horas1 = 0
+        total_horas2 = 0
+        publicador = Publicador.objects.get(pk=self.kwargs['pk'])
+        estado = publicador.estado
+        if estado == "Activo":
+        
+            ultimo_registro = Informe.objects.all().last()
+            año1 = ultimo_registro.año - 1
+            año2 = ultimo_registro.año
+            informe1 = Informe.objects.filter(publicador=publicador.id, año=año1)
+            informe2 = Informe.objects.filter(publicador=publicador.id, año=año2)
+            total_horas1 = Informe.objects.filter(publicador=publicador.id, año=año1).aggregate(Sum('horas'))
+            total_horas2 = Informe.objects.filter(publicador=publicador.id, año=año2).aggregate(Sum('horas'))
+        else:
+            try:
+                ultimo_registro = Informe.objects.filter(publicador=self.kwargs['pk']).last()
+                año1 = ultimo_registro.año   
+                informe1 = Informe.objects.filter(publicador=publicador.id, año=año1)
+                total_horas1 = Informe.objects.filter(publicador=publicador.id, año=año1).aggregate(Sum('horas'))
+            except:
+                pass
+        
+        context = {
+            'informe1': informe1,
+            'informe2': informe2,
+            'año1':año1,
+            'año2':año2,
+            'nombre': publicador.nombre,
+            'apellido': publicador.apellido,
+            'estado' : estado,
+            'total_horas1':total_horas1,
+            'total_horas2':total_horas2,
+         }
+       
+        return render(request, "s-21.html",context=context) 
 
 class Estadisticas(LoginRequiredMixin,View):
     def get(self,request):
@@ -193,42 +243,6 @@ class Estadisticas(LoginRequiredMixin,View):
 
         return render(request, "estadisticas.html",context=context)  
     
-
-
-class Publicado(LoginRequiredMixin,View):
-    def get(self, request, *args, **kwargs):
-        informe1 = {}
-        informe2 = {}
-        año1 = 0
-        año2 = 0
-        publicador = Publicador.objects.get(pk=self.kwargs['pk'])
-        estado = publicador.estado
-        if estado == "Activo":
-        
-            ultimo_registro = Informe.objects.all().last()
-            año1 = ultimo_registro.año - 1
-            año2 = ultimo_registro.año
-            informe1 = Informe.objects.filter(publicador=publicador.id, año=año1)
-            informe2 = Informe.objects.filter(publicador=publicador.id, año=año2)
-        else:
-            try:
-                ultimo_registro = Informe.objects.filter(publicador=self.kwargs['pk']).last()
-                año1 = ultimo_registro.año   
-                informe1 = Informe.objects.filter(publicador=publicador.id, año=año1)
-            except:
-                pass
-        
-        context = {
-            'informe1': informe1,
-            'informe2': informe2,
-            'año1':año1,
-            'año2':año2,
-            'nombre': publicador.nombre,
-            'apellido': publicador.apellido,
-            'estado' : estado,
-         }
-       
-        return render(request, "s-21.html",context=context) 
 
 
 class S10(LoginRequiredMixin,View):

@@ -54,6 +54,7 @@ class Tarjeta_grupo(LoginRequiredMixin,View):
 class Precursores(LoginRequiredMixin,View):
 
     def get(self, request, *args, **kwargs):
+        total = 0
         try:
             ultimo_registro = Informe.objects.all().last()
             año1 = ultimo_registro.año - 1
@@ -61,11 +62,13 @@ class Precursores(LoginRequiredMixin,View):
         except:
             año1 = 1
             año2 = 2
+        publicador = Publicador.objects.filter(servicio="Precursor Regular").filter(estado="Activo")
         template = get_template('s-21-pdf.html')
         context = {
-            'publicador': Publicador.objects.filter(servicio="Precursor Regular").filter(estado="Activo"),
+            'publicador': publicador,
             'año1':año1,
-            'año2':año2
+            'año2':año2,
+            'total':total,
             }
         
         html = template.render(context)
@@ -76,7 +79,7 @@ class Precursores(LoginRequiredMixin,View):
 class Inactivos(LoginRequiredMixin,View):
 
     def get(self, request, *args, **kwargs):
-        template = get_template('grupo-inactivos-pdf.html')
+        template = get_template('s-21-inactivos-pdf.html')
         context = {'publicador': Publicador.objects.filter(estado="Inactivo")}
         html = template.render(context)
         response = HttpResponse(content_type='application/pdf')
