@@ -41,7 +41,7 @@ class Tarjeta_grupo(LoginRequiredMixin,View):
         ultimo_registro = Informe.objects.all().last()
         año1 = ultimo_registro.año - 1
         año2 = ultimo_registro.año
-        template = get_template('s-21-pdf.html')
+        template = get_template('s-21-grupos-pdf.html')
         context = {'publicador': Publicador.objects.filter(grupo=grupo).filter(estado="Activo").filter(servicio__isnull=True),
                    'año1':año1,
                    'año2':año2,
@@ -63,7 +63,7 @@ class Precursores(LoginRequiredMixin,View):
             año1 = 1
             año2 = 2
         publicador = Publicador.objects.filter(servicio="Precursor Regular").filter(estado="Activo")
-        template = get_template('s-21-pdf.html')
+        template = get_template('s-21-grupos-pdf.html')
         context = {
             'publicador': publicador,
             'año1':año1,
