@@ -34,18 +34,41 @@ def home(request):
      
     return render(request, "home.html",{"grupos":grupos})
 
-class Tarjeta_grupo(LoginRequiredMixin,View):
+""" class Tarjeta_grupo(LoginRequiredMixin,View):
 
     def get(self, request,grupo, *args, **kwargs):
-        
+        total = 0
         ultimo_registro = Informe.objects.all().last()
         año1 = ultimo_registro.año - 1
         año2 = ultimo_registro.año
-        template = get_template('s-21-pdf.html')
+        template = get_template('s-21-grupos-pdf.html')
         context = {'publicador': Publicador.objects.filter(grupo=grupo).filter(estado="Activo").filter(servicio__isnull=True),
                    'año1':año1,
                    'año2':año2,
+                   'total': total,
                    }
+        html = template.render(context)
+        response = HttpResponse(content_type='application/pdf')
+        pisaStatus = pisa.CreatePDF(html, dest=response)
+        return response """
+
+class Tarjeta_grupo(LoginRequiredMixin,View):
+
+    def get(self, request,grupo, *args, **kwargs):
+        total = []
+        ultimo_registro = Informe.objects.all().last()
+        año1 = ultimo_registro.año - 1
+        año2 = ultimo_registro.año
+        
+        publicador = Publicador.objects.filter(grupo=grupo,estado="Activo",servicio__isnull=True)
+       
+        print(publicador)   
+        context = {'publicador':publicador,
+                   'año1':año1,
+                   'año2':año2,
+                   
+                   }
+        template = get_template('s-21-grupos-pdf.html')
         html = template.render(context)
         response = HttpResponse(content_type='application/pdf')
         pisaStatus = pisa.CreatePDF(html, dest=response)
