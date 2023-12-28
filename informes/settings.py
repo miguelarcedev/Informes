@@ -29,7 +29,7 @@ SECRET_KEY = 'django-insecure-+s6_ewh#16e=2$=u7vrwgp_ci#yii!tcl3!+cg-&f56*v^a&(u
 
 
 
-ALLOWED_HOSTS = [".localhost"]
+ALLOWED_HOSTS = ["*"]
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -43,15 +43,16 @@ DEBUG = True
 SHARED_APPS = [
     'django_tenants',
     'shared',
+    
+]
+
+TENANT_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',  
-]
-
-TENANT_APPS = [
     'publicador',
     'informe',
     'asistencia',
@@ -59,7 +60,8 @@ TENANT_APPS = [
     
 ]
 
-INSTALLED_APPS = list(SHARED_APPS) + [app for app in TENANT_APPS if app not in SHARED_APPS]
+INSTALLED_APPS = SHARED_APPS + TENANT_APPS
+# INSTALLED_APPS = list(SHARED_APPS) + [app for app in TENANT_APPS if app not in SHARED_APPS]
 
 MIDDLEWARE = [
     'django_tenants.middleware.main.TenantMainMiddleware',
