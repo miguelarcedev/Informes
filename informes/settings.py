@@ -41,9 +41,13 @@ DEBUG = True
 # Application definition
 
 SHARED_APPS = [
-    'django_tenants',
     'shared',
-    
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',  
 ]
 
 TENANT_APPS = [
@@ -60,7 +64,25 @@ TENANT_APPS = [
     
 ]
 
-INSTALLED_APPS = SHARED_APPS + TENANT_APPS
+INSTALLED_APPS = [
+    'django_tenants',
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'shared',
+    'publicador',
+    'informe',
+    'asistencia',
+    'import_export', 
+
+]
+
+
+
+#INSTALLED_APPS = SHARED_APPS + TENANT_APPS
 # INSTALLED_APPS = list(SHARED_APPS) + [app for app in TENANT_APPS if app not in SHARED_APPS]
 
 MIDDLEWARE = [
