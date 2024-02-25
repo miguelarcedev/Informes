@@ -3,3 +3,5 @@ Django==4.1.4
 whitenoise==6.2.0
 xhtml2pdf==0.2.8
 django-import-export
+django-tenants==3.5.0
+psycopg2==2.9.7

@@ -6,7 +6,7 @@ from shared.models import Congregacion, Domain
 
 @admin.register(Congregacion)
 class CongregacionAdmin(TenantAdminMixin, admin.ModelAdmin):
-        list_display = ('nombre', 'paid_until', 'on_trial', 'created_on', 'auto_create_schema')
+        list_display = ('nombre', 'created_on', 'auto_create_schema')
 
 
 @admin.register(Domain)
