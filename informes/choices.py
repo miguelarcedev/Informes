@@ -69,8 +69,8 @@ ESTADO = [
         ('Inactivo', 'Inactivo'),
         ('Baja', 'Baja'),
         ('Mudado', 'Mudado'),
-        
-        
+        ('Expulsado', 'Expulsado'),
+        ('Fallecido', 'Fallecido'),
     ]
 
 APR = [

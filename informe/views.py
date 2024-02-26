@@ -86,7 +86,7 @@ class Precursores(LoginRequiredMixin,View):
             año1 = 1
             año2 = 2
         publicador = Publicador.objects.filter(servicio="Precursor Regular").filter(estado="Activo")
-        template = get_template('s-21-pdf.html')
+        template = get_template('s-21-grupos-pdf.html')
         context = {
             'publicador': publicador,
             'año1':año1,
