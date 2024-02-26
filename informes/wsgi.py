@@ -12,10 +12,8 @@ import os
 from django.core.wsgi import get_wsgi_application
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'informes.settings')
-
 application = get_wsgi_application()
 
-# EStas 3 lineas agrego para ver que pasa con el deploy en IIS, borrar si no es necesario
 
 
 

@@ -77,6 +77,7 @@ INSTALLED_APPS = [
     'informe',
     'asistencia',
     'import_export', 
+    
 
 ]
 
