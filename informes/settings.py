@@ -117,7 +117,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'informes.wsgi.application'
+# WSGI_APPLICATION = 'informes.wsgi.application'
 
 
 # Database
@@ -136,13 +136,14 @@ DATABASES = {
         'ENGINE': 'django_tenants.postgresql_backend',
         'NAME': 'informes_db',
         'USER': 'postgres',
-        'PASSWORD': 'superadmin',
+        'PASSWORD': 'PdHwHq9skl78',
         'HOST': 'localhost',
         'PORT': '',
         'CHARSET': 'UTF8',
     }
 }
-
+# 'PASSWORD' : 'PdHwHq9skl78',
+# 'PASSWORD': 'superadmin',
 DATABASE_ROUTERS = (
     'django_tenants.routers.TenantSyncRouter',
 )
