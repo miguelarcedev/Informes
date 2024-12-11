@@ -55,19 +55,19 @@ def home(request):
 class Tarjeta_grupo(LoginRequiredMixin,View):
 
     def get(self, request,grupo, *args, **kwargs):
-        total1 = []
+        
         ultimo_registro = Informe.objects.all().last()
         año1 = ultimo_registro.año - 1
         año2 = ultimo_registro.año
         
         publicador = Publicador.objects.filter(grupo=grupo,estado="Activo",servicio__isnull=True)
-        for p in publicador:
-            total1.append(Informe.objects.filter(publicador=publicador, año= año1).aggregate(Sum('horas')))
-        print(total1)
+        
+        pub = Informe.objects.filter(publicador=7, año= año1).aggregate(Sum('horas'))
+        print(pub)
         context = {'publicador':publicador,
                    'año1':año1,
                    'año2':año2,
-                   
+                   'pub':pub,
                    }
         template = get_template('s-21-grupos-pdf.html')
         html = template.render(context)
