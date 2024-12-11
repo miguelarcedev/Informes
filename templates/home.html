@@ -5,7 +5,7 @@
 {% block contenido %}
 
 <div class="row justify-content-center">
-  <div class="m-3" style="width:200px">
+  <div class="m-3" style="width:300px">
     <ul>
       <li><a class="active" href="#home">Asistencia</a></li>
       <li><a href="{% url 'asistencia' 'entre' %}">Entre semana</a></li>
@@ -13,7 +13,7 @@
     </ul>
   </div>
 
-  <div class="m-3" style="width:200px">
+  <div class="m-3" style="width:300px">
     <ul>
       <li><a class="active" href="#home">Totales</a></li>
       <li><a href="{% url 'totales' 'Publicador' %}">Publicadores</a></li>
@@ -22,7 +22,7 @@
     </ul>
   </div>
 
-  <div class="m-3" style="width:200px">
+  <div class="m-3" style="width:300px">
     <ul>
       <li><a class="active" href="#home">Publicadores</a></li>
       <li><a href="{% url 'publicadores' 'Activo' %}">Activos</a></li>
@@ -33,7 +33,7 @@
     </ul>
   </div>
 
-  <div class="m-3" style="width:200px">
+  <div class="m-3" style="width:300px">
     <ul>
       <li><a class="active" href="#home">Tarjetas por grupo</a></li>
       {% for i in grupos %}
@@ -45,7 +45,7 @@
     </ul>
   </div>
 
-  <div class="m-3" style="width:200px">
+  <div class="m-3" style="width:300px">
     <ul>
       <li><a class="active" href="#home">Otros documentos</a></li>
       <li><a href="{% url 'grupos' %}">Lista de grupos</a></li>

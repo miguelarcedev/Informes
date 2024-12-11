@@ -136,7 +136,7 @@ DATABASES = {
         'ENGINE': 'django_tenants.postgresql_backend',
         'NAME': 'informes_db',
         'USER': 'postgres',
-        'PASSWORD': 'PdHwHq9skl78',
+        'PASSWORD': 'superadmin',
         'HOST': 'localhost',
         'PORT': '',
         'CHARSET': 'UTF8',

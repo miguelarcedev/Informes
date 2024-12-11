@@ -24,9 +24,9 @@ class Publicador_list(LoginRequiredMixin,View):
         publicador = Publicador.objects.filter(estado=estado)
         cantidad = Publicador.objects.filter(estado=estado).count()
         if estado == "Activo":
-            titulo = "PUBLICADORES ACTIVOS: "
+            titulo = "Publicadores Activos: "
         else:        
-            titulo = "PUBLICADORES INACTVOS: "
+            titulo = "Publicadores Inactivos: "
         
         return render(request, "publicadores.html",{"publicador": publicador, "titulo":titulo,"cantidad":cantidad})
 

@@ -32,7 +32,7 @@ def home(request):
         for i in range(1,cantidad+1):
             grupos.append(i)
      
-    return render(request, "home.html",{"grupos":grupos})
+    return render(request, "templates/home.html" ,{"grupos":grupos})
 
 """ class Tarjeta_grupo(LoginRequiredMixin,View):
 
@@ -55,14 +55,15 @@ def home(request):
 class Tarjeta_grupo(LoginRequiredMixin,View):
 
     def get(self, request,grupo, *args, **kwargs):
-        total = []
+        total1 = []
         ultimo_registro = Informe.objects.all().last()
         año1 = ultimo_registro.año - 1
         año2 = ultimo_registro.año
         
         publicador = Publicador.objects.filter(grupo=grupo,estado="Activo",servicio__isnull=True)
-       
-        print(publicador)   
+        for p in publicador:
+            total1.append(Informe.objects.filter(publicador=publicador, año= año1).aggregate(Sum('horas')))
+        print(total1)
         context = {'publicador':publicador,
                    'año1':año1,
                    'año2':año2,
@@ -301,7 +302,7 @@ class Totales(LoginRequiredMixin,View):
             ultimo_registro = Informe.objects.all().last()
             año1 = ultimo_registro.año - 1
             año2 = ultimo_registro.año
-
+            
             totales1 = {
                 'Septiembre': Informe.objects.filter(año=año1,mes="Septiembre",participacion = "Si",servicio=pub_aux_reg).
                 aggregate(Sum('horas'),Sum('estudios'),Count('id')),
@@ -371,5 +372,5 @@ class Totales(LoginRequiredMixin,View):
             'totales2':totales2,
             'datos':datos
         }
-            
+        print(totales2)
         return render(request, "totales.html", context=context)

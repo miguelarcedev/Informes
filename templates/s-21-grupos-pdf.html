@@ -123,16 +123,12 @@
                         {% endif %}
                     </tr>
                 {% endif %}
-<<<<<<< HEAD
-            {% endfor %}
-            
-=======
                 
             {% endfor %}
             <td colspan="3"></td>
             <td class="text-center">Total</td>
-            <td class="text-center">{{p}}}</td>
->>>>>>> 28fadbe3f71d010e9e7a0fc2dc67a8524032f25d
+            <td class="text-center"> {{pub.horas__sum}}</td>
+
             
         </tbody>
        
@@ -165,18 +161,31 @@
                         {% endif %}
                     </tr>
                 {% endif %}
-<<<<<<< HEAD
-                
+            
             {% endfor %}
-            
-            
-=======
+
+            {% for i in p.informe_set.all %}
+
+                {% if i.año == año2 %}
+                    <tr>
+                        <td class="text-center">{{ i.mes }}</td>
+                        <td class="text-center">{{ i.participacion }}</td>
+                        <td class="text-center">{{ i.estudios }}</td>
+                        <td class="text-center">{{ i.auxiliar }}</td>
+                        <td class="text-center">{{ i.horas }}</td>
+                        {% if i.notas != NULL %}
+                            <td class="text-center">  {{ i.notas }}</td>
+                        
+                        {% endif %}
+                    </tr>
+                {% endif %}
             
             {% endfor %}
             <td colspan="3"></td>
             <td class="text-center">Total</td>
-            <td class="text-center">{{ total_horas2.horas__sum }}</td>
->>>>>>> 28fadbe3f71d010e9e7a0fc2dc67a8524032f25d
+            <td class="text-center">""</td>
+       
+
             
         </tbody>
     </table>

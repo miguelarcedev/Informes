@@ -33,9 +33,15 @@
 
             <tr>
                 <td>{{clave}}</td>
+                {% if valor.id__count  == 0 %}
+                <td>      </td>
+                <td>      </td>
+                <td>      </td>
+                {% else %}
                 <td>{{valor.estudios__sum}}</td>
                 <td>{{valor.horas__sum}}</td>
                 <td>{{valor.id__count}}</td>
+                {% endif %}
             </tr>
 
             {% endfor %}
@@ -77,9 +83,16 @@
 
             <tr>
                 <td>{{clave}}</td>
+                {% if valor.id__count  == 0 %}
+                <td>      </td>
+                <td>      </td>
+                <td>      </td>
+                {% else %}
                 <td>{{valor.estudios__sum}}</td>
                 <td>{{valor.horas__sum}}</td>
                 <td>{{valor.id__count}}</td>
+                {% endif %}
+                
             </tr>
 
             {% endfor %}
