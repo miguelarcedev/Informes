@@ -127,9 +127,13 @@
             {% endfor %}
             <td colspan="3"></td>
             <td class="text-center">Total</td>
-            <td class="text-center"> {{pub.horas__sum}}</td>
-
+            {% for clave, valor in totales_dic_uno.items %}
+                {% if p.id == clave %}
+                    <td class="text-center"> {{valor}}</td>
+                {% endif %}
+            {% endfor %}
             
+         
         </tbody>
        
     </table> 
@@ -146,23 +150,6 @@
                 <th style="width: 40%;">Notas</th>
                 
             </tr>
-            {% for i in p.informe_set.all %}
-
-                {% if i.año == año2 %}
-                    <tr>
-                        <td class="text-center">{{ i.mes }}</td>
-                        <td class="text-center">{{ i.participacion }}</td>
-                        <td class="text-center">{{ i.estudios }}</td>
-                        <td class="text-center">{{ i.auxiliar }}</td>
-                        <td class="text-center">{{ i.horas }}</td>
-                        {% if i.notas != NULL %}
-                            <td class="text-center">  {{ i.notas }}</td>
-                        
-                        {% endif %}
-                    </tr>
-                {% endif %}
-            
-            {% endfor %}
 
             {% for i in p.informe_set.all %}
 
@@ -183,8 +170,11 @@
             {% endfor %}
             <td colspan="3"></td>
             <td class="text-center">Total</td>
-            <td class="text-center">""</td>
-       
+            {% for clave, valor in totales_dic_dos.items %}
+                {% if p.id == clave %}
+                    <td class="text-center"> {{valor}}</td>
+                {% endif %}
+            {% endfor %}
 
             
         </tbody>

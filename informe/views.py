@@ -55,19 +55,28 @@ def home(request):
 class Tarjeta_grupo(LoginRequiredMixin,View):
 
     def get(self, request,grupo, *args, **kwargs):
-        
+        ids = []
+        totales_uno = []
+        totales_dos = []
         ultimo_registro = Informe.objects.all().last()
         año1 = ultimo_registro.año - 1
         año2 = ultimo_registro.año
         
         publicador = Publicador.objects.filter(grupo=grupo,estado="Activo",servicio__isnull=True)
+        ids = list(publicador.values_list('id', flat=True))
+        for i in ids:   
+            total_horas_uno = Informe.objects.filter(publicador=i, año=año1).aggregate(total=Sum('horas'))['total']
+            total_horas_dos = Informe.objects.filter(publicador=i, año=año2).aggregate(total=Sum('horas'))['total']
+            totales_uno.append(total_horas_uno or 0)
+            totales_dos.append(total_horas_dos or 0)
+        totales_dic_uno = dict(zip(ids, totales_uno))
+        totales_dic_dos = dict(zip(ids, totales_dos))
         
-        pub = Informe.objects.filter(publicador=7, año= año1).aggregate(Sum('horas'))
-        print(pub)
         context = {'publicador':publicador,
                    'año1':año1,
                    'año2':año2,
-                   'pub':pub,
+                   'totales_dic_uno':totales_dic_uno,
+                   'totales_dic_dos':totales_dic_dos,
                    }
         template = get_template('s-21-grupos-pdf.html')
         html = template.render(context)
@@ -78,7 +87,9 @@ class Tarjeta_grupo(LoginRequiredMixin,View):
 class Precursores(LoginRequiredMixin,View):
 
     def get(self, request, *args, **kwargs):
-        total = 0
+        ids = []
+        totales_uno = []
+        totales_dos = []
         try:
             ultimo_registro = Informe.objects.all().last()
             año1 = ultimo_registro.año - 1
@@ -87,14 +98,22 @@ class Precursores(LoginRequiredMixin,View):
             año1 = 1
             año2 = 2
         publicador = Publicador.objects.filter(servicio="Precursor Regular").filter(estado="Activo")
-        template = get_template('s-21-grupos-pdf.html')
-        context = {
-            'publicador': publicador,
-            'año1':año1,
-            'año2':año2,
-            'total':total,
-            }
+        ids = list(publicador.values_list('id', flat=True))
+        for i in ids:   
+            total_horas_uno = Informe.objects.filter(publicador=i, año=año1).aggregate(total=Sum('horas'))['total']
+            total_horas_dos = Informe.objects.filter(publicador=i, año=año2).aggregate(total=Sum('horas'))['total']
+            totales_uno.append(total_horas_uno or 0)
+            totales_dos.append(total_horas_dos or 0)
+        totales_dic_uno = dict(zip(ids, totales_uno))
+        totales_dic_dos = dict(zip(ids, totales_dos))
         
+        context = {'publicador':publicador,
+                   'año1':año1,
+                   'año2':año2,
+                   'totales_dic_uno':totales_dic_uno,
+                   'totales_dic_dos':totales_dic_dos,
+                   }
+        template = get_template('s-21-grupos-pdf.html')
         html = template.render(context)
         response = HttpResponse(content_type='application/pdf')
         pisaStatus = pisa.CreatePDF(html, dest=response)
