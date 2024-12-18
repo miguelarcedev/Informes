@@ -108,7 +108,7 @@ ul {
   
  
 
-  @media screen and (max-width: 370px) {
+  @media screen and (max-width: 400px) {
     .topnav a:not(:first-child) {display: none;}
     .topnav a.icon {
       float: right;
