@@ -391,5 +391,5 @@ class Totales(LoginRequiredMixin,View):
             'totales2':totales2,
             'datos':datos
         }
-        print(totales2)
+        
         return render(request, "totales.html", context=context)
