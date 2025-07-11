@@ -1,7 +1,7 @@
 
 from django.db import models
 from informes.choices import *
-
+from django.contrib.auth.models import User
 
 class Publicador(models.Model):
     apellido = models.CharField(max_length=50,null=True, blank=True)
@@ -17,6 +17,7 @@ class Publicador(models.Model):
     telefono = models.CharField(max_length=12, default=388)
     contacto = models.CharField(max_length=50, null=True, blank=True)
     telefono_contacto = models.CharField(max_length=12, default=388)
+    user = models.OneToOneField(User, null=True, blank=True, on_delete=models.SET_NULL)
 
     class Meta():
         verbose_name='publicador'

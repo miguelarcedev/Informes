@@ -47,7 +47,8 @@ SHARED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',  
+    'django.contrib.staticfiles',
+    
 ]
 
 TENANT_APPS = [
@@ -56,11 +57,12 @@ TENANT_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',  
+    'django.contrib.staticfiles',
     'publicador',
     'informe',
     'asistencia',
-    'import_export', 
+    'import_export',
+    'usuarios', 
     
 ]
 
@@ -77,7 +79,7 @@ INSTALLED_APPS = [
     'informe',
     'asistencia',
     'import_export', 
-    
+    'usuarios',
 
 ]
 
@@ -206,7 +208,21 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_URL = '/admin/login/?next=/admin/'
 
+#LOGIN_REDIRECT_URL = '/home/'  # O la ruta que tú decidas como página principal
+
+
 # Esta linea se habilita para deployar en heroku
 
 
 IMPORT_EXPORT_USE_TRANSACTIONS = True
+
+# Para enviar correos 
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'adm.cuentas.correo@gmail.com'
+EMAIL_HOST_PASSWORD = 'lhso hedx aqao ixox'
+
+
