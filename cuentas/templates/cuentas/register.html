@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}Crear cuenta{% endblock %}
+{% block content %}
+<h2>Crear cuenta</h2>
+<form method="post" onsubmit="return validateRegister()">{% csrf_token %}
+  {{ form.first_name }}
+  {{ form.last_name }}
+  {{ form.username }}
+  {{ form.email }}
+  {{ form.password1 }}
+  {{ form.password2 }}
+  <div id="registerError" class="error">
+    {% for field in form %}{% for e in field.errors %}{{ e }}{% endfor %}{% endfor %}
+    {% for e in form.non_field_errors %}{{ e }}{% endfor %}
+  </div>
+  <button type="submit">Crear cuenta</button>
+</form>
+<a href="{% url 'login_username' %}">¿Ya tienes cuenta? Inicia sesión</a>
+<script>
+function validateRegister(){
+  const req = ['first_name','last_name','username','email','password1','password2'];
+  const err = document.getElementById('registerError');
+  for (const n of req){ const el=document.querySelector(`[name="${n}"]`); if(!el||!el.value.trim()){err.textContent='Todos los campos son obligatorios.'; return false;}}
+  const p1=document.querySelector('[name="password1"]').value;
+  const p2=document.querySelector('[name="password2"]').value;
+  if(p1!==p2){err.textContent='Las contraseñas no coinciden.'; return false;}
+  err.textContent=''; return true;
+}
+</script>
+{% endblock %}
