@@ -1,0 +1,19 @@
+# Crear un entorno virutal
+
+py -m venv nombre-de-entorno
+
+# Instalar paquetes del archivo requirements.txt
+
+pip install -r requirements.txt
+
+# Crear migraciones
+python manage.py makemigrations
+
+# Migrar esquema público (aplicaciones compartidas)
+python manage.py migrate_schemas --shared
+
+# Migrar todos los esquemas de inquilinos
+python manage.py migrate_schemas
+
+
+

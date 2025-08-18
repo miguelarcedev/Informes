@@ -1,0 +1,107 @@
+{% extends "base0.html" %}
+
+{% block contenido %}
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+      <div class="card shadow-lg border-0 rounded-4">
+        <div class="card-header bg-warning text-dark text-center py-3 rounded-top-4">
+          <h4 class="mb-0">✏️ Editar Informe</h4>
+        </div>
+        <div class="card-body p-4">
+
+          <!-- Mensajes (ej: éxito/error) -->
+          {% if messages %}
+            {% for message in messages %}
+              <div class="alert alert-{{ message.tags }} alert-dismissible fade show shadow-sm" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+              </div>
+            {% endfor %}
+          {% endif %}
+
+          <!-- Formulario -->
+          <form method="post" novalidate>
+            {% csrf_token %}
+
+            {# Mostrar errores globales (no de un campo específico) #}
+            {% if form.non_field_errors %}
+              <div class="alert alert-danger">
+                {{ form.non_field_errors }}
+              </div>
+            {% endif %}
+
+            <!-- Campos del formulario -->
+            <div class="mb-3">
+              <label class="form-label">Año</label>
+              {{ form.año }}
+              {% for error in form.anio.errors %}
+                <div class="text-danger small">{{ error }}</div>
+              {% endfor %}
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Mes</label>
+              {{ form.mes }}
+              {% for error in form.mes.errors %}
+                <div class="text-danger small">{{ error }}</div>
+              {% endfor %}
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Participación</label>
+              {{ form.participacion }}
+              {% for error in form.participacion.errors %}
+                <div class="text-danger small">{{ error }}</div>
+              {% endfor %}
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Estudios</label>
+              {{ form.estudios }}
+              {% for error in form.estudios.errors %}
+                <div class="text-danger small">{{ error }}</div>
+              {% endfor %}
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Auxiliar</label>
+              {{ form.auxiliar }}
+              {% for error in form.auxiliar.errors %}
+                <div class="text-danger small">{{ error }}</div>
+              {% endfor %}
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Horas</label>
+              {{ form.horas }}
+              {% for error in form.horas.errors %}
+                <div class="text-danger small">{{ error }}</div>
+              {% endfor %}
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Notas</label>
+              {{ form.notas }}
+              {% for error in form.notas.errors %}
+                <div class="text-danger small">{{ error }}</div>
+              {% endfor %}
+            </div>
+
+            <!-- Botones -->
+            <div class="d-flex justify-content-between mt-4">
+              <a href="{% url 'home' %}" class="btn btn-outline-secondary">
+                ⬅️ Cancelar
+              </a>
+              <button type="submit" class="btn btn-warning px-4">
+                Actualizar Informe
+              </button>
+            </div>
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

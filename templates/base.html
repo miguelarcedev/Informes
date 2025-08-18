@@ -1,0 +1,24 @@
+{% load static %}
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+  <title>{% block title %}Sistema{% endblock %}</title>
+</head>
+<body>
+<div class="container">
+{% if messages %}
+  {% for m in messages %}
+    <div class="alert">{{ m }}</div>
+  {% endfor %}
+{% endif %}
+
+{% block content %}
+
+{% endblock %}
+
+</div>
+</body>
+</html>

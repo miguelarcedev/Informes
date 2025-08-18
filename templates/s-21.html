@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+
+{% block contenido %}
+<div class="container">
+    <div class="row justify-content-center" >
+        <div class="m-3">
+            <table id="customers">
+                <tr>
+                    <th colspan="7">{{apellido}} {{nombre}}</th>
+                </tr>
+                <tr>
+                    <th>{{año1}}</th>
+                    <th>Participación</th>
+                    <th>Estudios</th>
+                    <th>Auxiliar</th>
+                    <th>Horas</th>
+                    <th>Notas</th>
+
+                </tr>
+
+                {% for c in informe1 %}
+
+                <tr>
+                    <td>{{c.mes}}</td>
+                    <td>{{c.participacion}}</td>
+                    <td>{{c.estudios}}</td>
+                    <td>{{c.auxiliar}}</td>
+                    <td>{{c.horas}}</td>
+                    {% if c.notas != NULL %}
+                    <td>{{c.notas}}</td>
+                    {% else %}
+                    <td></td>
+                    {% endif %}
+                </tr>
+
+                {% endfor %}
+                <td colspan="3"></td>
+                <td>Total</td>
+                <td>{{total_horas1.horas__sum}}</td>
+                <td></td>
+
+            </table>
+            
+            
+        </div>
+
+        {% if estado == "Activo" %}
+
+        <div class="m-3">
+            <table id="customers">
+                <tr>
+                    <th colspan="7">{{apellido}} {{nombre}}</th>
+                </tr>
+
+                <tr>
+                    <th>{{año2}}</th>
+                    <th>Participación</th>
+                    <th>Estudios</th>
+                    <th>Auxiliar</th>
+                    <th>Horas</th>
+                    <th>Notas</th>
+
+                </tr>
+
+                {% for c in informe2 %}
+
+                <tr>
+                    <td>{{c.mes}}</td>
+                    <td>{{c.participacion}}</td>
+                    <td>{{c.estudios}}</td>
+                    <td>{{c.auxiliar}}</td>
+                    <td>{{c.horas}}</td>
+                    {% if c.notas != NULL %}
+                    <td>{{c.notas}}</td>
+                    {% else %}
+                    <td></td>
+                    {% endif %}
+                </tr>
+
+                {% endfor %}
+                <td colspan="3"></td>
+                <td>Total</td>
+                <td>{{total_horas2.horas__sum}}</td>
+                <td></td>
+
+            </table>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+
+{% endblock %}

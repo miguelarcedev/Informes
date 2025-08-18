@@ -1,0 +1,155 @@
+{% extends "base0.html" %}
+{% load static %}
+{% load custom_filters %}
+
+{% block contenido %}
+<div class="container mt-4">
+
+    <!-- Bloque de mensajes -->
+    {% if messages %}
+      <div class="mb-3">
+        {% for message in messages %}
+          <div 
+            class="alert alert-{{ message.tags }} alert-dismissible fade show shadow-sm" 
+            role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+    <!-- Fin mensajes -->
+
+    <!-- Nav Tabs -->
+    <ul class="nav nav-tabs" id="datosTabs" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link {% if not publicador %}active{% endif %}" 
+                id="usuario-tab" data-bs-toggle="tab"
+                data-bs-target="#usuario" type="button" role="tab" 
+                aria-controls="usuario"
+                aria-selected="{% if not publicador %}true{% else %}false{% endif %}">
+                Datos del Usuario
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link {% if publicador %}active{% endif %}" 
+                id="publicador-tab" data-bs-toggle="tab"
+                data-bs-target="#publicador" type="button" role="tab" 
+                aria-controls="publicador"
+                aria-selected="{% if publicador %}true{% else %}false{% endif %}">
+                Datos del Publicador
+            </button>
+        </li>
+    </ul>
+
+    <!-- Tab Content -->
+    <div class="tab-content mt-3" id="datosTabsContent">
+
+        <!-- Tab Usuario -->
+        <div class="tab-pane fade {% if not publicador %}show active{% endif %}" 
+             id="usuario" role="tabpanel"
+             aria-labelledby="usuario-tab">
+            <div class="card mb-4">
+                <div class="card-header bg-primary text-white">Datos del Usuario</div>
+                <div class="card-body">
+                    <p><strong>Nombre de usuario:</strong> {{ user.username }}</p>
+                    <p><strong>Email:</strong> {{ user.email }}</p>
+                    <p><strong>Nombre completo:</strong> {{ user.get_full_name }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab Publicador -->
+        <div class="tab-pane fade {% if publicador %}show active{% endif %}" 
+             id="publicador" role="tabpanel"
+             aria-labelledby="publicador-tab">
+
+            {% if publicador %}
+            <div class="card mb-4">
+                <div class="card-header bg-success text-white">Datos del Publicador</div>
+                <div class="card-body">
+                    <p><strong>ID:</strong> {{ publicador.id }}</p>
+                    <p><strong>Nombre:</strong> {{ publicador.nombre }} {{ publicador.apellido }}</p>
+                    <p><strong>Fecha Bautismo:</strong> {{ publicador.bautismo }}</p>
+                    <p><strong>Grupo:</strong> {{ publicador.grupo }}</p>
+                </div>
+            </div>
+
+            <!-- Informes -->
+            <div class="card">
+                <div class="card-header bg-info text-white d-flex justify-content-between align-items-center">
+                    <span>Informes</span>
+                    <a href="{% url 'crear_informe' %}" class="btn btn-light btn-sm">
+                        ➕ Agregar Informe
+                    </a>
+                </div>
+                <div class="card-body">
+                    {% if años_ordenados %}
+                    <div class="accordion" id="accordionInformes">
+                        {% for año in años_ordenados %}
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="heading{{ año }}">
+                                <button class="accordion-button {% if not forloop.first %}collapsed{% endif %}"
+                                    type="button" data-bs-toggle="collapse" 
+                                    data-bs-target="#collapse{{ año }}"
+                                    aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}"
+                                    aria-controls="collapse{{ año }}">
+                                    {{ año }}
+                                </button>
+                            </h2>
+                            <div id="collapse{{ año }}"
+                                class="accordion-collapse collapse {% if forloop.first %}show{% endif %}"
+                                aria-labelledby="heading{{ año }}" 
+                                data-bs-parent="#accordionInformes">
+                                <div class="accordion-body p-0">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped table-bordered mb-0">
+                                            <thead>
+                                                <tr>
+                                                    <th>Mes</th>
+                                                    <th class="d-none d-sm-table-cell">Participación</th>
+                                                    <th class="d-none d-sm-table-cell">Estudios</th>
+                                                    <th>Auxiliar</th>
+                                                    <th>Horas</th>
+                                                    <th>Notas</th>
+                                                    <th>Acciones</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for informe in informes_agrupados|get_item:año %}
+                                                <tr>
+                                                    <td>{{ informe.mes }}</td>
+                                                    <td class="d-none d-sm-table-cell">{{ informe.participacion }}</td>
+                                                    <td class="d-none d-sm-table-cell">{{ informe.estudios }}</td>
+                                                    <td>{{ informe.auxiliar }}</td>
+                                                    <td>{{ informe.horas }}</td>
+                                                    <td>{{ informe.notas }}</td>
+                                                    <td>
+                                                        <a href="{% url 'editar_informe' informe.id %}"
+                                                           class="btn btn-sm btn-warning">✏️</a>
+                                                    </td>
+                                                </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <p>No hay informes disponibles.</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            {% else %}
+            <div class="alert alert-warning mt-3" role="alert">
+                Tus registros todavía no están vinculados a un publicador de la congregación. Contacta al Secretario.
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

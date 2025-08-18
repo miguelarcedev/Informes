@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+<style>
+    th, td {
+  padding-top: 5px;
+  padding-bottom: 2px;
+  padding-left: 1px;
+  padding-right: 1px;
+}
+p.saltodepagina
+{
+    page-break-after: always;
+}
+</style>
+
+<body>
+    
+    <table border="0.1">
+        <thead>
+            <tr style="background-color: rgb(228, 228, 224)">
+                <th style="width: 4%;">N°</th>
+                <th style="width: 32%;">GRUPO 1</th>
+                <th style="width: 32%;">GRUPO 2</th>
+                <th style="width: 32%;">GRUPO 3</th>
+                
+                
+            </tr>
+        </thead>
+        
+        <tbody>
+            {% for grupo in matriz_1 %}
+                    <tr>
+                            <td align="center">{{grupo.0}}</td>
+                            <td>{{grupo.1 }}</td>
+                            <td>{{grupo.2 }}</td>
+                            <td>{{grupo.3 }}</td>
+                            
+                    </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    {% if cantidad > 3 %}
+        <p class="saltodepagina" />
+        <table border="0.1">
+            <thead>
+                <tr style="background-color: rgb(228, 228, 224)">
+                    <th style="width: 4%;">N°</th>
+                    <th style="width: 32%;">GRUPO 4</th>
+                    <th style="width: 32%;">GRUPO 5</th>
+                    <th style="width: 32%;">GRUPO 6</th>
+                    
+                    
+                </tr>
+            </thead>
+            
+            <tbody>
+                {% for grupo in matriz_2 %}
+                        <tr>
+                                <td align="center">{{grupo.0}}</td>
+                                <td>{{grupo.1 }}</td>
+                                <td>{{grupo.2 }}</td>
+                                <td>{{grupo.3 }}</td>
+                                
+                        </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    {% endif %}
+
+    {% if cantidad > 6 %}
+        <p class="saltodepagina" />
+        <table border="0.1">
+            <thead>
+                <tr style="background-color: rgb(228, 228, 224)">
+                    <th style="width: 4%;">N°</th>
+                    <th style="width: 32%;">GRUPO 7</th>
+                    <th style="width: 32%;">GRUPO 8</th>
+                    <th style="width: 32%;">GRUPO 9</th>
+                    
+                    
+                </tr>
+            </thead>
+            
+            <tbody>
+                {% for grupo in matriz_3 %}
+                        <tr>
+                                <td align="center">{{grupo.0}}</td>
+                                <td>{{grupo.1 }}</td>
+                                <td>{{grupo.2 }}</td>
+                                <td>{{grupo.3 }}</td>
+                                
+                        </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    {% endif %}
+
+
+
+</body>
+</html>

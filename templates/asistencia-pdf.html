@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<style>
+    .img-invoice {
+        width: 50px;
+        text-align: center;
+        margin: 0 auto;
+    }
+    
+    
+    .head {
+        text-align: center;
+        text-transform: uppercase;
+    }
+
+    #invoice thead tr th {
+        text-align: center;
+        border-bottom: 0px solid black;
+        border-top: 0px solid black;
+        padding-top: 4px;
+    }
+
+    #invoice thead tr {
+        
+        margin-bottom: 1;
+        padding-bottom: 0;
+    }
+
+    #invoice tbody tr {
+        padding: 0.1;
+    }
+
+    .text-center{
+        text-align: center;
+    }
+
+    .text-right{
+        text-align: right;
+    }
+
+    p.saltodepagina
+        {
+            page-break-after: always;
+        }
+
+    @page {
+        /*size: a6 , landscape; /* para 12 registros */
+        size: a5;
+        @frame header_frame {
+        left: 15pt;
+        width: 370pt;
+        top: 10pt;
+        height: 20pt;
+        
+        }
+        @frame content_frame {
+        left: 15pt; width: 370pt; top: 25pt; height: 100vh;
+        }
+        @frame footer_frame {
+        -pdf-frame-content:footer_content;
+        left: 15pt; width: 370pt; top: 772pt; height: 20pt;
+        }
+        
+        
+    }
+
+</style>
+
+<body>
+
+<h3 class="text-center">REGISTRO DE ASISTENCIA A LAS REUNIONES DE CONGREGACION</h3>
+
+<h3 class="text-center">{{ titulo }}</h3>
+
+<table id="invoice" border="0.2" >
+    <thead>
+        <tr>
+            <th style="width: 25%;">{{año1}}</th>
+            <th style="width: 25%;">Cantidad</th>
+            <th style="width: 25%;">Total</th>
+            <th style="width: 25%;">Promedio</th>
+        </tr>
+    </thead>
+    
+    <tbody>
+        {% for d in asistencia1.all %}
+        
+            <tr {% if forloop.first %}style="padding-top: 3px;" {% endif %}>
+                
+                <td class="text-center">{{ d.mes }}</td>
+                <td class="text-center">{{ d.cantidad }}</td>
+                <td class="text-center">{{ d.total }}</td>
+                <td class="text-center">{{ d.promedio }}</td>
+                
+            </tr>
+        {% endfor %}
+        
+    </tbody>
+</table>
+
+<h3 class="text-right">Promedio de asistencia mensual: {{ promedio1.promedio__avg|floatformat:"0" }}</h3>
+
+<br>
+
+<table id="invoice" border="0.2" >
+    <thead>
+        <tr>
+            <th style="width: 25%;">{{año2}}</th>
+            <th style="width: 25%;">Cantidad</th>
+            <th style="width: 25%;">Total</th>
+            <th style="width: 25%;">Promedio</th>
+        </tr>
+    </thead>
+    
+    <tbody>
+        {% for d in asistencia2.all %}
+        
+            <tr {% if forloop.first %}style="padding-top: 3px;" {% endif %}>
+                
+                <td class="text-center">{{ d.mes }}</td>
+                <td class="text-center">{{ d.cantidad }}</td>
+                <td class="text-center">{{ d.total }}</td>
+                <td class="text-center">{{ d.promedio }}</td>
+                
+            </tr>
+        {% endfor %}
+        
+    </tbody>
+</table>
+
+<h3 class="text-right">Promedio de asistencia mensual: {{ promedio2.promedio__avg|floatformat:"0" }}</h3>
+
+</body>
+</html>

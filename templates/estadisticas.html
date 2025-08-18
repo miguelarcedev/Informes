@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+
+{% block contenido %}
+
+<div class="row justify-content-center">
+
+  <div class="m-3">
+    <table id="customers" style="width: 300px;">
+
+      <tr>
+        <th colspan="2">TOTALES DE LA CONGREGACION</th>
+      </tr>
+
+      <tr>
+        <td>Publicadores Activos</td>
+        <td>{{tot_activos}}</td>
+      </tr>
+      <tr>
+        <td>Publicadores Inactivos</td>
+        <td>{{tot_inactivos}}</td>
+      </tr>
+      <tr>
+        <td>Publicadores Bautizados</td>
+        <td>{{tot_bautizados}}</td>
+      </tr>
+      <tr>
+        <td>Publicadores No bautizados</td>
+        <td>{{tot_no_bautizados}}</td>
+      </tr>
+      <tr>
+        <td>Total Ancianos</td>
+        <td>{{tot_ancianos}}</td>
+      </tr>
+      <tr>
+        <td>Total Siervos Mimisteriales</td>
+        <td>{{tot_ministeriales}}</td>
+      </tr>
+      <tr>
+        <td>Precursores regulares</td>
+        <td>{{tot_regulares}}</td>
+      </tr>
+      <tr>
+        <td>Hombres</td>
+        <td>{{tot_hombres}}</td>
+      </tr>
+      <tr>
+        <td>Mujeres</td>
+        <td>{{tot_mujeres}}</td>
+      </tr>
+      <tr>
+        <td>Otras Ovejas</td>
+        <td>{{tot_otras_ovejas}}</td>
+
+      </tr>
+      <tr>
+        <td>Ungidos</td>
+        <td>{{tot_ungidos}}</td>
+      </tr>
+
+    </table>
+  </div>
+
+  <div class="m-3">
+    <table id="customers" style="width: 300px;">
+
+      <tr>
+        <th colspan="2">SITUACION ULTIMOS 6 MESES</th>
+      </tr>
+
+      <tr>
+        <td>Publicadores Inactivos</td>
+        <td>{{inactivos}}</td>
+      </tr>
+      <tr>
+        <td>Publicadores Irregulares</td>
+        <td>{{irregulares}}</td>
+      </tr>
+      <tr>
+        <td>Publicadores Reactivados</td>
+        <td>{{reactivados}}</td>
+      </tr>
+      <tr>
+        <td>Publicadores Readmitidos</td>
+        <td>{{readmitidos}}</td>
+      </tr>
+      <tr>
+        <td>Nuevos Bautizados</td>
+        <td>{{nuevos_bautizados}}</td>
+      </tr>
+      <tr>
+        <td>Nuevos Publicadores</td>
+        <td>{{nuevos_publicadores}}</td>
+      </tr>
+
+
+    </table>
+  </div>
+
+</div>
+
+
+
+{% endblock %}

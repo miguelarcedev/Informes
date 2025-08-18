@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block contenido %}
+
+<div class="row justify-content-center">
+  <div class="m-3">
+
+    <table id="customers" style="width: 300px;">
+
+      <tr>
+        <th colspan="2">INFORME DEL ANALISIS DE LA CONGREGACION {{año}}</th>
+      </tr>
+
+      <tr>
+        <td>Reunión de fin de semana</td>
+        <td>{{ prom_fin.promedio__avg|floatformat:"0" }}</td>
+      </tr>
+      <tr>
+        <td>Reunión de entre semana</td>
+        <td>{{ prom_entre.promedio__avg|floatformat:"0" }}</td>
+      </tr>
+      <tr>
+        <td>Publicadores Activos</td>
+        <td>{{tot_activos}}</td>
+      </tr>
+      <tr>
+        <td>Publicadores Inactivos</td>
+        <td>{{tot_inactivos}}</td>
+      </tr>
+      <tr>
+        <td>Publicadores Reactivados</td>
+        <td>{{tot_reactivados}}</td>
+      </tr>
+      <tr>
+        <td>Publicadores Sordos</td>
+        <td>{{tot_sordos}}</td>
+      </tr>
+      <tr>
+        <td>Publicadores Ciegos</td>
+        <td>{{tot_ciegos}}</td>
+      </tr>
+
+    </table>
+    
+  </div>
+
+</div>
+
+
+
+{% endblock %}

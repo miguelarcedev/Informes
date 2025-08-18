@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block contenido %}
+
+<div class="row justify-content-center">
+    <div class="m-3">
+
+        <table id="customers" style="width: 300px;">
+            <tr>
+                <th colspan="4">Asistencia {{titulo}}</th>
+
+            </tr>
+            <tr>
+                <th>{{año1}}</th>
+                <th>Cantidad</th>
+                <th>Total</th>
+                <th>Promedio</th>
+            </tr>
+
+            {% for c in asistencia1 %}
+
+            <tr>
+                <td>{{c.mes}}</td>
+                <td>{{c.cantidad}}</td>
+                <td>{{c.total}}</td>
+                <td>{{c.promedio}}</td>
+            </tr>
+
+            {% endfor %}
+            <tr>
+                {% if reunion == 'entre' %}
+                <th><a href="{% url 'asistencia_pdf' 'entre' %}"><i class="fa-sharp fa-solid fa-file-pdf fa-2xl"
+                            style="color:white;"></i></a></th>
+                {% else %}
+                <th><a href="{% url 'asistencia_pdf' 'fin' %}"><i class="fa-sharp fa-solid fa-file-pdf fa-2xl"
+                            style="color:white;"></i></a></th>
+                {% endif %}
+                <th colspan="2">Promedio</th>
+                <th>{{ promedio1.promedio__avg|floatformat:"0" }}</th>
+
+            </tr>
+
+        </table>
+    </div>
+    <div class="m-3">
+        <table id="customers" style="width: 300px;">
+            <tr>
+                <th colspan="4">Asistencia {{titulo}}</th>
+
+            </tr>
+
+            <tr>
+                <th>{{año2}}</th>
+                <th>Cantidad</th>
+                <th>Total</th>
+                <th>Promedio</th>
+            </tr>
+
+            {% for c in asistencia2 %}
+
+            <tr>
+                <td>{{c.mes}}</td>
+                <td>{{c.cantidad}}</td>
+                <td>{{c.total}}</td>
+                <td>{{c.promedio}}</td>
+            </tr>
+
+            {% endfor %}
+            <tr>
+                {% if reunion == 'entre' %}
+                <th><a href="{% url 'asistencia_pdf' 'entre' %}"><i class="fa-sharp fa-solid fa-file-pdf fa-2xl"
+                            style="color:white;"></i></a></th>
+                {% else %}
+                <th><a href="{% url 'asistencia_pdf' 'fin' %}"><i class="fa-sharp fa-solid fa-file-pdf fa-2xl"
+                            style="color:white;"></i></a></th>
+                {% endif %}
+                <th colspan="2">Promedio</th>
+                <th>{{ promedio2.promedio__avg|floatformat:"0" }}</th>
+
+            </tr>
+
+        </table>
+    </div>
+
+</div>
+
+
+{% endblock %}

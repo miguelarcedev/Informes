@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block contenido %}
+
+<div class="row justify-content-center">
+  <div class="m-3" style="width:300px">
+    <ul>
+      <li><a class="active" href="#home">Asistencia</a></li>
+      <li><a href="{% url 'asistencia' 'entre' %}">Entre semana</a></li>
+      <li><a href="{% url 'asistencia' 'fin' %}">Fin de semana</a></li>
+    </ul>
+  </div>
+
+  <div class="m-3" style="width:300px">
+    <ul>
+      <li><a class="active" href="#home">Totales</a></li>
+      <li><a href="{% url 'totales' 'Publicador' %}">Publicadores</a></li>
+      <li><a href="{% url 'totales' 'Auxiliar' %}">Auxiliares</a></li>
+      <li><a href="{% url 'totales' 'Regular' %}">Regulares</a></li>
+    </ul>
+  </div>
+
+  <div class="m-3" style="width:300px">
+    <ul>
+      <li><a class="active" href="#home">Publicadores</a></li>
+      <li><a href="{% url 'publicadores' 'Activo' %}">Activos</a></li>
+      <li><a href="{% url 'publicadores' 'Inactivo' %}">Inactivos</a></li>
+      <li><a href="{% url 'irregulares-list' %}">Irregulares</a></li>
+      <li><a href="{% url 'estadisticas' %}">Estadísticas</a></li>
+      <li><a href="{% url 'S10' %}">S-10</a></li>
+    </ul>
+  </div>
+
+  <div class="m-3" style="width:300px">
+    <ul>
+      <li><a class="active" href="#home">Tarjetas por grupo</a></li>
+      {% for i in grupos %}
+      <li><a href="{% url 'tarjeta_grupo' i %}"> Grupo {{ i }}</a></li>
+      {% endfor %}
+      <li><a href="{% url 'precursores' %}">Precursores</a></li>
+      <li><a href="{% url 'inactivos' %}">Inactivos</a></li>
+
+    </ul>
+  </div>
+
+  <div class="m-3" style="width:300px">
+    <ul>
+      <li><a class="active" href="#home">Otros documentos</a></li>
+      <li><a href="{% url 'grupos' %}">Lista de grupos</a></li>
+      <li><a href="{% url 'telefonos' %}">Teléfonos</a></li>
+      <li><a href="{% url 'contactos' %}">Contactos</a></li>
+    </ul>
+  </div>
+
+</div>
+
+{% endblock %}

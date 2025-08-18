@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block contenido %}
+
+<div class="row justify-content-center">
+
+    <div class="m-3">
+
+        <table id="customers">
+            <tr>
+                <th>Publicador</th>
+                <th>Contacto</th>
+                <th>Teléfono contacto</th>
+
+            </tr>
+            {% for c in contactos %}
+            <tr>
+
+                <td>{{c.apellido}} {{c.nombre}}</td>
+                <td>{{c.contacto}}</td>
+                <td>{{c.telefono_contacto}}</td>
+
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+
+
+{% endblock %}

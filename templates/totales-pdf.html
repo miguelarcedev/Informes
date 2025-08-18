@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<style>
+    .img-invoice {
+        width: 50px;
+        text-align: center;
+        margin: 0 auto;
+    }
+    
+    
+    .head {
+        text-align: center;
+        text-transform: uppercase;
+    }
+
+    #invoice thead tr th {
+        text-align: center;
+        border-bottom: 0px solid black;
+        border-top: 0px solid black;
+        padding-top: 4px;
+    }
+
+    #invoice thead tr {
+        
+        margin-bottom: 2;
+        padding-bottom: 0;
+    }
+
+    #invoice tbody tr {
+        padding: 0.2;
+    }
+
+    .text-center{
+        text-align: center;
+    }
+
+    p.saltodepagina
+        {
+            page-break-after: always;
+        }
+
+    @page {
+        /*size: a6 , landscape; /* para 22 registros */
+        size: a5;
+        @frame header_frame {
+        left: 25pt;
+        width: 370pt;
+        top: 15pt;
+        height: 20pt;
+        
+        }
+        @frame content_frame {
+        left: 30pt; width: 370pt; top: 30pt; height: 200vh;
+        }
+        @frame footer_frame {
+        -pdf-frame-content:footer_content;
+        left: 25pt; width: 370pt; top: 772pt; height: 20pt;
+        }
+        
+        
+    }
+
+</style>
+
+<body>
+
+<h3 class="text-center">REGISTRO DE PUBLICADOR DE LA CONGREGACION</h3>
+<h3 class="text-center">{{ titulo }}</h3>
+
+<table id="invoice" border="0.2">
+        <thead>
+            <tr>
+                <th style="width: 25%;">{{año1}}</th>
+                <th style="width: 20%;">Estudios</th>
+                <th style="width: 20%;">Horas</th>
+                <th style="width: 30%;">Informan</th>
+                
+            </tr>
+        </thead>
+        
+        <tbody>
+            
+            <tr>
+                <td class="text-center">Septiembre</td>
+                {% if septiembre1.id__count  == 0 %}
+                    <td class="text-center">    </td>
+                    <td class="text-center">    </td>
+                    <td class="text-center">    </td>
+                    
+                {% else %}
+                    <td class="text-center">{{ septiembre1.estudios__sum }}</td>
+                    <td class="text-center">{{ septiembre1.horas__sum }}</td>
+                    <td class="text-center">{{ septiembre1.id__count }}</td>
+                {% endif %}
+                    
+            </tr>
+            <tr>
+                <td class="text-center">Octubre</td>
+                {% if octubre1.id__count  == 0 %}
+                    <td class="text-center">    </td>
+                    <td class="text-center">    </td>
+                    <td class="text-center">    </td>
+                    
+                {% else %}
+ 
+                    <td class="text-center">{{ octubre1.estudios__sum }}</td>
+                    <td class="text-center">{{ octubre1.horas__sum }}</td>
+                    <td class="text-center">{{ octubre1.id__count }}</td>
+                {% endif %}
+                    
+            </tr>
+            <tr>
+                <td class="text-center">Noviembre</td>
+                {% if noviembre1.id__count  == 0 %}
+                    <td class="text-center">    </td>
+                    <td class="text-center">    </td>
+                    <td class="text-center">    </td>
+                    
+                {% else %}
+                    <td class="text-center">{{ noviembre1.estudios__sum }}</td>
+                    <td class="text-center">{{ noviembre1.horas__sum }}</td>
+                    <td class="text-center">{{ noviembre1.id__count }}</td>
+                {% endif %}
+                    
+            </tr>
+            <tr>
+                <td class="text-center">Diciembre</td>
+                {% if diciembre1.id__count  == 0 %}
+                    <td class="text-center">    </td>
+                    <td class="text-center">    </td>
+                    <td class="text-center">    </td>
+                    
+                {% else %}
+                    <td class="text-center">{{ diciembre1.estudios__sum }}</td>
+                    <td class="text-center">{{ diciembre1.horas__sum }}</td>
+                    <td class="text-center">{{ diciembre1.id__count }}</td>
+                {% endif %}
+                    
+            </tr>
+            <tr>
+                <td class="text-center">Enero</td>
+                {% if enero1.id__count  == 0 %}
+                    <td class="text-center">    </td>
+                    <td class="text-center">    </td>
+                    <td class="text-center">    </td>
+                {% else %}
+                    <td class="text-center">{{ enero1.estudios__sum }}</td>
+                    <td class="text-center">{{ enero1.horas__sum }}</td>
+                    <td class="text-center">{{ enero1.id__count }}</td>
+                {% endif %}
+                    
+            </tr>
+            <tr>
+                <td class="text-center">Febrero</td>
+                {% if febrero1.id__count  == 0 %}
+                    <td class="text-center">    </td>
+                    <td class="text-center">    </td>
+                    <td class="text-center">    </td>
+                {% else %}
+                    <td class="text-center">{{ febrero1.estudios__sum }}</td>
+                    <td class="text-center">{{ febrero1.horas__sum }}</td>
+                    <td class="text-center">{{ febrero1.id__count }}</td>
+                {% endif %}
+                    
+            </tr>
+            <tr>
+                <td class="text-center">Marzo</td>
+                {% if marzo1.id__count  == 0 %}
+                    <td class="text-center">    </td>
+                    <td class="text-center">    </td>
+                    <td class="text-center">    </td>
+                {% else %}
+                    <td class="text-center">{{ marzo1.estudios__sum }}</td>
+                    <td class="text-center">{{ marzo1.horas__sum }}</td>
+                    <td class="text-center">{{ marzo1.id__count }}</td>
+                {% endif %}
+                    
+            </tr>
+            <tr>
+                <td class="text-center">Abril</td>
+                {% if abril1.id__count  == 0 %}
+                    <td class="text-center">    </td>
+                    <td class="text-center">    </td>
+                    <td class="text-center">    </td>
+                {% else %}
+                    <td class="text-center">{{ abril1.estudios__sum }}</td>
+                    <td class="text-center">{{ abril1.horas__sum }}</td>
+                    <td class="text-center">{{ abril1.id__count }}</td>
+                {% endif %}
+                    
+            </tr>
+            <tr>
+                <td class="text-center">Mayo</td>
+                {% if mayo1.id__count  == 0 %}
+                    <td class="text-center">    </td>
+                    <td class="text-center">    </td>
+                    <td class="text-center">    </td>
+                {% else %}
+                    <td class="text-center">{{ mayo1.estudios__sum }}</td>
+                    <td class="text-center">{{ mayo1.horas__sum }}</td>
+                    <td class="text-center">{{ mayo1.id__count }}</td>
+                {% endif %}
+                   
+            </tr>
+            <tr>
+                <td class="text-center">Junio</td>
+                {% if junio1.id__count  == 0 %}
+                    <td class="text-center">    </td>
+                    <td class="text-center">    </td>
+                    <td class="text-center">    </td>
+                {% else %}
+                    <td class="text-center">{{ junio1.estudios__sum }}</td>
+                    <td class="text-center">{{ junio1.horas__sum }}</td>
+                    <td class="text-center">{{ junio1.id__count }}</td>
+                {% endif %}
+                    
+            </tr>
+            <tr>
+                <td class="text-center">Julio</td>
+                {% if julio1.id__count  == 0 %}
+                    <td class="text-center">    </td>
+                    <td class="text-center">    </td>
+                    <td class="text-center">    </td>
+                {% else %}
+                    <td class="text-center">{{ julio1.estudios__sum }}</td>
+                    <td class="text-center">{{ julio1.horas__sum }}</td>
+                    <td class="text-center">{{ julio1.id__count }}</td>
+                {% endif %}
+                    
+            </tr>
+            <tr>
+                <td class="text-center">Agosto</td>
+                {% if agosto1.id__count  == 0 %}
+                    <td class="text-center">    </td>
+                    <td class="text-center">    </td>
+                    <td class="text-center">    </td>
+                {% else %}
+                    <td class="text-center">{{ agosto1.estudios__sum }}</td>
+                    <td class="text-center">{{ agosto1.horas__sum }}</td>
+                    <td class="text-center">{{ agosto1.id__count }}</td>
+                {% endif %}
+                    
+            </tr>
+                
+        </tbody>
+</table>
+<br>
+<br>
+
+<table id="invoice" border="0.2">
+        <thead>
+            <tr>
+                <th style="width: 25%;">{{año2}}</th>
+                <th style="width: 20%;">Estudios</th>
+                <th style="width: 20%;">Horas</th>
+                <th style="width: 30%;">Informan</th>
+                
+            </tr>
+        </thead>
+        
+        <tbody>
+            
+            <tr>
+                <td class="text-center">Septiembre</td>
+                {% if septiembre2.id__count  == 0 %}
+                    <td class="text-center">    </td>
+                    <td class="text-center">    </td>
+                    <td class="text-center">    </td>
+                    
+                {% else %}
+                    <td class="text-center">{{ septiembre2.estudios__sum }}</td>
+                    <td class="text-center">{{ septiembre2.horas__sum }}</td>
+                    <td class="text-center">{{ septiembre2.id__count }}</td>
+                {% endif %}
+                    
+            </tr>
+            <tr>
+                <td class="text-center">Octubre</td>
+                {% if octubre2.id__count  == 0 %}
+                    <td class="text-center">    </td>
+                    <td class="text-center">    </td>
+                    <td class="text-center">    </td>
+                    
+                {% else %}
+ 
+                    <td class="text-center">{{ octubre2.estudios__sum }}</td>
+                    <td class="text-center">{{ octubre2.horas__sum }}</td>
+                    <td class="text-center">{{ octubre2.id__count }}</td>
+                {% endif %}
+                    
+            </tr>
+            <tr>
+                <td class="text-center">Noviembre</td>
+                {% if noviembre2.id__count  == 0 %}
+                    <td class="text-center">    </td>
+                    <td class="text-center">    </td>
+                    <td class="text-center">    </td>
+                    
+                {% else %}
+                    <td class="text-center">{{ noviembre2.estudios__sum }}</td>
+                    <td class="text-center">{{ noviembre2.horas__sum }}</td>
+                    <td class="text-center">{{ noviembre2.id__count }}</td>
+                {% endif %}
+                    
+            </tr>
+            <tr>
+                <td class="text-center">Diciembre</td>
+                {% if diciembre2.id__count  == 0 %}
+                    <td class="text-center">    </td>
+                    <td class="text-center">    </td>
+                    <td class="text-center">    </td>
+                    
+                {% else %}
+                    <td class="text-center">{{ diciembre2.estudios__sum }}</td>
+                    <td class="text-center">{{ diciembre2.horas__sum }}</td>
+                    <td class="text-center">{{ diciembre2.id__count }}</td>
+                {% endif %}
+                    
+            </tr>
+            <tr>
+                <td class="text-center">Enero</td>
+                {% if enero2.id__count  == 0 %}
+                    <td class="text-center">    </td>
+                    <td class="text-center">    </td>
+                    <td class="text-center">    </td>
+                {% else %}
+                    <td class="text-center">{{ enero2.estudios__sum }}</td>
+                    <td class="text-center">{{ enero2.horas__sum }}</td>
+                    <td class="text-center">{{ enero2.id__count }}</td>
+                {% endif %}
+                    
+            </tr>
+            <tr>
+                <td class="text-center">Febrero</td>
+                {% if febrero2.id__count  == 0 %}
+                    <td class="text-center">    </td>
+                    <td class="text-center">    </td>
+                    <td class="text-center">    </td>
+                {% else %}
+                    <td class="text-center">{{ febrero2.estudios__sum }}</td>
+                    <td class="text-center">{{ febrero2.horas__sum }}</td>
+                    <td class="text-center">{{ febrero2.id__count }}</td>
+                {% endif %}
+                    
+            </tr>
+            <tr>
+                <td class="text-center">Marzo</td>
+                {% if marzo2.id__count  == 0 %}
+                    <td class="text-center">    </td>
+                    <td class="text-center">    </td>
+                    <td class="text-center">    </td>
+                {% else %}
+                    <td class="text-center">{{ marzo2.estudios__sum }}</td>
+                    <td class="text-center">{{ marzo2.horas__sum }}</td>
+                    <td class="text-center">{{ marzo2.id__count }}</td>
+                {% endif %}
+                    
+            </tr>
+            <tr>
+                <td class="text-center">Abril</td>
+                {% if abril2.id__count  == 0 %}
+                    <td class="text-center">    </td>
+                    <td class="text-center">    </td>
+                    <td class="text-center">    </td>
+                {% else %}
+                    <td class="text-center">{{ abril2.estudios__sum }}</td>
+                    <td class="text-center">{{ abril2.horas__sum }}</td>
+                    <td class="text-center">{{ abril2.id__count }}</td>
+                {% endif %}
+                    
+            </tr>
+            <tr>
+                <td class="text-center">Mayo</td>
+                {% if mayo2.id__count  == 0 %}
+                    <td class="text-center">    </td>
+                    <td class="text-center">    </td>
+                    <td class="text-center">    </td>
+                {% else %}
+                    <td class="text-center">{{ mayo2.estudios__sum }}</td>
+                    <td class="text-center">{{ mayo2.horas__sum }}</td>
+                    <td class="text-center">{{ mayo2.id__count }}</td>
+                {% endif %}
+                   
+            </tr>
+            <tr>
+                <td class="text-center">Junio</td>
+                {% if junio2.id__count  == 0 %}
+                    <td class="text-center">    </td>
+                    <td class="text-center">    </td>
+                    <td class="text-center">    </td>
+                {% else %}
+                    <td class="text-center">{{ junio2.estudios__sum }}</td>
+                    <td class="text-center">{{ junio2.horas__sum }}</td>
+                    <td class="text-center">{{ junio2.id__count }}</td>
+                {% endif %}
+                    
+            </tr>
+            <tr>
+                <td class="text-center">Julio</td>
+                {% if julio2.id__count  == 0 %}
+                    <td class="text-center">    </td>
+                    <td class="text-center">    </td>
+                    <td class="text-center">    </td>
+                {% else %}
+                    <td class="text-center">{{ julio2.estudios__sum }}</td>
+                    <td class="text-center">{{ julio2.horas__sum }}</td>
+                    <td class="text-center">{{ julio2.id__count }}</td>
+                {% endif %}
+                    
+            </tr>
+            <tr>
+                <td class="text-center">Agosto</td>
+                {% if agosto2.id__count  == 0 %}
+                    <td class="text-center">    </td>
+                    <td class="text-center">    </td>
+                    <td class="text-center">    </td>
+                {% else %}
+                    <td class="text-center">{{ agosto2.estudios__sum }}</td>
+                    <td class="text-center">{{ agosto2.horas__sum }}</td>
+                    <td class="text-center">{{ agosto2.id__count }}</td>
+                {% endif %}
+                    
+            </tr>
+                
+        </tbody>
+</table>
+    
+
+</body>
+</html>

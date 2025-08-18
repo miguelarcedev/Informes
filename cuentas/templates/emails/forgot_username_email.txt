@@ -1,0 +1,8 @@
+Hola,
+Recibimos una solicitud para recuperar tu(s) nombre(s) de usuario asociados a este correo:
+
+{% for u in users %}
+- {{ u.username }}
+{% endfor %}
+
+Si no solicitaste esto, puedes ignorar este correo.
