@@ -30,4 +30,5 @@ urlpatterns = [
 
     path('informes/nuevo/', views.crear_informe, name='crear_informe'),
     path('informes/<int:pk>/editar/', views.editar_informe, name='editar_informe'),
+    path("staff/", views.panel_staff, name="pagina_staff"),
 ]

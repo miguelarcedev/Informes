@@ -1,0 +1,115 @@
+{% extends "base0.html" %}
+{% load static %}
+
+{% block contenido %}
+<div class="container py-4">
+  <div class="row g-4 justify-content-center">
+
+    <!-- Asistencia -->
+    <div class="col-md-4">
+      <div class="card shadow-lg border-0 rounded-3 h-100 bg-light bg-gradient">
+        <div class="card-header bg-primary text-white fw-bold text-center">
+          <i class="fas fa-calendar-check me-2"></i> Asistencia
+        </div>
+        <div class="list-group list-group-flush">
+          <a href="{% url 'asistencia' 'entre' %}" class="list-group-item list-group-item-action">
+            <i class="fas fa-business-time me-2"></i> Entre semana
+          </a>
+          <a href="{% url 'asistencia' 'fin' %}" class="list-group-item list-group-item-action">
+            <i class="fas fa-sun me-2"></i> Fin de semana
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Totales -->
+    <div class="col-md-4">
+      <div class="card shadow-lg border-0 rounded-3 h-100 bg-light bg-gradient">
+        <div class="card-header bg-success text-white fw-bold text-center">
+          <i class="fas fa-chart-bar me-2"></i> Totales
+        </div>
+        <div class="list-group list-group-flush">
+          <a href="{% url 'totales' 'Publicador' %}" class="list-group-item list-group-item-action">
+            <i class="fas fa-users me-2"></i> Publicadores
+          </a>
+          <a href="{% url 'totales' 'Auxiliar' %}" class="list-group-item list-group-item-action">
+            <i class="fas fa-user-friends me-2"></i> Auxiliares
+          </a>
+          <a href="{% url 'totales' 'Regular' %}" class="list-group-item list-group-item-action">
+            <i class="fas fa-user-check me-2"></i> Regulares
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Publicadores -->
+    <div class="col-md-4">
+      <div class="card shadow-lg border-0 rounded-3 h-100 bg-light bg-gradient">
+        <div class="card-header bg-warning text-dark fw-bold text-center">
+          <i class="fas fa-user me-2"></i> Publicadores
+        </div>
+        <div class="list-group list-group-flush">
+          <a href="{% url 'publicadores' 'Activo' %}" class="list-group-item list-group-item-action">
+            <i class="fas fa-check-circle me-2"></i> Activos
+          </a>
+          <a href="{% url 'publicadores' 'Inactivo' %}" class="list-group-item list-group-item-action">
+            <i class="fas fa-times-circle me-2"></i> Inactivos
+          </a>
+          <a href="{% url 'irregulares-list' %}" class="list-group-item list-group-item-action">
+            <i class="fas fa-exclamation-triangle me-2"></i> Irregulares
+          </a>
+          <a href="{% url 'estadisticas' %}" class="list-group-item list-group-item-action">
+            <i class="fas fa-chart-line me-2"></i> Estadísticas
+          </a>
+          <a href="{% url 'S10' %}" class="list-group-item list-group-item-action">
+            <i class="fas fa-file-alt me-2"></i> S-10
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tarjetas por grupo -->
+    <div class="col-md-4">
+      <div class="card shadow-lg border-0 rounded-3 h-100 bg-light bg-gradient">
+        <div class="card-header bg-info text-white fw-bold text-center">
+          <i class="fas fa-id-card me-2"></i> Tarjetas por grupo
+        </div>
+        <div class="list-group list-group-flush">
+          {% for i in grupos %}
+          <a href="{% url 'tarjeta_grupo' i %}" class="list-group-item list-group-item-action">
+            <i class="fas fa-users me-2"></i> Grupo {{ i }}
+          </a>
+          {% endfor %}
+          <a href="{% url 'precursores' %}" class="list-group-item list-group-item-action">
+            <i class="fas fa-user-graduate me-2"></i> Precursores
+          </a>
+          <a href="{% url 'inactivos' %}" class="list-group-item list-group-item-action">
+            <i class="fas fa-user-slash me-2"></i> Inactivos
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Otros documentos -->
+    <div class="col-md-4">
+      <div class="card shadow-lg border-0 rounded-3 h-100 bg-light bg-gradient">
+        <div class="card-header bg-dark text-white fw-bold text-center">
+          <i class="fas fa-folder-open me-2"></i> Otros documentos
+        </div>
+        <div class="list-group list-group-flush">
+          <a href="{% url 'grupos' %}" class="list-group-item list-group-item-action">
+            <i class="fas fa-list-ul me-2"></i> Lista de grupos
+          </a>
+          <a href="{% url 'telefonos' %}" class="list-group-item list-group-item-action">
+            <i class="fas fa-phone me-2"></i> Teléfonos
+          </a>
+          <a href="{% url 'contactos' %}" class="list-group-item list-group-item-action">
+            <i class="fas fa-address-book me-2"></i> Contactos
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+{% endblock %}

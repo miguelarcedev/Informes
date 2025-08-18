@@ -167,3 +167,10 @@ def editar_informe(request, pk):
     return render(request, 'informes/editar_informe.html', {'form': form})
 
 
+from django.contrib.auth.decorators import user_passes_test
+from django.shortcuts import render
+
+# Solo permite acceso si el usuario es staff
+@user_passes_test(lambda u: u.is_staff)
+def panel_staff(request):
+    return render(request, "panel_staff.html")
