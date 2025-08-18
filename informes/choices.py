@@ -15,13 +15,12 @@ MES = [
 ]
 
 NOTAS = [
-        ('Inactivo', 'Inactivo'),
-        ('Mudado', 'Mudado'),
-        ('Construccion', 'Construccion'),
+        (' ', ' '),
+        ('Trabajos Construccion Salon', 'Trabajos Construccion Salon'),
         ('Enfermo', 'Enfermo'),
-        ('Expulsado', 'Expulsado'),
+        ('Cuidado fliar. Enfermo', 'Cuidado fliar. Enfermo'),
         ('Reactivado', 'Reactivado'),
-        ('Asamblea', 'Asamblea'),
+        ('Trabajos en Asamblea', 'Trabajos en Asamblea'),
         ('Escuela Precursor', 'Escuela Precursor'),
         ('Inicia Regular', 'Inicia Regular'),
         ('Nuevo Publicador', 'Nuevo Publicador'),
@@ -69,9 +68,6 @@ ESTADO = [
         ('Activo', 'Activo'),
         ('Inactivo', 'Inactivo'),
         ('Baja', 'Baja'),
-        ('Mudado', 'Mudado'),
-        ('Expulsado', 'Expulsado'),
-        ('Fallecido', 'Fallecido'),
     ]
 
 APR = [
@@ -83,8 +79,7 @@ APR = [
         
     ]
 
-SINO = [
-              
+SINO = [         
         (' ', ' '),
         ('Si', 'Si'),
         

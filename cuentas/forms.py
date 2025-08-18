@@ -60,33 +60,66 @@ class RegisterForm(forms.ModelForm):
             user.save()
         return user
 
+import datetime
 from django import forms
 from informe.models import Informe
-import datetime
-
-
 
 class InformeForm(forms.ModelForm):
     class Meta:
         model = Informe
-        fields = [ "año","mes", "participacion", "estudios", "auxiliar", "horas", "notas"]
+        fields = ["año", "mes", "participacion", "estudios", "auxiliar", "horas", "notas"]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        for field_name, field in self.fields.items():
-            # Estilo base de todos los campos
-            css_class = "form-control"
+        # ======= LÓGICA DE AÑO Y MES AUTOMÁTICO =======
+        hoy = datetime.date.today()
+        dia, mes, anio = hoy.day, hoy.month, hoy.year
 
-            # Ajuste si es booleano (ej. auxiliar como checkbox)
+        # Diccionario de meses en español
+        meses_es = {
+            1: "Enero",
+            2: "Febrero",
+            3: "Marzo",
+            4: "Abril",
+            5: "Mayo",
+            6: "Junio",
+            7: "Julio",
+            8: "Agosto",
+            9: "Septiembre",
+            10: "Octubre",
+            11: "Noviembre",
+            12: "Diciembre",
+        }
+
+        # Si es 21 o más → pasamos al mes siguiente
+        if dia >= 25:
+            mes += 1
+            if mes == 13:
+                mes = 1
+                anio += 1
+        else:
+            mes -= 1
+
+        # Determinar el año académico
+        if mes >= 9:  # septiembre a diciembre pertenecen al año académico siguiente
+            anio_academico = anio + 1
+        else:  # enero a agosto pertenecen al año académico actual
+            anio_academico = anio
+
+        # Preasignar valores por defecto
+        self.fields["año"].initial = anio_academico
+        self.fields["mes"].initial = meses_es[mes]
+
+        # ======= ESTILOS Y READONLY =======
+        for field_name, field in self.fields.items():
+            css_class = "form-control"
             if isinstance(field.widget, forms.CheckboxInput):
                 css_class = "form-check-input"
-
-            # Ajuste si es textarea (ej. notas)
             if isinstance(field.widget, forms.Textarea):
-                css_class = "form-control"  # ya está bien, pero por claridad
+                css_class = "form-control"
+            field.widget.attrs.update({"class": css_class})
 
-            field.widget.attrs.update({
-                "class": css_class,
-            })
-
+        # Añadimos readonly a año 
+        self.fields["año"].widget.attrs["readonly"] = True
+        

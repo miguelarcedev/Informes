@@ -13,8 +13,8 @@ class Informe(models.Model):
     estudios = models.IntegerField(null=True, blank=True,default=0)
     auxiliar = models.CharField(max_length=10, choices=SINO,default=" ")
     horas = models.IntegerField(null=True, blank=True,default=0)
-    notas = models.CharField(max_length=20, choices=NOTAS, blank=True, null=True)
-    servicio = models.CharField(max_length=10, choices=APR,default="Publicador")    
+    notas = models.CharField(max_length=40, choices=NOTAS, blank=True, null=True)
+   
 
     class Meta():
         unique_together = ('publicador', 'año', 'mes')  # Un informe por mes y año por publicador

@@ -58,7 +58,7 @@ class Informe_Resource(resources.ModelResource):
 
 class Informe_Admin(ImportExportModelAdmin):
     resource_class = Informe_Resource
-    list_display = ('publicador', 'año', 'mes', 'participacion', 'estudios', 'auxiliar', 'horas', 'notas', 'servicio')
+    list_display = ('publicador', 'año', 'mes', 'participacion', 'estudios', 'auxiliar', 'horas', 'notas')
     list_filter = ['notas', 'año', 'mes']
 
     def get_queryset(self, request):

@@ -58,8 +58,12 @@
         <div class="navbar-left">
             {{ nombre_cong }}
         </div>
-
+        
         <!-- Derecha -->
+
+        <div class="navbar-right">
+            <a href="{% url 'logout' %}">Panel</a>
+        </div>
         <div class="navbar-right">
             <a href="{% url 'logout' %}">Cerrar sesión</a>
         </div>
