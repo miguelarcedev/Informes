@@ -64,7 +64,7 @@
 
         <div class="navbar-right">
         {% if user.is_staff %}
-            <a href="{% url 'pagina_staff' %}">Panel</a>
+            <a href="{% url 'panel' %}">Panel</a>
         {% endif %}
         <a href="{% url 'logout' %}">Cerrar sesión</a>
     </div>

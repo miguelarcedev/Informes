@@ -1,0 +1,46 @@
+{% extends "base0.html" %}
+{% load static %}
+
+{% block contenido %}
+<div class="container py-4">
+    <h2 class="mb-4 text-center">📊 Resumen de Informes por Año</h2>
+
+    <div class="accordion" id="accordionInformes">
+        {% for año, registros in datos_por_año.items %}
+            <div class="accordion-item shadow mb-3 rounded-3">
+                <h2 class="accordion-header" id="heading{{ forloop.counter }}">
+                    <button class="accordion-button fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ forloop.counter }}" aria-expanded="true" aria-controls="collapse{{ forloop.counter }}">
+                        Año {{ año }}
+                    </button>
+                </h2>
+                <div id="collapse{{ forloop.counter }}" class="accordion-collapse collapse {% if forloop.first %}show{% endif %}" aria-labelledby="heading{{ forloop.counter }}" data-bs-parent="#accordionInformes">
+                    <div class="accordion-body">
+                        <table class="table table-striped table-hover text-center align-middle">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>Mes</th>
+                                    <th>Total Estudios</th>
+                                    <th>Total Horas</th>
+                                    <th>Publicadores Informantes</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for registro in registros %}
+                                    <tr>
+                                        <td>{{ registro.mes }}</td>
+                                        <td>{{ registro.total_estudios|default:"0" }}</td>
+                                        <td>{{ registro.total_horas|default:"0" }}</td>
+                                        <td>{{ registro.total_publicadores }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <div class="alert alert-warning text-center">No hay informes disponibles.</div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

@@ -394,3 +394,32 @@ class Totales(LoginRequiredMixin,View):
         }
         
         return render(request, "totales.html", context=context)
+    
+
+# app informe/views.py
+from django.db.models import Sum, Count
+from django.shortcuts import render
+from .models import Informe
+
+def resumen_informes(request):
+    # Filtrar según condiciones:
+    # participacion = "Si", auxiliar != "Si", servicio vacío
+    queryset = Informe.objects.filter(
+        participacion="Si",
+        auxiliar__iexact="",  # vacío o None
+        publicador__servicio__exact=""
+    ).values("año", "mes").annotate(
+        total_estudios=Sum("estudios"),
+        total_horas=Sum("horas"),
+        total_publicadores=Count("publicador", distinct=True)
+    ).order_by("año", "mes")
+
+    # Agrupar por año
+    datos_por_año = {}
+    for row in queryset:
+        año = row["año"]
+        if año not in datos_por_año:
+            datos_por_año[año] = []
+        datos_por_año[año].append(row)
+
+    return render(request, "informe/resumen.html", {"datos_por_año": datos_por_año})
