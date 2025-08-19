@@ -12,4 +12,5 @@ urlpatterns = [
     path('asistencia_pdf/<str:entre_fin>/', Asistencia_pdf.as_view(), name='asistencia_pdf'),
     path('asistencia/<str:entre_fin>/', Asistencia_pantalla.as_view(), name='asistencia'),
     
+    
 ]

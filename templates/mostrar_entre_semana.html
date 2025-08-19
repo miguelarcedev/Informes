@@ -1,0 +1,47 @@
+{% extends 'base0.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Datos de la Tabla Entre_Semana</h2>
+
+    <div class="accordion" id="accordionAnual">
+        {% for año, datos_del_año in datos_agrupados.items %}
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="heading{{ año }}">
+                <button class="accordion-button {% if not forloop.first %}collapsed{% endif %}" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ año }}" aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}" aria-controls="collapse{{ año }}">
+                    Año {{ año }}
+                </button>
+            </h2>
+            <div id="collapse{{ año }}" class="accordion-collapse collapse {% if forloop.first %}show{% endif %}" aria-labelledby="heading{{ año }}" data-bs-parent="#accordionAnual">
+                <div class="accordion-body">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Mes</th>
+                                <th>Cantidad</th>
+                                <th>Total</th>
+                                <th>Promedio</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for dato in datos_del_año %}
+                            <tr>
+                                <td>{{ dato.mes }}</td>
+                                <td>{{ dato.cantidad }}</td>
+                                <td>{{ dato.total }}</td>
+                                <td>{{ dato.promedio }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <div class="alert alert-info mt-3">
+                        <strong>Promedio Anual:</strong> {{ promedios_anuales|get_item:año|floatformat:2 }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

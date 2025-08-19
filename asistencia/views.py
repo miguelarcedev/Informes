@@ -102,3 +102,4 @@ class Asistencia_pantalla(LoginRequiredMixin,View):
                 context = {}
         
         return render(request, "asistencia.html",context= context)
+    
