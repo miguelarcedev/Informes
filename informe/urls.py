@@ -11,5 +11,7 @@ urlpatterns = [
     path('inactivos/', Inactivos.as_view(), name='inactivos'),
     path('totales/<str:pub_aux_reg>/', Totales.as_view(), name='totales'),
     path('totales_pdf/<str:pub_aux_reg>/', TotalesPdf.as_view(), name='totales_pdf'),
-    path("resumen/", views.resumen_informes, name="resumen"),
+    path("totales_publicadores/", views.totales_publicadores, name="totales_publicadores"),
+    path("totales_auxiliares/", views.totales_auxiliares, name="totales_auxiliares"),
+    path("totales_regulares/", views.totales_regulares, name="totales_regulares"),
 ]

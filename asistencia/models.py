@@ -4,7 +4,7 @@ from informes.choices import MES
 class Entre_Semana(models.Model):
     
     año = models.IntegerField()
-    mes = models.CharField(max_length=10, choices=MES) 
+    mes = models.IntegerField(choices=MES) 
     cantidad = models.IntegerField(null=True, blank=True)
     total = models.IntegerField(null=True, blank=True)
     promedio = models.IntegerField(null=True, blank=True)
@@ -16,7 +16,7 @@ class Entre_Semana(models.Model):
         ordering=['id']
     
     def __str__(self):
-        return str(self.año) +" - " + self.mes
+        return str(self.año) +" - " + str(self.mes)
 
     def save(self):
         self.promedio = round(self.total / self.cantidad)
@@ -26,7 +26,7 @@ class Entre_Semana(models.Model):
 class Fin_De_Semana(models.Model):
     
     año = models.IntegerField()
-    mes = models.CharField(max_length=10, choices=MES) 
+    mes = models.IntegerField(choices=MES) 
     cantidad = models.IntegerField(null=True, blank=True)
     total = models.IntegerField(null=True, blank=True)
     promedio = models.IntegerField(null=True, blank=True)
@@ -38,7 +38,7 @@ class Fin_De_Semana(models.Model):
         ordering=['id']
 
     def __str__(self):
-        return str(self.año) +" - " + self.mes
+        return str(self.año) +" - " + str(self.mes)
 
     def save(self):
         self.promedio = round(self.total / self.cantidad)

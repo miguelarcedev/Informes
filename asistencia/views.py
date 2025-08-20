@@ -119,7 +119,7 @@ def asistencia_entre_semana_view(request):
     from django.db.models import Avg
     titulo = "Asistencia Entre semana"
     data_por_anio = {}
-    registros = Entre_Semana.objects.all().order_by('año')
+    registros = Entre_Semana.objects.all().order_by('-año','mes')
 
     for registro in registros:
         anio = registro.año
@@ -142,7 +142,7 @@ def asistencia_fin_semana_view(request):
     from django.db.models import Avg
     titulo = "Asistencia Fin de semana"
     data_por_anio = {}
-    registros = Fin_De_Semana.objects.all().order_by('año')
+    registros = Fin_De_Semana.objects.all().order_by('-año','mes')
 
     for registro in registros:
         anio = registro.año
@@ -172,7 +172,7 @@ def asistencia_pdf(request, anio, titulo):
         registros = Fin_De_Semana.objects.filter(año=anio)
         promedio_final = registros.aggregate(avg=Avg("promedio"))["avg"] or 0
         promedio_final = round(promedio_final, 2)
-    print(titulo)
+    
     # Preparar respuesta como PDF
     response = HttpResponse(content_type="application/pdf")
     response['Content-Disposition'] = f'attachment; filename="asistencia_{anio}.pdf"'

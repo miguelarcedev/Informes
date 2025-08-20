@@ -3,7 +3,7 @@
 
 {% block contenido %}
 <div class="container py-4">
-    <h2 class="mb-4 text-center">📊 Resumen de Informes por Año</h2>
+    <h3 class="mb-4 text-center">📊 {{titulo}}</h3>
 
     <div class="accordion" id="accordionInformes">
         {% for año, registros in datos_por_año.items %}
@@ -21,13 +21,13 @@
                                     <th>Mes</th>
                                     <th>Total Estudios</th>
                                     <th>Total Horas</th>
-                                    <th>Publicadores Informantes</th>
+                                    <th>Informaron</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {% for registro in registros %}
                                     <tr>
-                                        <td>{{ registro.mes }}</td>
+                                        <td>{{ registro.mes_nombre }}</td>
                                         <td>{{ registro.total_estudios|default:"0" }}</td>
                                         <td>{{ registro.total_horas|default:"0" }}</td>
                                         <td>{{ registro.total_publicadores }}</td>

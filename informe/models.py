@@ -8,7 +8,7 @@ from informes.choices import *
 class Informe(models.Model):
     publicador=models.ForeignKey(Publicador, on_delete=models.CASCADE)
     año = models.IntegerField()
-    mes = models.CharField(max_length=10, choices=MES) 
+    mes = models.IntegerField(choices=MES) 
     participacion = models.CharField(max_length=10, choices=SINO,default=" ")
     estudios = models.IntegerField(null=True, blank=True,default=0)
     auxiliar = models.CharField(max_length=10, choices=SINO,default=" ")

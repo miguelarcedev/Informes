@@ -1,5 +1,5 @@
 {% extends "base0.html" %}
-
+{% load filtros_meses %}
 {% block contenido %}
 <div class="container my-4">
     <h4 class="mb-4 text-center">📊 {{titulo}}</h4>
@@ -35,7 +35,7 @@
                             <tbody>
                                 {% for registro in datos.meses %}
                                 <tr>
-                                    <td>{{ registro.mes }}</td>
+                                    <td>{{ registro.mes|mes_personalizado }}</td>
                                     <td>{{ registro.cantidad }}</td>
                                     <td>{{ registro.total }}</td>
                                     <td><span class="badge bg-primary">{{ registro.promedio }}</span></td>

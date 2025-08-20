@@ -401,25 +401,88 @@ from django.db.models import Sum, Count
 from django.shortcuts import render
 from .models import Informe
 
-def resumen_informes(request):
-    # Filtrar según condiciones:
-    # participacion = "Si", auxiliar != "Si", servicio vacío
+MESES_SERVICIO = {
+    1: "Septiembre",
+    2: "Octubre",
+    3: "Noviembre",
+    4: "Diciembre",
+    5: "Enero",
+    6: "Febrero",
+    7: "Marzo",
+    8: "Abril",
+    9: "Mayo",
+    10: "Junio",
+    11: "Julio",
+    12: "Agosto",
+}
+
+def totales_publicadores(request):
+    titulo = "Totales Publicadores"
     queryset = Informe.objects.filter(
         participacion="Si",
-        auxiliar__iexact="",  # vacío o None
-        publicador__servicio__exact=""
+        auxiliar__exact=" ",
+        publicador__servicio__isnull=True,
+        publicador__estado="Activo"
     ).values("año", "mes").annotate(
         total_estudios=Sum("estudios"),
         total_horas=Sum("horas"),
         total_publicadores=Count("publicador", distinct=True)
-    ).order_by("año", "mes")
+    ).order_by("-año", "mes")
 
-    # Agrupar por año
     datos_por_año = {}
     for row in queryset:
         año = row["año"]
+        mes_num = row["mes"]
+        row["mes_nombre"] = MESES_SERVICIO.get(mes_num, "")
         if año not in datos_por_año:
             datos_por_año[año] = []
         datos_por_año[año].append(row)
 
-    return render(request, "informe/resumen.html", {"datos_por_año": datos_por_año})
+    return render(request, "informe/totales.html", {"datos_por_año": datos_por_año,"titulo":titulo})
+
+def totales_auxiliares(request):
+    titulo = "Totales Auxiliares"
+    queryset = Informe.objects.filter(
+        participacion="Si",
+        auxiliar="Si",
+        publicador__servicio__isnull=True,
+        publicador__estado="Activo"
+    ).values("año", "mes").annotate(
+        total_estudios=Sum("estudios"),
+        total_horas=Sum("horas"),
+        total_publicadores=Count("publicador", distinct=True)
+    ).order_by("-año", "mes")
+
+    datos_por_año = {}
+    for row in queryset:
+        año = row["año"]
+        mes_num = row["mes"]
+        row["mes_nombre"] = MESES_SERVICIO.get(mes_num, "")
+        if año not in datos_por_año:
+            datos_por_año[año] = []
+        datos_por_año[año].append(row)
+
+    return render(request, "informe/totales.html", {"datos_por_año": datos_por_año,"titulo":titulo})
+
+def totales_regulares(request):
+    titulo = "Totales Regulares"
+    queryset = Informe.objects.filter(
+        participacion="Si",
+        publicador__servicio="Precursor Regular",
+        publicador__estado="Activo"
+    ).values("año", "mes").annotate(
+        total_estudios=Sum("estudios"),
+        total_horas=Sum("horas"),
+        total_publicadores=Count("publicador", distinct=True)
+    ).order_by("-año", "mes")
+
+    datos_por_año = {}
+    for row in queryset:
+        año = row["año"]
+        mes_num = row["mes"]
+        row["mes_nombre"] = MESES_SERVICIO.get(mes_num, "")
+        if año not in datos_por_año:
+            datos_por_año[año] = []
+        datos_por_año[año].append(row)
+
+    return render(request, "informe/totales.html", {"datos_por_año": datos_por_año,"titulo":titulo})
