@@ -9,7 +9,7 @@ urlpatterns = [
     path('register/', views.register, name='register'),
     path('forgot-username/', views.forgot_username, name='forgot_username'),
     path('logout/', views.do_logout, name='logout'),
-    path('home/', views.home, name='home'),
+    path('mi/panel/', views.mi_panel, name='mi_panel'),
 
     path('password-reset/', auth_views.PasswordResetView.as_view(
         template_name='cuentas/password_reset_form.html',
@@ -30,5 +30,5 @@ urlpatterns = [
 
     path('informes/nuevo/', views.crear_informe, name='crear_informe'),
     path('informes/<int:pk>/editar/', views.editar_informe, name='editar_informe'),
-    path("panel/", views.panel_staff, name="panel"),
+    path("panel/general/", views.panel_general, name="panel_general"),
 ]

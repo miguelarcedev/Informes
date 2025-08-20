@@ -12,11 +12,6 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-# @login_required
-# def home(request):
-#     grupos=Publicador.objects.filter(estado="Activo").values('grupo').order_by('grupo').annotate(suma=Sum('grupo'))
-#     return render(request, "home.html",{"grupos": grupos})
-
 
     
 @login_required

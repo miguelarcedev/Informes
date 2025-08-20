@@ -1,17 +1,24 @@
-from django.shortcuts import render, redirect
+
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.template.loader import render_to_string
 from django.core.mail import send_mail
 from django.conf import settings
-
+from collections import defaultdict
+from publicador.models import Publicador
+from informe.models import Informe
 from .forms import UsernameForm, PasswordForm, RegisterForm, ForgotUsernameForm
 from django.contrib.auth.models import User
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
+from .forms import InformeForm
+from django.db import IntegrityError, transaction
+from django.contrib.auth.decorators import user_passes_test
 
 def login_username(request):
     if request.user.is_authenticated:
-        return redirect('home')
+        return redirect('mi_panel')
     form = UsernameForm(request.POST or None)
     if request.method == 'POST' and form.is_valid():
         username = form.cleaned_data['username']
@@ -24,7 +31,7 @@ def login_username(request):
 
 def login_password(request):
     if request.user.is_authenticated:
-        return redirect('home')
+        return redirect('mi_panel')
     username = request.session.get('tmp_username')
     if not username:
         return redirect('login_username')
@@ -34,14 +41,14 @@ def login_password(request):
         user = authenticate(request, username=username, password=password)
         if user:
             login(request, user)
-            return redirect('home')
+            return redirect('mi_panel')
         else:
             form.add_error('password', 'Contraseña incorrecta.')
     return render(request, 'cuentas/login_password.html', {'form': form, 'username': username})
 
 def register(request):
     if request.user.is_authenticated:
-        return redirect('home')
+        return redirect('mi_panel')
     form = RegisterForm(request.POST or None)
     if request.method == 'POST' and form.is_valid():
         form.save()
@@ -65,17 +72,10 @@ def forgot_username(request):
             form.add_error('email', 'No hay cuentas vinculadas a ese correo.')
     return render(request, 'cuentas/forgot_username.html', {'form': form})
 
-""" @login_required
-def home(request):
-    return render(request, 'cuentas/home.html') """
 
-from django.shortcuts import render
-from collections import defaultdict
-from publicador.models import Publicador
-from informe.models import Informe
 
 @login_required
-def home(request):
+def mi_panel(request):
     publicador = None
     informes = None
 
@@ -105,7 +105,7 @@ def home(request):
         'años_ordenados': años_ordenados,
         'form_inicial': form_inicial
     }
-    return render(request, 'cuentas/contenido.html', context)
+    return render(request, 'cuentas/mi_panel.html', context)
 
   
 
@@ -114,20 +114,6 @@ def do_logout(request):
     messages.info(request, "Has cerrado sesión.")
     return redirect('login_username')
 
-
-from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.decorators import login_required
-from informe.models import Informe
-from .forms import InformeForm
-import datetime
-
-
-
-# views.py
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
-from django.contrib import messages
-from django.db import IntegrityError, transaction
 
 @login_required
 def crear_informe(request):
@@ -142,7 +128,7 @@ def crear_informe(request):
                 with transaction.atomic():
                     informe.save()
                 messages.success(request, "✅ Informe creado correctamente.")
-                return redirect("home")  # 👈 redirige a la vista que muestra los tabs
+                return redirect("mi_panel")  # 👈 redirige a la vista que muestra los tabs
             except IntegrityError:
                 form.add_error(None, "Ya existe un informe para ese mes y año.")
     else:
@@ -160,17 +146,14 @@ def editar_informe(request, pk):
         form = InformeForm(request.POST, instance=informe)
         if form.is_valid():
             form.save()
-            return redirect('home')
+            return redirect('mi_panel')
     else:
         form = InformeForm(instance=informe)
 
     return render(request, 'informes/editar_informe.html', {'form': form})
 
 
-from django.contrib.auth.decorators import user_passes_test
-from django.shortcuts import render
-
 # Solo permite acceso si el usuario es staff
 @user_passes_test(lambda u: u.is_staff)
-def panel_staff(request):
-    return render(request, "panel_staff.html")
+def panel_general(request):
+    return render(request, "panel_general.html")

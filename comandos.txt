@@ -16,4 +16,8 @@ python manage.py migrate_schemas --shared
 python manage.py migrate_schemas
 
 
+# Cambiar valores en una tabla con SQL
 
+UPDATE "Alto_Comedero".informe_informe
+SET mes = 12
+WHERE mes LIKE '%Agosto%';
