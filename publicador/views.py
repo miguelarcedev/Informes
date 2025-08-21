@@ -291,4 +291,74 @@ class Contactos(LoginRequiredMixin,View):
         }
         
        
-        return render(request, "contactos.html",context=context)      
+        return render(request, "contactos.html",context=context)  
+
+
+    # views.py
+from django.shortcuts import render, get_object_or_404
+from django.http import HttpResponse
+from django.db.models import Sum
+from publicador.models import Publicador
+
+# Para PDF
+from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Spacer
+from reportlab.lib.pagesizes import A4
+from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.lib import colors
+
+
+def publicadores_view(request):
+    publicadores = Publicador.objects.filter(estado="Activo").prefetch_related("informes")
+    data = []
+    for pub in publicadores:
+        años = {}
+        for inf in pub.informes.all():
+            if inf.año not in años:
+                años[inf.año] = {"informes": [], "total_horas": 0}
+            años[inf.año]["informes"].append(inf)
+            años[inf.año]["total_horas"] += inf.horas
+
+        data.append({
+            "publicador": pub,
+            "años": dict(sorted(años.items(), reverse=True))  # mostrar años descendentes
+        })
+
+    return render(request, "publicador/publicadores.html", {"data": data})
+
+
+def informe_pdf(request, pk, anio):
+    publicador = get_object_or_404(Publicador, pk=pk)
+
+    informes = Informe.objects.filter(publicador=publicador, año=anio).order_by("mes")
+
+    response = HttpResponse(content_type="application/pdf")
+    response["Content-Disposition"] = f'attachment; filename="{publicador}_{anio}.pdf"'
+
+    doc = SimpleDocTemplate(response, pagesize=A4)
+    styles = getSampleStyleSheet()
+    elements = []
+
+    elements.append(Paragraph(f"Informe de Servicio {anio}", styles["Title"]))
+    elements.append(Paragraph(f"Publicador: {publicador.apellido}, {publicador.nombre}", styles["Normal"]))
+    elements.append(Spacer(1, 12))
+
+    data = [["Mes", "Horas", "Estudios", "Auxiliar", "Notas"]]
+    for inf in informes:
+        data.append([
+            inf.mes, inf.horas, inf.estudios,
+            "Sí" if inf.auxiliar else "No",
+            inf.notas or ""
+        ])
+
+    tabla = Table(data, hAlign="LEFT")
+    tabla.setStyle(TableStyle([
+        ("BACKGROUND", (0, 0), (-1, 0), colors.gray),
+        ("TEXTCOLOR", (0, 0), (-1, 0), colors.whitesmoke),
+        ("GRID", (0, 0), (-1, -1), 0.5, colors.black),
+        ("ALIGN", (1, 1), (1, -1), "CENTER"),
+    ]))
+
+    elements.append(tabla)
+    doc.build(elements)
+    return response
+   

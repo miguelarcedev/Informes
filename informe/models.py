@@ -6,7 +6,7 @@ from informes.choices import *
 
 
 class Informe(models.Model):
-    publicador=models.ForeignKey(Publicador, on_delete=models.CASCADE)
+    publicador = models.ForeignKey(Publicador, on_delete=models.CASCADE, related_name="informes")
     año = models.IntegerField()
     mes = models.IntegerField(choices=MES) 
     participacion = models.CharField(max_length=10, choices=SINO,default=" ")

@@ -14,4 +14,5 @@ urlpatterns = [
     path("totales_publicadores/", views.totales_publicadores, name="totales_publicadores"),
     path("totales_auxiliares/", views.totales_auxiliares, name="totales_auxiliares"),
     path("totales_regulares/", views.totales_regulares, name="totales_regulares"),
+    path('informes/pdf/<int:año>/<str:titulo>/', views.informe_pdf, name='informe_pdf'),
 ]

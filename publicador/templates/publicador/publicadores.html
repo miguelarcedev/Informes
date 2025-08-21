@@ -1,0 +1,58 @@
+{% extends "base0.html" %}
+{% block contenido %}
+<div class="accordion" id="accordionPublicadores">
+  {% for item in data %}
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="heading{{ forloop.counter }}">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ forloop.counter }}">
+          {{ item.publicador.apellido }}, {{ item.publicador.nombre }}
+        </button>
+      </h2>
+      <div id="collapse{{ forloop.counter }}" class="accordion-collapse collapse" data-bs-parent="#accordionPublicadores">
+        <div class="accordion-body">
+
+          <div class="accordion" id="accordionAnios{{ forloop.counter }}">
+            {% for anio, datos in item.años.items %}
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="headingY{{ forloop.parentloop.counter }}{{ forloop.counter }}">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseY{{ forloop.parentloop.counter }}{{ forloop.counter }}">
+                    Año {{ anio }} (Total horas: {{ datos.total_horas }})
+                  </button>
+                </h2>
+                <div id="collapseY{{ forloop.parentloop.counter }}{{ forloop.counter }}" class="accordion-collapse collapse" data-bs-parent="#accordionAnios{{ forloop.parentloop.counter }}">
+                  <div class="accordion-body">
+                    <table class="table table-striped">
+                      <thead>
+                        <tr>
+                          <th>Mes</th>
+                          <th>Horas</th>
+                          <th>Estudios</th>
+                          <th>Auxiliar</th>
+                          <th>Notas</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for inf in datos.informes %}
+                          <tr>
+                            <td>{{ inf.mes }}</td>
+                            <td>{{ inf.horas }}</td>
+                            <td>{{ inf.estudios }}</td>
+                            <td>{% if inf.auxiliar %}Sí{% else %}No{% endif %}</td>
+                            <td>{{ inf.notas }}</td>
+                          </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                    <a href="{% url 'informe_pdf' item.publicador.id anio %}" class="btn btn-primary">Imprimir PDF</a>
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+</div>
+{% endblock %}

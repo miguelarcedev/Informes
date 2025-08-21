@@ -10,8 +10,10 @@ from publicador.models import Publicador
 from informe.models import Informe
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-
-
+from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Spacer
+from reportlab.lib.pagesizes import A4
+from reportlab.lib import colors
+from reportlab.lib.styles import getSampleStyleSheet
 
     
 @login_required
@@ -30,23 +32,6 @@ def home(request):
      
     return render(request, "templates/home.html" ,{"grupos":grupos})
 
-""" class Tarjeta_grupo(LoginRequiredMixin,View):
-
-    def get(self, request,grupo, *args, **kwargs):
-        total = 0
-        ultimo_registro = Informe.objects.all().last()
-        año1 = ultimo_registro.año - 1
-        año2 = ultimo_registro.año
-        template = get_template('s-21-grupos-pdf.html')
-        context = {'publicador': Publicador.objects.filter(grupo=grupo).filter(estado="Activo").filter(servicio__isnull=True),
-                   'año1':año1,
-                   'año2':año2,
-                   'total': total,
-                   }
-        html = template.render(context)
-        response = HttpResponse(content_type='application/pdf')
-        pisaStatus = pisa.CreatePDF(html, dest=response)
-        return response """
 
 class Tarjeta_grupo(LoginRequiredMixin,View):
 
@@ -391,24 +376,11 @@ class Totales(LoginRequiredMixin,View):
         return render(request, "totales.html", context=context)
     
 
-# app informe/views.py
-from django.db.models import Sum, Count
-from django.shortcuts import render
-from .models import Informe
-
+# Diccionario de meses de servicio
 MESES_SERVICIO = {
-    1: "Septiembre",
-    2: "Octubre",
-    3: "Noviembre",
-    4: "Diciembre",
-    5: "Enero",
-    6: "Febrero",
-    7: "Marzo",
-    8: "Abril",
-    9: "Mayo",
-    10: "Junio",
-    11: "Julio",
-    12: "Agosto",
+    1: "Septiembre", 2: "Octubre", 3: "Noviembre", 4: "Diciembre",
+    5: "Enero", 6: "Febrero", 7: "Marzo", 8: "Abril",
+    9: "Mayo", 10: "Junio", 11: "Julio", 12: "Agosto"
 }
 
 def totales_publicadores(request):
@@ -481,3 +453,102 @@ def totales_regulares(request):
         datos_por_año[año].append(row)
 
     return render(request, "informe/totales.html", {"datos_por_año": datos_por_año,"titulo":titulo})
+
+
+
+def informe_pdf(request, año,titulo):
+    # === 1) AGRUPAR POR AÑO Y MES CON TOTALES ===
+    # Segun el titulo modificamos el queryset 
+    if titulo == "Totales Publicadores":
+        queryset = Informe.objects.filter(
+            año=año,
+            participacion="Si",
+            auxiliar__exact = " ",  # <-- cambia según el tipo de publicador que quieras
+            publicador__servicio__isnull=True,
+            publicador__estado="Activo"
+        ).values("año", "mes").annotate(
+            total_estudios=Sum("estudios"),
+            total_horas=Sum("horas"),
+            total_publicadores=Count("publicador", distinct=True)
+        ).order_by("mes")
+    if titulo == "Totales Auxiliares":
+        queryset = Informe.objects.filter(
+            año=año,
+            participacion="Si",
+            auxiliar="Si",  # <-- cambia según el tipo de publicador que quieras
+            publicador__servicio__isnull=True,
+            publicador__estado="Activo"
+        ).values("año", "mes").annotate(
+            total_estudios=Sum("estudios"),
+            total_horas=Sum("horas"),
+            total_publicadores=Count("publicador", distinct=True)
+        ).order_by("mes")
+    if titulo == "Totales Regulares":
+        queryset = Informe.objects.filter(
+            año=año,
+            participacion="Si",
+            publicador__servicio = "Precursor Regular",
+            publicador__estado="Activo"
+        ).values("año", "mes").annotate(
+            total_estudios=Sum("estudios"),
+            total_horas=Sum("horas"),
+            total_publicadores=Count("publicador", distinct=True)
+        ).order_by("mes")
+
+    # Agrupar en dict por año (aunque pedimos solo uno, mantenemos la lógica)
+    datos_por_año = {}
+    for row in queryset:
+        año = row["año"]
+        mes_num = row["mes"]
+        row["mes_nombre"] = MESES_SERVICIO.get(mes_num, "")
+        if año not in datos_por_año:
+            datos_por_año[año] = []
+        datos_por_año[año].append(row)
+
+    # === 2) ARMAR EL PDF ===
+    response = HttpResponse(content_type="application/pdf")
+    response["Content-Disposition"] = f'inline; filename="{titulo} {año}.pdf"'
+
+    doc = SimpleDocTemplate(response, pagesize=A4)
+    styles = getSampleStyleSheet()
+    elements = []
+
+    # Título principal
+    elements.append(Paragraph(f"{titulo} - Año {año}", styles["Title"]))
+    elements.append(Spacer(1, 12))
+
+    # Por cada año (aunque es uno en este caso)
+    for año, registros in datos_por_año.items():
+        # Subtítulo
+        # elements.append(Paragraph(f"Año de Servicio {año}", styles["Heading2"]))
+        # elements.append(Spacer(1, 8))
+
+        # Encabezado de la tabla
+        data = [["Mes", "Total Estudios", "Total Horas", "Publicadores"]]
+
+        # Filas por cada mes
+        for reg in registros:
+            data.append([
+                reg["mes_nombre"],
+                reg["total_estudios"] or 0,
+                reg["total_horas"] or 0,
+                reg["total_publicadores"] or 0,
+            ])
+
+        # Crear tabla
+        table = Table(data, hAlign="CENTER")
+        table.setStyle(TableStyle([
+            ("BACKGROUND", (0, 0), (-1, 0), colors.black),
+            ("TEXTCOLOR", (0, 0), (-1, 0), colors.white),
+            ("ALIGN", (0, 0), (-1, -1), "CENTER"),
+            ("FONTNAME", (0, 0), (-1, 0), "Helvetica-Bold"),
+            ("BOTTOMPADDING", (0, 0), (-1, 0), 10),
+            ("GRID", (0, 0), (-1, -1), 0.5, colors.grey),
+        ]))
+
+        elements.append(table)
+        elements.append(Spacer(1, 20))  # espacio después de cada año
+
+    doc.build(elements)
+    return response
+
