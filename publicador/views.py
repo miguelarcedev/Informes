@@ -1,22 +1,22 @@
 
-from urllib import request
-from django.shortcuts import render
 from django.http import HttpResponse
-from django.template import Context
 from django.template.loader import get_template
 from xhtml2pdf import pisa
-from django.views.generic.list import ListView
 from django.http import  HttpResponse
-from django.urls import reverse_lazy
 from publicador.models import Publicador
 from asistencia.models import Entre_Semana, Fin_De_Semana
 from informe.models import Informe
 from django.views.generic import  View
-from django.db.models import Count, Sum, Max, Avg
+from django.db.models import  Sum, Max, Avg
 from django.contrib.auth.mixins import LoginRequiredMixin
 from informe.utils import *
+from django.shortcuts import render, get_object_or_404
 
-# Create your views here.
+# Para PDF
+from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Spacer
+from reportlab.lib.pagesizes import A4
+from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+from reportlab.lib import colors
 
 
 class Publicador_list(LoginRequiredMixin,View):
@@ -294,20 +294,10 @@ class Contactos(LoginRequiredMixin,View):
         return render(request, "contactos.html",context=context)  
 
 
-    # views.py
-from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse
-from django.db.models import Sum
-from publicador.models import Publicador
-
-# Para PDF
-from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Spacer
-from reportlab.lib.pagesizes import A4
-from reportlab.lib.styles import getSampleStyleSheet
-from reportlab.lib import colors
 
 
 def publicadores_view(request):
+    titulo="Publicadores Activos"
     publicadores = Publicador.objects.filter(estado="Activo").prefetch_related("informes")
     data = []
     for pub in publicadores:
@@ -322,9 +312,15 @@ def publicadores_view(request):
             "publicador": pub,
             "años": dict(sorted(años.items(), reverse=True))  # mostrar años descendentes
         })
+    return render(request, "publicador/publicadores.html", {"data": data,"titulo": titulo})
 
-    return render(request, "publicador/publicadores.html", {"data": data})
 
+# Definición de meses del año de servicio (septiembre–agosto)
+MESES_SERVICIO = [
+    "Septiembre", "Octubre", "Noviembre", "Diciembre",
+    "Enero", "Febrero", "Marzo", "Abril",
+    "Mayo", "Junio", "Julio", "Agosto",
+]
 
 def informe_pdf(request, pk, anio):
     publicador = get_object_or_404(Publicador, pk=pk)
@@ -334,23 +330,70 @@ def informe_pdf(request, pk, anio):
     response = HttpResponse(content_type="application/pdf")
     response["Content-Disposition"] = f'attachment; filename="{publicador}_{anio}.pdf"'
 
-    doc = SimpleDocTemplate(response, pagesize=A4)
+    doc = SimpleDocTemplate(
+    response,
+    pagesize=A4,
+    leftMargin=92,   # margen izquierdo
+    rightMargin=92,  # margen derecho
+    topMargin=40,    # margen superior
+    bottomMargin=72  # margen inferior
+)
     styles = getSampleStyleSheet()
     elements = []
 
-    elements.append(Paragraph(f"Informe de Servicio {anio}", styles["Title"]))
-    elements.append(Paragraph(f"Publicador: {publicador.apellido}, {publicador.nombre}", styles["Normal"]))
+    # --- 2. Estilo modificado Título ---
+    titulo_modificado = styles["Title"].clone('TituloModificado')
+    titulo_modificado.fontName = "Helvetica-Bold"
+    titulo_modificado.fontSize = 12
+
+    # --- 2. Estilo modificado Normal  ---
+    normal_modificado = styles["Normal"].clone('NormalModificado')
+    normal_modificado.fontName = "Helvetica-Bold"
+    normal_modificado.fontSize = 10
+    normal_modificado.leading = 16
+
+    # --- 2. Estilo modificado Normal izquierda ---
+    normal_modificado_izq = styles["Normal"].clone('NormalModificado')
+    normal_modificado_izq.fontName = "Helvetica"
+    normal_modificado_izq.fontSize = 8
+    normal_modificado_izq.leading = 12
+    
+    
+    # --- 3. Estilo personalizado ---
+    estilo_personal = ParagraphStyle(
+        name="Personal",
+        fontName="Times-Roman",
+        fontSize=12,
+        leading=16,               # interlineado
+        textColor=colors.green,
+        alignment=1,              # centrado
+        spaceAfter=10,
+        backColor=colors.whitesmoke
+    )
+    
+    elements.append(Paragraph(f"REGISTRO DE PUBLICADOR DE LA CONGREGACION", titulo_modificado))
+    elements.append(Paragraph(f"Nombre: {publicador.apellido}, {publicador.nombre}", normal_modificado))
+    elements.append(Paragraph(f"Fecha nacimiento: {publicador.nacimiento}", normal_modificado_izq))
+    elements.append(Paragraph(f"Fecha bautismo: {publicador.bautismo}", normal_modificado_izq))
+    elements.append(Paragraph(f"Sexo: {publicador.sexo}", normal_modificado_izq))
+    elements.append(Paragraph(f"{publicador.u_oo}", normal_modificado_izq))
+    elements.append(Paragraph(f"{publicador.servicio}", normal_modificado_izq))
+    elements.append(Paragraph(f"{publicador.a_sm}", normal_modificado_izq))
     elements.append(Spacer(1, 12))
 
-    data = [["Mes", "Horas", "Estudios", "Auxiliar", "Notas"]]
+    
+    # Cabecera de la tabla
+    data = [[f"Año: {anio}", "Participacion", "Estudios", "Auxiliar", "Horas", "Notas                                "]]
+
+    # Agregar filas con el nombre del mes en vez del número
     for inf in informes:
+        nombre_mes = MESES_SERVICIO[inf.mes - 1]  # inf.mes = 1 → Septiembre
         data.append([
-            inf.mes, inf.horas, inf.estudios,
-            "Sí" if inf.auxiliar else "No",
+            nombre_mes, inf.participacion, inf.estudios, inf.auxiliar, inf.horas,
             inf.notas or ""
         ])
 
-    tabla = Table(data, hAlign="LEFT")
+    tabla = Table(data, hAlign="CENTER")
     tabla.setStyle(TableStyle([
         ("BACKGROUND", (0, 0), (-1, 0), colors.gray),
         ("TEXTCOLOR", (0, 0), (-1, 0), colors.whitesmoke),
@@ -361,4 +404,3 @@ def informe_pdf(request, pk, anio):
     elements.append(tabla)
     doc.build(elements)
     return response
-   

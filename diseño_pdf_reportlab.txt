@@ -1,0 +1,118 @@
+####################### Para modificar parametros del texto #################################
+
+from django.http import HttpResponse
+from reportlab.lib.pagesizes import A4
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
+from reportlab.lib import colors
+from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+from reportlab.pdfbase import pdfmetrics
+from reportlab.pdfbase.ttfonts import TTFont
+
+def ejemplo_paragraphs(request):
+    response = HttpResponse(content_type="application/pdf")
+    response["Content-Disposition"] = 'attachment; filename="ejemplo_paragraphs.pdf"'
+
+    doc = SimpleDocTemplate(response, pagesize=A4)
+    styles = getSampleStyleSheet()
+    elements = []
+
+    # --- 1. Usando estilo predefinido ---
+    elements.append(Paragraph("Texto con estilo Normal", styles["Normal"]))
+    elements.append(Spacer(1, 12))
+
+    # --- 2. Estilo modificado ---
+    estilo_modificado = styles["Normal"].clone('EstiloModificado')
+    estilo_modificado.fontName = "Helvetica-Bold"
+    estilo_modificado.fontSize = 14
+    estilo_modificado.textColor = colors.darkblue
+    elements.append(Paragraph("Texto con Helvetica-Bold, tamaño 14, azul", estilo_modificado))
+    elements.append(Spacer(1, 12))
+
+    # --- 3. Estilo personalizado ---
+    estilo_personal = ParagraphStyle(
+        name="Personal",
+        fontName="Times-Roman",
+        fontSize=12,
+        leading=16,               # interlineado
+        textColor=colors.green,
+        alignment=1,              # centrado
+        spaceAfter=10,
+        backColor=colors.whitesmoke
+    )
+    elements.append(Paragraph("Texto con Times-Roman, verde, centrado y con fondo gris claro", estilo_personal))
+    elements.append(Spacer(1, 12))
+
+    # --- 4. Usando etiquetas HTML dentro del Paragraph ---
+    elements.append(Paragraph("Texto con <b>negrita</b>, <i>cursiva</i> y <font color='red' size=16>rojo grande</font>", styles["Normal"]))
+    elements.append(Spacer(1, 12))
+
+    # --- 5. Fuente externa (ejemplo con Roboto, debe existir el archivo .ttf) ---
+    try:
+        pdfmetrics.registerFont(TTFont("Roboto", "/ruta/a/Roboto-Regular.ttf"))
+        estilo_roboto = ParagraphStyle(name="RobotoStyle", fontName="Roboto", fontSize=12)
+        elements.append(Paragraph("Texto usando fuente externa Roboto", estilo_roboto))
+    except:
+        elements.append(Paragraph("No se pudo cargar la fuente externa (verifica la ruta al .ttf)", styles["Normal"]))
+
+    # --- Generar PDF ---
+    doc.build(elements)
+    return response
+
+####################### Para modificar parametros de la Página #################################
+
+##----- tamaño de la pagina ----##
+
+from reportlab.lib.pagesizes import A4, letter, landscape
+
+# A4 vertical
+doc = SimpleDocTemplate(response, pagesize=A4)
+
+# Carta (Letter)
+doc = SimpleDocTemplate(response, pagesize=letter)
+
+# Apaisado (horizontal)
+doc = SimpleDocTemplate(response, pagesize=landscape(A4))
+
+##----- tamaño de la pagina personalizado ----##
+
+custom_page = (400, 600)  # ancho x alto en puntos (1 punto = 1/72 pulgadas)
+doc = SimpleDocTemplate(response, pagesize=custom_page)
+
+##----- Margenes de la Página ----##
+
+doc = SimpleDocTemplate(
+    response,
+    pagesize=A4,
+    leftMargin=50,   # margen izquierdo
+    rightMargin=50,  # margen derecho
+    topMargin=72,    # margen superior
+    bottomMargin=72  # margen inferior
+)
+
+##----- Encabezado y Pie de Pagina ----##
+
+from reportlab.pdfgen import canvas
+
+def header_footer(canvas, doc):
+    # Cabecera
+    canvas.saveState()
+    canvas.setFont("Helvetica", 9)
+    canvas.drawString(50, A4[1] - 30, "Informe de Servicio")
+    # Pie de página
+    canvas.drawString(50, 30, f"Página {doc.page}")
+    canvas.restoreState()
+
+doc = SimpleDocTemplate(response, pagesize=A4)
+doc.build(elements, onFirstPage=header_footer, onLaterPages=header_footer)
+
+##----- Orientacion del Texto ----##
+
+El texto dentro de Paragraph se controla con alignment en el ParagraphStyle:
+
+0 → izquierda
+
+1 → centro
+
+2 → derecha
+
+4 → justificado

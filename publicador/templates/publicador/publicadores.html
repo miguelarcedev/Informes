@@ -1,5 +1,8 @@
 {% extends "base0.html" %}
+{% load filtros_meses %}
 {% block contenido %}
+<div class="container my-4">
+    <h4 class="mb-4 text-center">📊 {{titulo}}</h4>
 <div class="accordion" id="accordionPublicadores">
   {% for item in data %}
     <div class="accordion-item">
@@ -25,19 +28,22 @@
                       <thead>
                         <tr>
                           <th>Mes</th>
-                          <th>Horas</th>
+                          <th>Participación</th>
                           <th>Estudios</th>
                           <th>Auxiliar</th>
+                          <th>Horas</th>
                           <th>Notas</th>
+                          
                         </tr>
                       </thead>
                       <tbody>
                         {% for inf in datos.informes %}
                           <tr>
-                            <td>{{ inf.mes }}</td>
-                            <td>{{ inf.horas }}</td>
+                            <td>{{ inf.mes|mes_personalizado }}</td>
+                            <td>{{ inf.participacion }}</td>
                             <td>{{ inf.estudios }}</td>
-                            <td>{% if inf.auxiliar %}Sí{% else %}No{% endif %}</td>
+                            <td>{{ inf.auxiliar}}</td>
+                            <td>{{ inf.horas }}</td>
                             <td>{{ inf.notas }}</td>
                           </tr>
                         {% endfor %}
@@ -54,5 +60,6 @@
       </div>
     </div>
   {% endfor %}
+</div>
 </div>
 {% endblock %}
