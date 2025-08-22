@@ -296,7 +296,7 @@ class Contactos(LoginRequiredMixin,View):
 
 
 
-def publicadores_view(request):
+def publicadores_activos(request):
     titulo="Publicadores Activos"
     publicadores = Publicador.objects.filter(estado="Activo").prefetch_related("informes")
     data = []
@@ -315,7 +315,28 @@ def publicadores_view(request):
     return render(request, "publicador/publicadores.html", {"data": data,"titulo": titulo})
 
 
+def publicadores_inactivos(request):
+    titulo="Publicadores Inactivos"
+    publicadores = Publicador.objects.filter(estado="Inactivo").prefetch_related("informes")
+    data = []
+    for pub in publicadores:
+        años = {}
+        for inf in pub.informes.all():
+            if inf.año not in años:
+                años[inf.año] = {"informes": [], "total_horas": 0}
+            años[inf.año]["informes"].append(inf)
+            años[inf.año]["total_horas"] += inf.horas
+
+        data.append({
+            "publicador": pub,
+            "años": dict(sorted(años.items(), reverse=True))  # mostrar años descendentes
+        })
+    return render(request, "publicador/publicadores.html", {"data": data,"titulo": titulo})
+
+
+
 # Definición de meses del año de servicio (septiembre–agosto)
+
 MESES_SERVICIO = [
     "Septiembre", "Octubre", "Noviembre", "Diciembre",
     "Enero", "Febrero", "Marzo", "Abril",

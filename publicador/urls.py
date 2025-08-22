@@ -16,7 +16,8 @@ urlpatterns = [
     path('S10/', S10.as_view(), name='S10'),
     path('telefonos/', Telefonos.as_view(), name='telefonos'),
     path('contactos/', Contactos.as_view(), name='contactos'),
-    path("activos/", views.publicadores_view, name="activos"),
+    path("activos/", views.publicadores_activos, name="activos"),
+    path("inactivos/", views.publicadores_inactivos, name="inactivos"),
     path("publicador/<int:pk>/pdf/<int:anio>/", views.informe_pdf, name="informe_pdf"),
 
 ]

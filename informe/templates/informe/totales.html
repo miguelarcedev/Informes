@@ -2,7 +2,9 @@
 {% load filtros_meses %}
 {% block contenido %}
 <div class="container my-4">
-    <h4 class="mb-4 text-center">📊 {{titulo}}</h4>
+    <h4 class="mb-4 text-center">
+      <i class="bi bi-people-fill"></i> {{titulo}}
+    </h4>
 
     <div class="accordion" id="accordionAsistencia">
         {% for año, registros in datos_por_año.items %}
