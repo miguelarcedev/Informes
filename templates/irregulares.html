@@ -1,27 +1,46 @@
 {% extends "base0.html" %}
 
 {% block contenido %}
-<div class="row justify-content-center">
-    <div class="m-3">
-        <table id="customers" style="width: 300px;">
+<div class="container my-4">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-10 col-lg-8">
 
-            <tr>
-                <th>IRREGULARES: {{cantidad}}</th>
-                <th>Año</th>
-                <th>Mes</th>
-            </tr>
+            <!-- Título elegante -->
+            <div class="text-center mb-4">
+                <h4 class="mb-4 text-center">
+                    <i class="bi bi-people-fill"></i> Irregulares
+                </h4>
+                    <p class="text-muted">Cantidad total: <span class="fw-bold">{{ cantidad }}</span></p>
+            </div>
 
-            {% for i in irregulares %}
+            <!-- Tabla responsiva -->
+            <div class="table-responsive shadow rounded">
+                <table class="table table-striped table-hover align-middle text-center">
+                    <thead class="table-primary">
+                        <tr>
+                            <th scope="col">Irregulares</th>
+                            <th scope="col">Año</th>
+                            <th scope="col">Mes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in irregulares %}
+                        <tr>
+                            <td>{{ i.0 }}</td>
+                            <td>{{ i.1 }}</td>
+                            <td>{{ i.2 }}</td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="3" class="text-muted">No se encontraron registros</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
 
-            <tr>
-                <td>{{i.0}}</td>
-                <td>{{i.1}}</td>
-                <td>{{i.2}}</td>
-            </tr>
-
-            {% endfor %}
-        </table>
+            
+        </div>
     </div>
 </div>
-
 {% endblock %}

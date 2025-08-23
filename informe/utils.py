@@ -1,8 +1,18 @@
 
 from publicador.models import Publicador
 from informe.models import Informe
+from datetime import datetime
 
 def calculo_irregulares():
+        # Fecha y hora actual
+        hoy = datetime.now()
+        mes_actual = hoy.month   # número de mes (1-12)
+        año_actual = hoy.year    # año (ej. 2025)
+        if mes_actual in range(3, 9):  # de 3 a 8 (marzo a agosto)
+            año = (año_actual)
+        else:
+            año = (año_actual -1, año_actual)
+
         bandera = True
         cantidad = 0
         key = []
@@ -15,12 +25,24 @@ def calculo_irregulares():
             informe = Informe.objects.filter(publicador=k).order_by('-id')[0:6]
             bandera = True
             for i in informe:
-                if i.participacion != "Si":
-                    irregulares.append((i.publicador,i.año,i.mes))
-                    if bandera:
-                        cantidad += 1
-                        bandera = False
+                if isinstance(año, tuple):  # si 'año' tiene dos posibles valores
+                    if i.año in año:
+                        if i.participacion != "Si":
+                            irregulares.append((i.publicador,i.año,i.mes))
+                            if bandera:
+                                cantidad += 1
+                                bandera = False
+                else:
+                     if i.año == año:
+                        if i.participacion != "Si":
+                            irregulares.append((i.publicador,i.año,i.mes))
+                            if bandera:
+                                cantidad += 1
+                                bandera = False
+                     
         return(irregulares, cantidad)
+
+
 
 def calculo_inactivos():
         año = 0

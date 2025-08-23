@@ -1,103 +1,112 @@
-{% extends "base.html" %}
+{% extends "base0.html" %}
 
 {% block contenido %}
+<div class="container my-4">
+  <div class="row justify-content-center">
+    <div class="text-center mb-4">
+                <h4 class="mb-4 text-center">
+                    <i class="fas fa-chart-line me-2"></i> Estadísticas
+                </h4>
+    </div>
 
-<div class="row justify-content-center">
+    <!-- Totales de la Congregación -->
+    <div class="col-12 col-md-6 mb-4">
+      <div class="card shadow rounded">
+        <div class="card-header bg-primary text-white text-center fw-bold">
+          Totales de la Congregación
+        </div>
+        <div class="table-responsive">
+          <table class="table table-striped table-hover align-middle text-center mb-0">
+            <tbody>
+              <tr>
+                <td>Publicadores Activos</td>
+                <td class="fw-bold">{{ tot_activos }}</td>
+              </tr>
+              <tr>
+                <td>Publicadores Inactivos</td>
+                <td class="fw-bold">{{ tot_inactivos }}</td>
+              </tr>
+              <tr>
+                <td>Publicadores Bautizados</td>
+                <td class="fw-bold">{{ tot_bautizados }}</td>
+              </tr>
+              <tr>
+                <td>Publicadores No bautizados</td>
+                <td class="fw-bold">{{ tot_no_bautizados }}</td>
+              </tr>
+              <tr>
+                <td>Total Ancianos</td>
+                <td class="fw-bold">{{ tot_ancianos }}</td>
+              </tr>
+              <tr>
+                <td>Total Siervos Ministeriales</td>
+                <td class="fw-bold">{{ tot_ministeriales }}</td>
+              </tr>
+              <tr>
+                <td>Precursores Regulares</td>
+                <td class="fw-bold">{{ tot_regulares }}</td>
+              </tr>
+              <tr>
+                <td>Hombres</td>
+                <td class="fw-bold">{{ tot_hombres }}</td>
+              </tr>
+              <tr>
+                <td>Mujeres</td>
+                <td class="fw-bold">{{ tot_mujeres }}</td>
+              </tr>
+              <tr>
+                <td>Otras Ovejas</td>
+                <td class="fw-bold">{{ tot_otras_ovejas }}</td>
+              </tr>
+              <tr>
+                <td>Ungidos</td>
+                <td class="fw-bold">{{ tot_ungidos }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
 
-  <div class="m-3">
-    <table id="customers" style="width: 300px;">
+    <!-- Situación últimos 6 meses -->
+    <div class="col-12 col-md-6 mb-4">
+      <div class="card shadow rounded">
+        <div class="card-header bg-success text-white text-center fw-bold">
+          Situación últimos 6 meses
+        </div>
+        <div class="table-responsive">
+          <table class="table table-striped table-hover align-middle text-center mb-0">
+            <tbody>
+              <tr>
+                <td>Publicadores Inactivos</td>
+                <td class="fw-bold">{{ inactivos }}</td>
+              </tr>
+              <tr>
+                <td>Publicadores Irregulares</td>
+                <td class="fw-bold">{{ irregulares }}</td>
+              </tr>
+              <tr>
+                <td>Publicadores Reactivados</td>
+                <td class="fw-bold">{{ reactivados }}</td>
+              </tr>
+              <tr>
+                <td>Publicadores Readmitidos</td>
+                <td class="fw-bold">{{ readmitidos }}</td>
+              </tr>
+              <tr>
+                <td>Nuevos Bautizados</td>
+                <td class="fw-bold">{{ nuevos_bautizados }}</td>
+              </tr>
+              <tr>
+                <td>Nuevos Publicadores</td>
+                <td class="fw-bold">{{ nuevos_publicadores }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
 
-      <tr>
-        <th colspan="2">TOTALES DE LA CONGREGACION</th>
-      </tr>
-
-      <tr>
-        <td>Publicadores Activos</td>
-        <td>{{tot_activos}}</td>
-      </tr>
-      <tr>
-        <td>Publicadores Inactivos</td>
-        <td>{{tot_inactivos}}</td>
-      </tr>
-      <tr>
-        <td>Publicadores Bautizados</td>
-        <td>{{tot_bautizados}}</td>
-      </tr>
-      <tr>
-        <td>Publicadores No bautizados</td>
-        <td>{{tot_no_bautizados}}</td>
-      </tr>
-      <tr>
-        <td>Total Ancianos</td>
-        <td>{{tot_ancianos}}</td>
-      </tr>
-      <tr>
-        <td>Total Siervos Mimisteriales</td>
-        <td>{{tot_ministeriales}}</td>
-      </tr>
-      <tr>
-        <td>Precursores regulares</td>
-        <td>{{tot_regulares}}</td>
-      </tr>
-      <tr>
-        <td>Hombres</td>
-        <td>{{tot_hombres}}</td>
-      </tr>
-      <tr>
-        <td>Mujeres</td>
-        <td>{{tot_mujeres}}</td>
-      </tr>
-      <tr>
-        <td>Otras Ovejas</td>
-        <td>{{tot_otras_ovejas}}</td>
-
-      </tr>
-      <tr>
-        <td>Ungidos</td>
-        <td>{{tot_ungidos}}</td>
-      </tr>
-
-    </table>
   </div>
-
-  <div class="m-3">
-    <table id="customers" style="width: 300px;">
-
-      <tr>
-        <th colspan="2">SITUACION ULTIMOS 6 MESES</th>
-      </tr>
-
-      <tr>
-        <td>Publicadores Inactivos</td>
-        <td>{{inactivos}}</td>
-      </tr>
-      <tr>
-        <td>Publicadores Irregulares</td>
-        <td>{{irregulares}}</td>
-      </tr>
-      <tr>
-        <td>Publicadores Reactivados</td>
-        <td>{{reactivados}}</td>
-      </tr>
-      <tr>
-        <td>Publicadores Readmitidos</td>
-        <td>{{readmitidos}}</td>
-      </tr>
-      <tr>
-        <td>Nuevos Bautizados</td>
-        <td>{{nuevos_bautizados}}</td>
-      </tr>
-      <tr>
-        <td>Nuevos Publicadores</td>
-        <td>{{nuevos_publicadores}}</td>
-      </tr>
-
-
-    </table>
-  </div>
-
 </div>
-
-
-
 {% endblock %}
