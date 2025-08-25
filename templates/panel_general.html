@@ -70,14 +70,10 @@
     <div class="col-md-4">
       <div class="card shadow-lg border-0 rounded-3 h-100 bg-light bg-gradient">
         <div class="card-header bg-info text-white fw-bold text-center">
-          <i class="fas fa-id-card me-2"></i> Tarjetas por grupo
+          <i class="fas fa-id-card me-2"></i> Tarjetas
         </div>
         <div class="list-group list-group-flush">
-          {% for i in grupos %}
-          <a href="{% url 'tarjeta_grupo' i %}" class="list-group-item list-group-item-action">
-            <i class="fas fa-users me-2"></i> Grupo {{ i }}
-          </a>
-          {% endfor %}
+          
           <a href="{% url 'precursores_tarjetas' %}" class="list-group-item list-group-item-action">
             <i class="fas fa-user-graduate me-2"></i> Precursores
           </a>
@@ -91,7 +87,7 @@
     <!-- Tarjetas por grupo de predicación -->
     <div class="col-md-4">
       <div class="card shadow-lg border-0 rounded-3 h-100 bg-light bg-gradient">
-        <div class="card-header bg-info text-white fw-bold text-center">
+        <div class="card-header bg-danger text-white fw-bold text-center">
           <i class="fas fa-id-card me-2"></i> Tarjetas por grupo
         </div>
         <div class="list-group list-group-flush">
@@ -100,12 +96,7 @@
             <i class="fas fa-users me-2"></i> Grupo {{ i }}
           </a>
           {% endfor %}
-          <a href="{% url 'precursores_tarjetas' %}" class="list-group-item list-group-item-action">
-            <i class="fas fa-user-graduate me-2"></i> Precursores
-          </a>
-          <a href="{% url 'inactivos_tarjetas' %}" class="list-group-item list-group-item-action">
-            <i class="fas fa-user-slash me-2"></i> Inactivos
-          </a>
+          
         </div>
       </div>
     </div>
@@ -120,12 +111,27 @@
           <a href="{% url 'grupos' %}" class="list-group-item list-group-item-action">
             <i class="fas fa-list-ul me-2"></i> Lista de grupos
           </a>
-          <a href="{% url 'telefonos' %}" class="list-group-item list-group-item-action">
-            <i class="fas fa-phone me-2"></i> Teléfonos
-          </a>
+          
           <a href="{% url 'contactos' %}" class="list-group-item list-group-item-action">
             <i class="fas fa-address-book me-2"></i> Contactos
           </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Informes faltantes del ultimo mes -->
+    <div class="col-md-4">
+      <div class="card shadow-lg border-0 rounded-3 h-100 bg-light bg-gradient">
+        <div class="card-header bg-secondary text-white fw-bold text-center">
+          <i class="fas fa-id-card me-2"></i> Informes faltantes
+        </div>
+        <div class="list-group list-group-flush">
+          {% for i in grupos %}
+          <a href="{% url 'publicadores_sin_informe' i %}" class="list-group-item list-group-item-action">
+            <i class="fas fa-users me-2"></i> Grupo {{ i }}
+          </a>
+          {% endfor %}
+          
         </div>
       </div>
     </div>

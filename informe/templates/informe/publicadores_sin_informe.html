@@ -1,0 +1,39 @@
+{% extends "base0.html" %}
+{% block contenido %}
+
+<div class="container mt-5">
+    <h3 class="fw-bold">
+        📋 Publicadores sin informe del mes {{ mes_consulta }}/{{ anio_servicio }}
+    </h3>
+
+    <div class="card shadow-lg mt-3">
+        <div class="card-body">
+            {% if publicadores %}
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover align-middle text-center">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Grupo</th>
+                                <th>Apellido</th>
+                                <th>Nombre</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for p in publicadores %}
+                            <tr>
+                                <td>{{ p.grupo|default_if_none:"" }}</td>
+                                <td>{{ p.apellido|default_if_none:"" }}</td>
+                                <td>{{ p.nombre|default_if_none:"" }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <p class="text-success">✅ Todos los publicadores presentaron su informe.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

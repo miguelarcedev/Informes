@@ -48,7 +48,7 @@
                             <td>{{ inf.estudios }}</td>
                             <td>{{ inf.auxiliar}}</td>
                             <td>{{ inf.horas }}</td>
-                            <td>{{ inf.notas }}</td>
+                            <td>{{ inf.notas|default_if_none:"" }}</td>
                           </tr>
                         {% endfor %}
                       </tbody>

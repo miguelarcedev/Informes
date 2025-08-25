@@ -33,7 +33,7 @@ def home(request):
     return render(request, "templates/home.html" ,{"grupos":grupos})
 
 
-class Tarjeta_grupo(LoginRequiredMixin,View):
+""" class Tarjeta_grupo(LoginRequiredMixin,View):
 
     def get(self, request,grupo, *args, **kwargs):
         ids = []
@@ -63,7 +63,7 @@ class Tarjeta_grupo(LoginRequiredMixin,View):
         html = template.render(context)
         response = HttpResponse(content_type='application/pdf')
         pisaStatus = pisa.CreatePDF(html, dest=response)
-        return response
+        return response """
 
 """ class Precursores(LoginRequiredMixin,View):
 
@@ -789,3 +789,162 @@ class Inactivos_tarjetas(LoginRequiredMixin, View):
         # Generamos el PDF
         doc.build(story)
         return response
+    
+
+class Tarjeta_grupo(LoginRequiredMixin, View):
+
+    def get(self, request, grupo, *args, **kwargs):
+        try:
+            ultimo_registro = Informe.objects.all().last()
+            año1 = ultimo_registro.año - 1
+            año2 = ultimo_registro.año
+        except:
+            año1 = 1
+            año2 = 2
+
+        # Filtramos publicadores por grupo y en servicio
+        publicadores = Publicador.objects.filter(grupo=grupo,estado="Activo",servicio__isnull=True)
+
+        # Configuración PDF
+        response = HttpResponse(content_type='application/pdf')
+        response['Content-Disposition'] = 'inline; filename="Grupo{grupo}.pdf"'
+        doc = SimpleDocTemplate(response, pagesize=A4)
+        styles = getSampleStyleSheet()
+        story = []
+
+        # --- 2. Estilo modificado Título ---
+        titulo_modificado = styles["Title"].clone('TituloModificado')
+        titulo_modificado.fontName = "Helvetica-Bold"
+        titulo_modificado.fontSize = 12
+
+        # --- 2. Estilo modificado Normal  ---
+        normal_modificado = styles["Normal"].clone('NormalModificado')
+        normal_modificado.fontName = "Helvetica-Bold"
+        normal_modificado.fontSize = 10
+        normal_modificado.leading = 16
+
+        # --- 2. Estilo modificado Normal izquierda ---
+        normal_modificado_izq = styles["Normal"].clone('NormalModificado')
+        normal_modificado_izq.fontName = "Helvetica"
+        normal_modificado_izq.fontSize = 8
+        normal_modificado_izq.leading = 12
+
+        # Meses en el orden del año de servicio (1=Sept, ..., 12=Agosto)
+        meses = [
+            "Septiembre", "Octubre", "Noviembre", "Diciembre",
+            "Enero", "Febrero", "Marzo", "Abril",
+            "Mayo", "Junio", "Julio", "Agosto"
+        ]
+
+        for pub in publicadores:
+            # Título con el nombre del publicador
+            story.append(Paragraph(f"REGISTRO DE PUBLICADOR DE LA CONGREGACION", titulo_modificado))
+            story.append(Paragraph(f"Nombre: {pub.apellido}, {pub.nombre}", normal_modificado))
+            story.append(Paragraph(f"Fecha nacimiento: {pub.nacimiento}", normal_modificado_izq))
+            story.append(Paragraph(f"Fecha bautismo: {pub.bautismo}", normal_modificado_izq))
+            story.append(Paragraph(f"Sexo: {pub.sexo}", normal_modificado_izq))
+            story.append(Paragraph(f"{pub.u_oo}", normal_modificado_izq))
+            story.append(Paragraph(f"{pub.servicio or ''}", normal_modificado_izq))
+            story.append(Paragraph(f"{pub.a_sm or ''}", normal_modificado_izq))
+            story.append(Spacer(1, 12))
+
+
+            # ====================
+            # Función auxiliar para armar tabla de un año
+            def build_table(año_actual):
+                data = [[año_actual, "Participación", "Estudios", "Auxiliar", "Horas", "Notas"]]
+
+                # Total anual solo de horas
+                total_horas = 0
+
+                for mes_num, mes_nombre in enumerate(meses, start=1):
+                    informe = Informe.objects.filter(
+                        publicador=pub,
+                        año=año_actual,
+                        mes=mes_num
+                    ).first()
+
+                    if informe:
+                        participacion = informe.participacion or 0
+                        estudios = informe.estudios or 0
+                        auxiliar = informe.auxiliar or 0
+                        horas = informe.horas or 0
+                        notas = informe.notas or ""
+                    else:
+                        participacion = estudios = auxiliar = horas = 0
+                        notas = ""
+
+                    # Acumular solo horas
+                    total_horas += horas
+
+                    data.append([mes_nombre, participacion, estudios, auxiliar, horas, notas])
+
+                # Fila de total solo en horas
+                data.append(["Total", "", "", "", total_horas, ""])
+
+                table = Table(data, colWidths=[90, 70, 50, 50, 50, 160])
+                table.setStyle(TableStyle([
+                    ("BACKGROUND", (0, 0), (-1, 0), colors.gray),
+                    ("TEXTCOLOR", (0, 0), (-1, 0), colors.whitesmoke),
+                    ("ALIGN", (0, 0), (-1, -1), "CENTER"),
+                    ("GRID", (0, 0), (-1, -1), 0.5, colors.black),
+                    ("BACKGROUND", (0, -1), (-1, -1), colors.lightgrey),
+                    ("FONTNAME", (0, -1), (-1, -1), "Helvetica-Bold"),
+                ]))
+                return table
+
+            # ====================
+            # Tabla Año 1
+            story.append(build_table(año1))
+            story.append(Spacer(1, 20))
+
+            # Tabla Año 2
+            story.append(build_table(año2))
+
+            # Nueva página por cada publicador
+            story.append(PageBreak())
+
+        # Generamos el PDF
+        doc.build(story)
+        return response
+
+
+# views.py
+from datetime import date
+from django.shortcuts import render
+from .models import Publicador, Informe
+
+def publicadores_sin_informe(request,grupo):
+    hoy = date.today()
+    mes_actual = hoy.month
+    anio_actual = hoy.year
+
+    # --- Calcular el mes anterior ---
+    if mes_actual == 1:  # enero → mirar diciembre del año anterior
+        mes_consulta = 12
+        anio_consulta = anio_actual - 1
+    else:
+        mes_consulta = mes_actual - 1
+        anio_consulta = anio_actual
+
+    # --- Ajustar año de servicio ---
+    # si el mes_consulta >= 9 (septiembre-diciembre) → pertenece al anio_consulta
+    # si el mes_consulta <= 8 (enero-agosto) → pertenece al anio_consulta + 1 (nuevo año de servicio)
+    if mes_consulta >= 9:
+        anio_servicio = anio_consulta
+    else:
+        anio_servicio = anio_consulta + 1
+
+    # --- Obtener publicadores que NO tienen informe de ese mes y año de servicio ---
+    publicadores_con_informe = Informe.objects.filter(
+        año=anio_servicio, mes=mes_consulta
+    ).values_list("publicador_id", flat=True)
+
+    publicadores_sin_informe = Publicador.objects.exclude(id__in=publicadores_con_informe)
+
+    context = {
+        "publicadores": publicadores_sin_informe.order_by("grupo", "apellido", "nombre"),
+        "mes_consulta": mes_consulta,
+        "anio_servicio": anio_servicio,
+    }
+    return render(request, "informe/publicadores_sin_informe.html", context)

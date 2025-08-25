@@ -370,8 +370,8 @@ def informe_pdf(request, pk, anio):
     elements.append(Paragraph(f"Fecha bautismo: {publicador.bautismo}", normal_modificado_izq))
     elements.append(Paragraph(f"Sexo: {publicador.sexo}", normal_modificado_izq))
     elements.append(Paragraph(f"{publicador.u_oo}", normal_modificado_izq))
-    elements.append(Paragraph(f"{publicador.servicio}", normal_modificado_izq))
-    elements.append(Paragraph(f"{publicador.a_sm}", normal_modificado_izq))
+    elements.append(Paragraph(f"{publicador.servicio or ''}", normal_modificado_izq))
+    elements.append(Paragraph(f"{publicador.a_sm or ''}", normal_modificado_izq))
     elements.append(Spacer(1, 12))
 
     
@@ -396,4 +396,69 @@ def informe_pdf(request, pk, anio):
 
     elements.append(tabla)
     doc.build(elements)
+    return response
+
+
+# views.py
+from django.http import HttpResponse
+from reportlab.lib.pagesizes import A4
+from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Spacer
+from reportlab.lib import colors
+from reportlab.lib.styles import getSampleStyleSheet
+
+def exportar_contactos_pdf(request):
+    # Configuración de respuesta HTTP
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="contactos.pdf"'
+
+    # Documento con márgenes mínimos
+    doc = SimpleDocTemplate(
+        response,
+        pagesize=A4,
+        leftMargin=20, rightMargin=20,
+        topMargin=30, bottomMargin=20
+    )
+
+    styles = getSampleStyleSheet()
+    elements = []
+
+    # Encabezado
+    elements.append(Paragraph("📒 Listado de Contactos", styles["Heading3"]))
+    elements.append(Spacer(1, 10))
+
+    # Datos de la tabla
+    from .models import Publicador
+    contactos = Publicador.objects.filter(estado__contains="ctivo")
+
+    data = [["Publicador", "Teléfono", "Nombre de Contacto", "Teléfono contacto"]]
+    for c in contactos:
+        data.append([
+            f"{c.apellido} {c.nombre}",
+            c.telefono,
+            c.contacto,
+            c.telefono_contacto
+        ])
+
+    # Crear tabla
+    table = Table(data, colWidths=[200, 100, 140, 100])
+
+    # Estilos compactos
+    style = TableStyle([
+        ('BACKGROUND', (0,0), (-1,0), colors.grey),
+        ('TEXTCOLOR',(0,0),(-1,0),colors.whitesmoke),
+        ('ALIGN',(0,0),(-1,-1),'LEFT'),
+        ('FONTNAME', (0,0), (-1,0), 'Helvetica-Bold'),
+        ('FONTSIZE', (0,0), (-1,-1), 8),
+        ('GRID', (0,0), (-1,-1), 0.25, colors.black),
+        ('BOTTOMPADDING', (0,0), (-1,0), 4),
+        ('TOPPADDING', (0,0), (-1,-1), 2),
+    ])
+    table.setStyle(style)
+
+    # Agregar tabla al documento
+    elements.append(table)
+
+    # Construir documento (se divide automáticamente en varias páginas)
+    doc.build(elements)
+
     return response

@@ -126,8 +126,13 @@
           {% if publicador %}
             <p><strong>ID:</strong> {{ publicador.id }}</p>
             <p><strong>Nombre:</strong> {{ publicador.nombre }} {{ publicador.apellido }}</p>
+            <p><strong>Fecha Nacimiento:</strong> {{ publicador.nacimiento }}</p>
             <p><strong>Fecha Bautismo:</strong> {{ publicador.bautismo }}</p>
+            <p><strong>Estado:</strong> {{ publicador.estado }}</p>
             <p><strong>Grupo:</strong> {{ publicador.grupo }}</p>
+            <p><strong>Teléfono:</strong> {{ publicador.telefono }}</p>
+            <p><strong>Contacto:</strong> {{ publicador.contacto|default_if_none:""  }}</p>
+            <p><strong>Teléfono del contacto:</strong> {{ publicador.telefono_contacto }}</p>
           {% else %}
             <div class="alert alert-warning mt-3 shadow-sm" role="alert">
               ⚠️ Tus registros todavía no están vinculados a un publicador de la congregación. Contacta al Secretario.
@@ -152,8 +157,10 @@
 
           {% if publicador %}
             <div class="d-flex justify-content-end mb-3">
-              <a href="{% url 'crear_informe' %}" class="btn btn-sm btn-primary shadow-sm">
-                ➕ Agregar Informe
+               {% if publicador.estado == "Activo" %}
+                <a href="{% url 'crear_informe' %}" class="btn btn-sm btn-primary shadow-sm">
+                  ➕ Agregar Informe
+                {% endif %}
               </a>
             </div>
 
@@ -195,10 +202,12 @@
                             <td class="d-none d-sm-table-cell">{{ informe.estudios }}</td>
                             <td>{{ informe.auxiliar }}</td>
                             <td>{{ informe.horas }}</td>
-                            <td>{{ informe.notas }}</td>
+                            <td>{{ informe.notas|default_if_none:"" }}</td>
                             <td>
+                               {% if publicador.estado == "Activo" %}
                               <a href="{% url 'editar_informe' informe.id %}" 
                                  class="btn btn-sm btn-warning shadow-sm">✏️</a>
+                                {% endif %}
                             </td>
                           </tr>
                           {% endfor %}

@@ -18,5 +18,6 @@ urlpatterns = [
     path("activos/", views.publicadores_activos, name="activos"),
     path("inactivos/", views.publicadores_inactivos, name="inactivos"),
     path("publicador/<int:pk>/pdf/<int:anio>/", views.informe_pdf, name="informe_pdf"),
+    path("exportar_contactos_pdf/", views.exportar_contactos_pdf, name="exportar_contactos_pdf"),
 
 ]

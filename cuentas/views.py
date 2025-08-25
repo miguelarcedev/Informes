@@ -15,6 +15,7 @@ from django.contrib.auth.decorators import login_required
 from .forms import InformeForm
 from django.db import IntegrityError, transaction
 from django.contrib.auth.decorators import user_passes_test
+from django.db.models import  Max
 
 def login_username(request):
     if request.user.is_authenticated:
@@ -156,4 +157,16 @@ def editar_informe(request, pk):
 # Solo permite acceso si el usuario es staff
 @user_passes_test(lambda u: u.is_staff)
 def panel_general(request):
-    return render(request, "panel_general.html")
+    grupos = []
+    
+    cantidad=Publicador.objects.filter(estado="Activo").aggregate(cantidad=Max('grupo'))
+    
+    try:
+        cantidad=int(cantidad['cantidad'])
+    except:
+        cantidad = 0
+    if cantidad > 0:
+        for i in range(1,cantidad+1):
+            grupos.append(i)
+     
+    return render(request, "panel_general.html",{"grupos":grupos})
