@@ -244,34 +244,6 @@ class Estadisticas(LoginRequiredMixin,View):
         return render(request, "estadisticas.html",context=context)  
     
 
-
-class S10(LoginRequiredMixin,View):
-    def get(self,request):
-
-        try:
-                ultimo_registro = Informe.objects.all().last()
-                año = ultimo_registro.año
-                prom_entre = Entre_Semana.objects.filter(año=año).aggregate(Avg('promedio'))
-                prom_fin = Fin_De_Semana.objects.filter(año=año).aggregate(Avg('promedio'))
-                tot_activos = Publicador.objects.filter(estado="Activo").count()
-                tot_inactivos = Informe.objects.filter(año=año, notas="Inactivo").count()
-                tot_reactivados = Informe.objects.filter(año=año, notas="Reactivado").count()
-                tot_sordos = 0
-                tot_ciegos = 0
-                context = {
-                    'prom_entre': prom_entre,
-                    'prom_fin': prom_fin,
-                    'tot_activos': tot_activos,
-                    'tot_inactivos': tot_inactivos,
-                    'tot_reactivados': tot_reactivados,
-                    'tot_sordos': tot_sordos,
-                    'tot_ciegos': tot_ciegos,
-                    'año': año,
-                    }
-        except:
-                context = {}
-
-        return render(request, "s-10.html",context=context)
     
 class Telefonos(LoginRequiredMixin,View):
     def get(self, request, *args, **kwargs):

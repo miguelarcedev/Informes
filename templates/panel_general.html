@@ -78,10 +78,32 @@
             <i class="fas fa-users me-2"></i> Grupo {{ i }}
           </a>
           {% endfor %}
-          <a href="{% url 'precursores' %}" class="list-group-item list-group-item-action">
+          <a href="{% url 'precursores_tarjetas' %}" class="list-group-item list-group-item-action">
             <i class="fas fa-user-graduate me-2"></i> Precursores
           </a>
-          <a href="{% url 'inactivos' %}" class="list-group-item list-group-item-action">
+          <a href="{% url 'inactivos_tarjetas' %}" class="list-group-item list-group-item-action">
+            <i class="fas fa-user-slash me-2"></i> Inactivos
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tarjetas por grupo de predicación -->
+    <div class="col-md-4">
+      <div class="card shadow-lg border-0 rounded-3 h-100 bg-light bg-gradient">
+        <div class="card-header bg-info text-white fw-bold text-center">
+          <i class="fas fa-id-card me-2"></i> Tarjetas por grupo
+        </div>
+        <div class="list-group list-group-flush">
+          {% for i in grupos %}
+          <a href="{% url 'tarjeta_grupo' i %}" class="list-group-item list-group-item-action">
+            <i class="fas fa-users me-2"></i> Grupo {{ i }}
+          </a>
+          {% endfor %}
+          <a href="{% url 'precursores_tarjetas' %}" class="list-group-item list-group-item-action">
+            <i class="fas fa-user-graduate me-2"></i> Precursores
+          </a>
+          <a href="{% url 'inactivos_tarjetas' %}" class="list-group-item list-group-item-action">
             <i class="fas fa-user-slash me-2"></i> Inactivos
           </a>
         </div>

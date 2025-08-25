@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.urls import path
 from . import views
 
-from publicador.views import Tarjeta,Irregulares,Publicador_list, Grupos, Estadisticas, Publicado, S10, Telefonos,Contactos
+from publicador.views import Tarjeta,Irregulares,Publicador_list, Grupos, Estadisticas, Publicado, Telefonos,Contactos
 
 
 
@@ -13,7 +13,6 @@ urlpatterns = [
     path('tarjeta/<int:pk>/', Tarjeta.as_view(), name='tarjeta'),
     path('estadisticas/', Estadisticas.as_view(), name='estadisticas'),
     path('publicador/<int:pk>/', Publicado.as_view(), name='publicador'),
-    path('S10/', S10.as_view(), name='S10'),
     path('telefonos/', Telefonos.as_view(), name='telefonos'),
     path('contactos/', Contactos.as_view(), name='contactos'),
     path("activos/", views.publicadores_activos, name="activos"),
