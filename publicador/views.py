@@ -4,7 +4,6 @@ from django.template.loader import get_template
 from xhtml2pdf import pisa
 from django.http import  HttpResponse
 from publicador.models import Publicador
-from asistencia.models import Entre_Semana, Fin_De_Semana
 from informe.models import Informe
 from django.views.generic import  View
 from django.db.models import  Sum, Max, Avg
@@ -19,16 +18,6 @@ from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib import colors
 
 
-class Publicador_list(LoginRequiredMixin,View):
-    def get(self,request,estado):
-        publicador = Publicador.objects.filter(estado=estado)
-        cantidad = Publicador.objects.filter(estado=estado).count()
-        if estado == "Activo":
-            titulo = "Publicadores Activos: "
-        else:        
-            titulo = "Publicadores Inactivos: "
-        
-        return render(request, "publicadores.html",{"publicador": publicador, "titulo":titulo,"cantidad":cantidad})
 
 class Grupos(LoginRequiredMixin,View):
     def get(self, request, *args, **kwargs):
@@ -104,7 +93,7 @@ class Grupos(LoginRequiredMixin,View):
         except:
             cantidad = 0
 
-        template = get_template('grupos.html')
+        template = get_template('publicador/grupos.html')
         context = {
             'matriz_1': matriz_1,
             'matriz_2': matriz_2,
@@ -120,82 +109,10 @@ class Irregulares(LoginRequiredMixin,View):
        calculos = calculo_irregulares()
        irregulares = calculos[0]
        cantidad = calculos[1]
-       return render(request, "irregulares.html",{"irregulares": irregulares,"cantidad": cantidad})   
+       return render(request, "publicador/irregulares.html",{"irregulares": irregulares,"cantidad": cantidad})   
       
 
-class Tarjeta(LoginRequiredMixin,View):
-    def get(self, request,pk, *args, **kwargs):
-        año1 = 0
-        año2 = 0
-        total_horas1 = 0
-        total_horas2 = 0
-        publicador = Publicador.objects.get(pk=self.kwargs['pk'])
-        estado = publicador.estado
-        if estado == "Activo":
-
-            ultimo_registro = Informe.objects.all().last()
-            año1 = ultimo_registro.año - 1
-            año2 = ultimo_registro.año
-            total_horas1 = Informe.objects.filter(publicador=pk, año=año1).aggregate(Sum('horas'))
-            total_horas2 = Informe.objects.filter(publicador=pk, año=año2).aggregate(Sum('horas'))
-            template = get_template('s-21-pdf.html')
     
-        else:
-            ultimo_registro = Informe.objects.filter(publicador=pk).last()
-            template = get_template('s-21-inactivos-pdf.html')
-            
-            if ultimo_registro:
-                año1 = ultimo_registro.año
-            total_horas1 = Informe.objects.filter(publicador=publicador.id, año=año1).aggregate(Sum('horas'))
-        publicador = Publicador.objects.filter(pk=self.kwargs['pk'])
-       
-        context = {'publicador': publicador ,'año1':año1,'año2':año2,'total_horas1':total_horas1,'total_horas2':total_horas2,'estado':estado}
-        html = template.render(context)
-        response = HttpResponse(content_type='application/pdf')
-        pisaStatus = pisa.CreatePDF(html, dest=response)
-        return response 
-    
-class Publicado(LoginRequiredMixin,View):
-    def get(self, request, *args, **kwargs):
-        informe1 = {}
-        informe2 = {}
-        año1 = 0
-        año2 = 0
-        total_horas1 = 0
-        total_horas2 = 0
-        publicador = Publicador.objects.get(pk=self.kwargs['pk'])
-        estado = publicador.estado
-        if estado == "Activo":
-        
-            ultimo_registro = Informe.objects.all().last()
-            año1 = ultimo_registro.año - 1
-            año2 = ultimo_registro.año
-            informe1 = Informe.objects.filter(publicador=publicador.id, año=año1)
-            informe2 = Informe.objects.filter(publicador=publicador.id, año=año2)
-            total_horas1 = Informe.objects.filter(publicador=publicador.id, año=año1).aggregate(Sum('horas'))
-            total_horas2 = Informe.objects.filter(publicador=publicador.id, año=año2).aggregate(Sum('horas'))
-        else:
-            try:
-                ultimo_registro = Informe.objects.filter(publicador=self.kwargs['pk']).last()
-                año1 = ultimo_registro.año   
-                informe1 = Informe.objects.filter(publicador=publicador.id, año=año1)
-                total_horas1 = Informe.objects.filter(publicador=publicador.id, año=año1).aggregate(Sum('horas'))
-            except:
-                pass
-        
-        context = {
-            'informe1': informe1,
-            'informe2': informe2,
-            'año1':año1,
-            'año2':año2,
-            'nombre': publicador.nombre,
-            'apellido': publicador.apellido,
-            'estado' : estado,
-            'total_horas1':total_horas1,
-            'total_horas2':total_horas2,
-         }
-       
-        return render(request, "s-21.html",context=context) 
 
 class Estadisticas(LoginRequiredMixin,View):
     def get(self,request):
@@ -241,19 +158,9 @@ class Estadisticas(LoginRequiredMixin,View):
             'tot_otras_ovejas': tot_otras_ovejas,
         }
 
-        return render(request, "estadisticas.html",context=context)  
+        return render(request, "publicador/estadisticas.html",context=context)  
     
 
-    
-class Telefonos(LoginRequiredMixin,View):
-    def get(self, request, *args, **kwargs):
-        
-        telefonos = Publicador.objects.filter(estado="Activo")
-        context = {
-            'telefonos': telefonos,
-         }
-       
-        return render(request, "telefonos.html",context=context)
     
 class Contactos(LoginRequiredMixin,View):
     def get(self, request, *args, **kwargs):
@@ -262,9 +169,7 @@ class Contactos(LoginRequiredMixin,View):
             'contactos': contactos,
         }
         
-       
-        return render(request, "contactos.html",context=context)  
-
+        return render(request, "publicador/contactos.html",context=context)  
 
 
 
@@ -398,13 +303,6 @@ def informe_pdf(request, pk, anio):
     doc.build(elements)
     return response
 
-
-# views.py
-from django.http import HttpResponse
-from reportlab.lib.pagesizes import A4
-from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Spacer
-from reportlab.lib import colors
-from reportlab.lib.styles import getSampleStyleSheet
 
 def exportar_contactos_pdf(request):
     # Configuración de respuesta HTTP

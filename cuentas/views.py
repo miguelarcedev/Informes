@@ -11,7 +11,6 @@ from informe.models import Informe
 from .forms import UsernameForm, PasswordForm, RegisterForm, ForgotUsernameForm
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.decorators import login_required
 from .forms import InformeForm
 from django.db import IntegrityError, transaction
 from django.contrib.auth.decorators import user_passes_test
@@ -169,4 +168,4 @@ def panel_general(request):
         for i in range(1,cantidad+1):
             grupos.append(i)
      
-    return render(request, "panel_general.html",{"grupos":grupos})
+    return render(request, "cuentas/panel_general.html",{"grupos":grupos})

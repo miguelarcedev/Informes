@@ -1,5 +1,5 @@
-{% extends "base0.html" %}
-
+{% extends "base.html" %}
+{% load filtros_meses %}
 {% block contenido %}
 <div class="container my-4">
     <div class="row justify-content-center">
@@ -28,7 +28,7 @@
                         <tr>
                             <td>{{ i.0 }}</td>
                             <td>{{ i.1 }}</td>
-                            <td>{{ i.2 }}</td>
+                            <td>{{ i.2|mes_personalizado }}</td>
                         </tr>
                         {% empty %}
                         <tr>

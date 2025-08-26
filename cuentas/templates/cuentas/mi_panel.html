@@ -1,4 +1,4 @@
-{% extends "base0.html" %}
+{% extends "base.html" %}
 {% load static %}
 {% load filtros_años %}
 {% load filtros_meses %}
@@ -126,8 +126,8 @@
           {% if publicador %}
             <p><strong>ID:</strong> {{ publicador.id }}</p>
             <p><strong>Nombre:</strong> {{ publicador.nombre }} {{ publicador.apellido }}</p>
-            <p><strong>Fecha Nacimiento:</strong> {{ publicador.nacimiento }}</p>
-            <p><strong>Fecha Bautismo:</strong> {{ publicador.bautismo }}</p>
+            <p><strong>Fecha Nacimiento:</strong> {{ publicador.nacimiento|default_if_none:""  }}</p>
+            <p><strong>Fecha Bautismo:</strong> {{ publicador.bautismo|default_if_none:"" }}</p>
             <p><strong>Estado:</strong> {{ publicador.estado }}</p>
             <p><strong>Grupo:</strong> {{ publicador.grupo }}</p>
             <p><strong>Teléfono:</strong> {{ publicador.telefono }}</p>
