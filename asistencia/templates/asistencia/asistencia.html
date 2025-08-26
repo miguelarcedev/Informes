@@ -1,35 +1,71 @@
 {% extends "base.html" %}
 {% load filtros_meses %}
 {% block contenido %}
-<div class="container my-4">
-    <h4 class="mb-4 text-center">📊 {{titulo}}</h4>
+<div class="container my-3 px-2">
+    <h5 class="mb-3 text-center">📊 {{titulo}}</h5>
+
+    <style>
+        /* Encabezado acordeón */
+        .accordion-button {
+            font-size: 0.9rem;
+            padding: 0.4rem 0.75rem;
+        }
+
+        /* Tablas compactas */
+        .table {
+            font-size: 0.8rem; /* letras más chicas */
+        }
+        .table th,
+        .table td {
+            padding: 0.35rem 0.5rem; /* reduce padding */
+            vertical-align: middle;
+        }
+        .table thead th {
+            font-size: 0.75rem; /* encabezados aún más chicos */
+            text-transform: uppercase;
+        }
+
+        /* Badge (promedio y otros) */
+        .badge {
+            font-size: 0.7rem;
+            padding: 0.35em 0.6em;
+        }
+
+        /* Botones */
+        .btn {
+            font-size: 0.75rem;
+            padding: 0.25rem 0.5rem;
+        }
+    </style>
 
     <div class="accordion" id="accordionAsistencia">
         {% for anio, datos in data_por_anio.items %}
-        <div class="accordion-item shadow-sm rounded-3 mb-3">
-            <div class="d-flex justify-content-between align-items-center px-3 py-2 bg-light border-bottom">
-                <button class="accordion-button collapsed fw-bold w-100 me-3" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#collapse{{ anio }}" aria-expanded="false" aria-controls="collapse{{ anio }}">
+        <div class="accordion-item shadow-sm rounded-3 mb-2">
+            <div class="d-flex justify-content-between align-items-center px-2 py-1 bg-light border-bottom">
+                <button class="accordion-button collapsed fw-bold w-100 me-2" type="button" 
+                        data-bs-toggle="collapse" data-bs-target="#collapse{{ anio }}" 
+                        aria-expanded="false" aria-controls="collapse{{ anio }}">
                     Año {{ anio }} - Promedio Final: 
                     <span class="badge bg-success ms-2">{{ datos.promedio_final }}</span>
                 </button>
-                <a href="{% url 'asistencia_pdf' anio titulo %}" class="btn btn-danger btn-sm d-flex align-items-center">
+                <a href="{% url 'asistencia_pdf' anio titulo %}" 
+                   class="btn btn-danger btn-sm d-flex align-items-center">
                     <i class="bi bi-file-earmark-pdf-fill me-1"></i> PDF
                 </a>
             </div>
             
             <div id="collapse{{ anio }}" class="accordion-collapse collapse"
                 aria-labelledby="heading{{ anio }}" data-bs-parent="#accordionAsistencia">
-                <div class="accordion-body">
+                <div class="accordion-body p-2">
                     
                     <div class="table-responsive">
-                        <table class="table table-striped table-hover align-middle text-center">
+                        <table class="table table-striped table-hover table-bordered align-middle text-center mb-0">
                             <thead class="table-dark">
                                 <tr>
                                     <th>Mes</th>
-                                    <th>Cantidad</th>
+                                    <th>Cant.</th>
                                     <th>Total</th>
-                                    <th>Promedio</th>
+                                    <th>Prom.</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -49,7 +85,7 @@
             </div>
         </div>
         {% empty %}
-        <p class="text-muted">No hay registros de asistencia.</p>
+        <p class="text-muted small">No hay registros de asistencia.</p>
         {% endfor %}
     </div>
 </div>

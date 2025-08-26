@@ -4,20 +4,22 @@
 {% load filtros_meses %}
 
 {% block contenido %}
-<div class="container mt-4 mb-5">
+<div class="container my-3 px-2">
 
   <style>
-    /* Estilo acordeón */
+    /* Acordeón */
     .accordion-button {
-      background-color: #f8faff; /* Fondo muy suave */
+      background-color: #f8faff;
       color: #333;
       font-weight: 500;
+      font-size: 0.9rem; /* más pequeño */
       cursor: pointer;
       transition: all 0.25s ease;
       border-radius: 0.5rem !important;
+      padding: 0.4rem 0.75rem; /* compacto */
     }
     .accordion-button:hover {
-      background-color: #edf2ff; 
+      background-color: #edf2ff;
     }
     .accordion-button:not(.collapsed) {
       background-color: #dbe4ff;
@@ -27,31 +29,43 @@
     .accordion-item {
       border-radius: 0.75rem;
       overflow: hidden;
-      margin-bottom: 0.75rem;
+      margin-bottom: 0.5rem;
       border: 1px solid #dee2e6;
       box-shadow: 0 2px 6px rgba(0,0,0,0.05);
     }
     .accordion-body {
       background-color: #fff;
       border-top: 1px solid #e9ecef;
-      padding: 1rem 1.25rem;
+      padding: 0.75rem; /* compacto */
+      font-size: 0.9rem;
     }
 
-    /* Tablas */
-    table {
-      border-radius: 0.5rem;
-      overflow: hidden;
+    /* Tablas compactas */
+    .table {
+      font-size: 0.8rem; /* letras más chicas */
+    }
+    .table th,
+    .table td {
+      padding: 0.35rem 0.5rem; /* reduce padding */
+      vertical-align: middle;
     }
     thead {
       background-color: #f1f3f5;
     }
     th {
       font-weight: 600;
-      font-size: 0.9rem;
+      font-size: 0.75rem; /* títulos más chicos */
       text-transform: uppercase;
     }
 
     /* Botones */
+    .btn {
+      font-size: 0.75rem; /* más pequeños */
+      padding: 0.25rem 0.5rem;
+    }
+    .btn-sm {
+      padding: 0.2rem 0.4rem;
+    }
     .btn-primary {
       background-color: #4c6ef5;
       border-color: #4c6ef5;
@@ -61,29 +75,31 @@
       border-color: #3b5bdb;
     }
     .btn-warning {
-      border-radius: 0.5rem;
+      border-radius: 0.4rem;
     }
 
     /* Alertas */
     .alert {
-      border-radius: 0.75rem;
+      border-radius: 0.5rem;
+      font-size: 0.85rem;
+      padding: 0.5rem 0.75rem;
     }
 
-    /* Compactar datos usuario/publicador */
+    /* Datos usuario/publicador */
     .datos p {
-      margin-bottom: 0.25rem;   /* reduce espacio entre párrafos */
-      line-height: 1.2;        /* interlineado compacto */
-      font-size: 0.9rem;       /* fuente más pequeña */
+      margin-bottom: 0.2rem;
+      line-height: 1.2;
+      font-size: 0.85rem;
     }
   </style>
 
-  <!-- Bloque de mensajes -->
+  <!-- Mensajes -->
   {% if messages %}
-    <div class="mb-3">
+    <div class="mb-2">
       {% for message in messages %}
-        <div class="alert alert-{{ message.tags }} alert-dismissible fade show shadow-sm" role="alert">
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show shadow-sm small" role="alert">
           {{ message }}
-          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+          <button type="button" class="btn-close btn-sm" data-bs-dismiss="alert"></button>
         </div>
       {% endfor %}
     </div>
@@ -104,9 +120,9 @@
       <div id="collapseUsuario" class="accordion-collapse collapse show" 
            aria-labelledby="headingUsuario" data-bs-parent="#accordionDatos">
         <div class="accordion-body datos">
-          <p><strong>Nombre de usuario:</strong> {{ user.username }}</p>
+          <p><strong>Usuario:</strong> {{ user.username }}</p>
           <p><strong>Email:</strong> {{ user.email }}</p>
-          <p><strong>Nombre completo:</strong> {{ user.get_full_name }}</p>
+          <p><strong>Nombre:</strong> {{ user.get_full_name }}</p>
         </div>
       </div>
     </div>
@@ -126,16 +142,16 @@
           {% if publicador %}
             <p><strong>ID:</strong> {{ publicador.id }}</p>
             <p><strong>Nombre:</strong> {{ publicador.nombre }} {{ publicador.apellido }}</p>
-            <p><strong>Fecha Nacimiento:</strong> {{ publicador.nacimiento|default_if_none:""  }}</p>
-            <p><strong>Fecha Bautismo:</strong> {{ publicador.bautismo|default_if_none:"" }}</p>
+            <p><strong>Nacimiento:</strong> {{ publicador.nacimiento|default_if_none:""  }}</p>
+            <p><strong>Bautismo:</strong> {{ publicador.bautismo|default_if_none:"" }}</p>
             <p><strong>Estado:</strong> {{ publicador.estado }}</p>
             <p><strong>Grupo:</strong> {{ publicador.grupo }}</p>
-            <p><strong>Teléfono:</strong> {{ publicador.telefono }}</p>
+            <p><strong>Tel:</strong> {{ publicador.telefono }}</p>
             <p><strong>Contacto:</strong> {{ publicador.contacto|default_if_none:""  }}</p>
-            <p><strong>Teléfono del contacto:</strong> {{ publicador.telefono_contacto }}</p>
+            <p><strong>Tel. contacto:</strong> {{ publicador.telefono_contacto }}</p>
           {% else %}
-            <div class="alert alert-warning mt-3 shadow-sm" role="alert">
-              ⚠️ Tus registros todavía no están vinculados a un publicador de la congregación. Contacta al Secretario.
+            <div class="alert alert-warning mt-2 shadow-sm small" role="alert">
+              ⚠️ Tus registros no están vinculados a un publicador. Contacta al Secretario.
             </div>
           {% endif %}
         </div>
@@ -156,12 +172,12 @@
         <div class="accordion-body">
 
           {% if publicador %}
-            <div class="d-flex justify-content-end mb-3">
+            <div class="d-flex justify-content-end mb-2">
                {% if publicador.estado == "Activo" %}
                 <a href="{% url 'crear_informe' %}" class="btn btn-sm btn-primary shadow-sm">
-                  ➕ Agregar Informe
-                {% endif %}
-              </a>
+                  ➕ Informe
+                </a>
+               {% endif %}
             </div>
 
             {% if años_ordenados %}
@@ -186,12 +202,12 @@
                         <thead>
                           <tr>
                             <th>Mes</th>
-                            <th class="d-none d-sm-table-cell">Participación</th>
-                            <th class="d-none d-sm-table-cell">Estudios</th>
-                            <th>Auxiliar</th>
-                            <th>Horas</th>
+                            <th class="d-none d-sm-table-cell">Part.</th>
+                            <th class="d-none d-sm-table-cell">Est.</th>
+                            <th>Aux.</th>
+                            <th>Hrs</th>
                             <th>Notas</th>
-                            <th>Acciones</th>
+                            <th>Acc.</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -204,10 +220,10 @@
                             <td>{{ informe.horas }}</td>
                             <td>{{ informe.notas|default_if_none:"" }}</td>
                             <td>
-                               {% if publicador.estado == "Activo" %}
-                              <a href="{% url 'editar_informe' informe.id %}" 
-                                 class="btn btn-sm btn-warning shadow-sm">✏️</a>
-                                {% endif %}
+                              {% if publicador.estado == "Activo" %}
+                                <a href="{% url 'editar_informe' informe.id %}" 
+                                   class="btn btn-sm btn-warning shadow-sm">✏️</a>
+                              {% endif %}
                             </td>
                           </tr>
                           {% endfor %}
@@ -220,11 +236,11 @@
               {% endfor %}
             </div>
             {% else %}
-            <p class="text-muted fst-italic">No hay informes disponibles.</p>
+            <p class="text-muted fst-italic small">No hay informes disponibles.</p>
             {% endif %}
 
           {% else %}
-            <div class="alert alert-warning mt-3 shadow-sm" role="alert">
+            <div class="alert alert-warning mt-2 shadow-sm small" role="alert">
               🚫 No puedes ver informes porque tu usuario no está vinculado a un publicador.
             </div>
           {% endif %}

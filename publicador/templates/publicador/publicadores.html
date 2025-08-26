@@ -1,69 +1,114 @@
 {% extends "base.html" %}
 {% load filtros_meses %}
 {% block contenido %}
-<div class="container my-4">
-    <h4 class="mb-4 text-center">
+<div class="container my-3 px-2">
+    <h5 class="mb-3 text-center">
       <i class="bi bi-people-fill"></i> {{titulo}}
-    </h4>
+    </h5>
 
+    <style>
+        /* Acordeones más compactos */
+        .accordion-button {
+            font-size: 0.9rem;
+            padding: 0.35rem 0.6rem;
+        }
+        .accordion-item {
+            margin-bottom: 0.4rem;
+            border-radius: 0.5rem;
+            overflow: hidden;
+        }
 
-<div class="accordion" id="accordionPublicadores">
-  {% for item in data %}
-    <div class="accordion-item">
-      <h2 class="accordion-header" id="heading{{ forloop.counter }}">
-        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ forloop.counter }}">
-          {{ item.publicador.apellido }}, {{ item.publicador.nombre }}
-        </button>
-      </h2>
-      <div id="collapse{{ forloop.counter }}" class="accordion-collapse collapse" data-bs-parent="#accordionPublicadores">
-        <div class="accordion-body">
+        /* Tablas pequeñas */
+        .table {
+            font-size: 0.78rem; /* texto más chico */
+        }
+        .table th,
+        .table td {
+            padding: 0.3rem 0.4rem; /* menos espacio */
+            vertical-align: middle;
+        }
+        .table thead th {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
 
-          <div class="accordion" id="accordionAnios{{ forloop.counter }}">
-            {% for anio, datos in item.años.items %}
-              <div class="accordion-item">
-                <h2 class="accordion-header" id="headingY{{ forloop.parentloop.counter }}{{ forloop.counter }}">
-                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseY{{ forloop.parentloop.counter }}{{ forloop.counter }}">
-                    Año {{ anio }} (Total horas: {{ datos.total_horas }})
-                  </button>
-                </h2>
-                <div id="collapseY{{ forloop.parentloop.counter }}{{ forloop.counter }}" class="accordion-collapse collapse" data-bs-parent="#accordionAnios{{ forloop.parentloop.counter }}">
-                  <div class="accordion-body">
-                    <table class="table table-striped">
-                      <thead>
-                        <tr>
-                          <th>Mes</th>
-                          <th>Participación</th>
-                          <th>Estudios</th>
-                          <th>Auxiliar</th>
-                          <th>Horas</th>
-                          <th>Notas</th>
-                          
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {% for inf in datos.informes %}
-                          <tr>
-                            <td>{{ inf.mes|mes_personalizado }}</td>
-                            <td>{{ inf.participacion }}</td>
-                            <td>{{ inf.estudios }}</td>
-                            <td>{{ inf.auxiliar}}</td>
-                            <td>{{ inf.horas }}</td>
-                            <td>{{ inf.notas|default_if_none:"" }}</td>
-                          </tr>
-                        {% endfor %}
-                      </tbody>
-                    </table>
-                    <a href="{% url 'informe_pdf' item.publicador.id anio %}" class="btn btn-primary">Imprimir PDF</a>
+        /* Botones */
+        .btn {
+            font-size: 0.75rem;
+            padding: 0.25rem 0.5rem;
+        }
+    </style>
+
+    <div class="accordion" id="accordionPublicadores">
+      {% for item in data %}
+        <div class="accordion-item shadow-sm">
+          <h2 class="accordion-header" id="heading{{ forloop.counter }}">
+            <button class="accordion-button collapsed fw-semibold" type="button" 
+                    data-bs-toggle="collapse" data-bs-target="#collapse{{ forloop.counter }}">
+              {{ item.publicador.apellido }}, {{ item.publicador.nombre }}
+            </button>
+          </h2>
+          <div id="collapse{{ forloop.counter }}" class="accordion-collapse collapse" 
+               data-bs-parent="#accordionPublicadores">
+            <div class="accordion-body p-2">
+
+              <div class="accordion" id="accordionAnios{{ forloop.counter }}">
+                {% for anio, datos in item.años.items %}
+                  <div class="accordion-item shadow-sm">
+                    <h2 class="accordion-header" id="headingY{{ forloop.parentloop.counter }}{{ forloop.counter }}">
+                      <button class="accordion-button collapsed" type="button" 
+                              data-bs-toggle="collapse" data-bs-target="#collapseY{{ forloop.parentloop.counter }}{{ forloop.counter }}">
+                        Año {{ anio }} <span class="badge bg-secondary ms-2">Horas: {{ datos.total_horas }}</span>
+                      </button>
+                    </h2>
+                    <div id="collapseY{{ forloop.parentloop.counter }}{{ forloop.counter }}" 
+                         class="accordion-collapse collapse" 
+                         data-bs-parent="#accordionAnios{{ forloop.parentloop.counter }}">
+                      <div class="accordion-body p-2">
+
+                        <div class="table-responsive">
+                          <table class="table table-striped table-hover table-bordered text-center align-middle mb-2">
+                            <thead class="table-dark">
+                              <tr>
+                                <th>Mes</th>
+                                <th>Part.</th>
+                                <th>Est.</th>
+                                <th>Aux.</th>
+                                <th>Horas</th>
+                                <th>Notas</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {% for inf in datos.informes %}
+                                <tr>
+                                  <td>{{ inf.mes|mes_personalizado }}</td>
+                                  <td>{{ inf.participacion }}</td>
+                                  <td>{{ inf.estudios }}</td>
+                                  <td>{{ inf.auxiliar}}</td>
+                                  <td>{{ inf.horas }}</td>
+                                  <td>{{ inf.notas|default_if_none:"" }}</td>
+                                </tr>
+                              {% endfor %}
+                            </tbody>
+                          </table>
+                        </div>
+
+                        <a href="{% url 'informe_pdf' item.publicador.id anio %}" 
+                           class="btn btn-primary btn-sm">
+                          <i class="bi bi-file-earmark-pdf-fill me-1"></i> PDF
+                        </a>
+
+                      </div>
+                    </div>
                   </div>
-                </div>
+                {% endfor %}
               </div>
-            {% endfor %}
-          </div>
 
+            </div>
+          </div>
         </div>
-      </div>
+      {% endfor %}
     </div>
-  {% endfor %}
-</div>
 </div>
 {% endblock %}

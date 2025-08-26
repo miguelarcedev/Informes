@@ -1,18 +1,47 @@
 {% extends "base.html" %}
 {% load filtros_meses %}
 {% block contenido %}
-<div class="container my-4">
-    <h4 class="mb-4 text-center">
+<div class="container my-3 px-2">
+    <h5 class="mb-3 text-center">
       <i class="bi bi-people-fill"></i> {{titulo}}
-    </h4>
+    </h5>
+
+    <style>
+        /* Encabezado acordeón */
+        .accordion-button {
+            font-size: 0.9rem;
+            padding: 0.4rem 0.6rem;
+        }
+
+        /* Tablas compactas */
+        .table {
+            font-size: 0.8rem; /* texto más pequeño */
+        }
+        .table th,
+        .table td {
+            padding: 0.35rem 0.5rem; /* menos espacio */
+            vertical-align: middle;
+        }
+        .table thead th {
+            font-size: 0.75rem; /* encabezados más pequeños */
+            text-transform: uppercase;
+        }
+
+        /* Botones */
+        .btn {
+            font-size: 0.75rem;
+            padding: 0.25rem 0.5rem;
+        }
+    </style>
 
     <div class="accordion" id="accordionAsistencia">
         {% for año, registros in datos_por_año.items %}
-        <div class="accordion-item shadow-sm rounded-3 mb-3">
-            <div class="d-flex justify-content-between align-items-center px-3 py-2 bg-light border-bottom">
-                <button class="accordion-button collapsed fw-bold w-100 me-3" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#collapse{{ año }}" aria-expanded="false" aria-controls="collapse{{ año }}">
-                    Año {{ año }} 
+        <div class="accordion-item shadow-sm rounded-3 mb-2">
+            <div class="d-flex justify-content-between align-items-center px-2 py-1 bg-light border-bottom">
+                <button class="accordion-button collapsed fw-bold w-100 me-2" type="button" 
+                        data-bs-toggle="collapse" data-bs-target="#collapse{{ año }}" 
+                        aria-expanded="false" aria-controls="collapse{{ año }}">
+                    Año {{ año }}
                 </button>
                 <a href="{% url 'informe_pdf' año titulo %}" class="btn btn-danger btn-sm d-flex align-items-center">
                     <i class="bi bi-file-earmark-pdf-fill me-1"></i> PDF
@@ -21,16 +50,16 @@
             
             <div id="collapse{{ año }}" class="accordion-collapse collapse"
                 aria-labelledby="heading{{ año }}" data-bs-parent="#accordionAsistencia">
-                <div class="accordion-body">
+                <div class="accordion-body p-2">
                     
                     <div class="table-responsive">
-                        <table class="table table-striped table-hover align-middle text-center">
+                        <table class="table table-striped table-hover table-bordered align-middle text-center mb-0">
                             <thead class="table-dark">
                                 <tr>
                                     <th>Mes</th>
-                                    <th>Total Estudios</th>
-                                    <th>Total Horas</th>
-                                    <th>Informaron</th>
+                                    <th>Estudios</th>
+                                    <th>Horas</th>
+                                    <th>Inf.</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -50,7 +79,7 @@
             </div>
         </div>
         {% empty %}
-            <div class="alert alert-warning text-center">No hay informes disponibles.</div>
+            <div class="alert alert-warning text-center small">No hay informes disponibles.</div>
         {% endfor %}
     </div>
 </div>

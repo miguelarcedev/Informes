@@ -1,21 +1,21 @@
 {% extends "base.html" %}
 
 {% block contenido %}
-<div class="container mt-5">
+<div class="container my-3 px-2">
   <div class="row justify-content-center">
-    <div class="col-md-8 col-lg-6">
-      <div class="card shadow-lg border-0 rounded-4">
-        <div class="card-header bg-warning text-dark text-center py-3 rounded-top-4">
-          <h4 class="mb-0">✏️ Editar Informe</h4>
+    <div class="col-12 col-sm-10 col-md-8 col-lg-6">
+      <div class="card shadow-sm border-0 rounded-3">
+        <div class="card-header bg-warning text-dark text-center py-2 rounded-top-3">
+          <h6 class="mb-0">✏️ Editar Informe</h6>
         </div>
-        <div class="card-body p-4">
+        <div class="card-body p-3">
 
-          <!-- Mensajes (ej: éxito/error) -->
+          <!-- Mensajes -->
           {% if messages %}
             {% for message in messages %}
-              <div class="alert alert-{{ message.tags }} alert-dismissible fade show shadow-sm" role="alert">
+              <div class="alert alert-{{ message.tags }} alert-dismissible fade show small py-2 mb-2" role="alert">
                 {{ message }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                <button type="button" class="btn-close btn-sm" data-bs-dismiss="alert"></button>
               </div>
             {% endfor %}
           {% endif %}
@@ -24,64 +24,57 @@
           <form method="post" novalidate>
             {% csrf_token %}
 
-            {# Mostrar errores globales (no de un campo específico) #}
             {% if form.non_field_errors %}
-              <div class="alert alert-danger">
+              <div class="alert alert-danger small py-2">
                 {{ form.non_field_errors }}
               </div>
             {% endif %}
 
-            <!-- Campos del formulario -->
-            <div class="mb-3">
-              <label class="form-label">Año</label>
+            <!-- Campos -->
+            <div class="mb-2">
+              <label class="form-label small">Año</label>
               {{ form.año }}
               {% for error in form.anio.errors %}
                 <div class="text-danger small">{{ error }}</div>
               {% endfor %}
             </div>
-
-            <div class="mb-3">
-              <label class="form-label">Mes</label>
+            <div class="mb-2">
+              <label class="form-label small">Mes</label>
               {{ form.mes }}
               {% for error in form.mes.errors %}
                 <div class="text-danger small">{{ error }}</div>
               {% endfor %}
             </div>
-
-            <div class="mb-3">
-              <label class="form-label">Participación</label>
+            <div class="mb-2">
+              <label class="form-label small">Participación</label>
               {{ form.participacion }}
               {% for error in form.participacion.errors %}
                 <div class="text-danger small">{{ error }}</div>
               {% endfor %}
             </div>
-
-            <div class="mb-3">
-              <label class="form-label">Estudios</label>
+            <div class="mb-2">
+              <label class="form-label small">Estudios</label>
               {{ form.estudios }}
               {% for error in form.estudios.errors %}
                 <div class="text-danger small">{{ error }}</div>
               {% endfor %}
             </div>
-
-            <div class="mb-3">
-              <label class="form-label">Auxiliar</label>
+            <div class="mb-2">
+              <label class="form-label small">Auxiliar</label>
               {{ form.auxiliar }}
               {% for error in form.auxiliar.errors %}
                 <div class="text-danger small">{{ error }}</div>
               {% endfor %}
             </div>
-
-            <div class="mb-3">
-              <label class="form-label">Horas</label>
+            <div class="mb-2">
+              <label class="form-label small">Horas</label>
               {{ form.horas }}
               {% for error in form.horas.errors %}
                 <div class="text-danger small">{{ error }}</div>
               {% endfor %}
             </div>
-
-            <div class="mb-3">
-              <label class="form-label">Notas</label>
+            <div class="mb-2">
+              <label class="form-label small">Notas</label>
               {{ form.notas }}
               {% for error in form.notas.errors %}
                 <div class="text-danger small">{{ error }}</div>
@@ -89,12 +82,12 @@
             </div>
 
             <!-- Botones -->
-            <div class="d-flex justify-content-between mt-4">
-              <a href="{% url 'mi_panel' %}" class="btn btn-outline-secondary">
+            <div class="d-flex justify-content-between mt-3">
+              <a href="{% url 'mi_panel' %}" class="btn btn-outline-secondary btn-sm">
                 ⬅️ Cancelar
               </a>
-              <button type="submit" class="btn btn-warning px-4">
-                Actualizar Informe
+              <button type="submit" class="btn btn-warning btn-sm px-3">
+                Actualizar
               </button>
             </div>
           </form>

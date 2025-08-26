@@ -92,7 +92,7 @@ class InformeForm(forms.ModelForm):
             12: "Diciembre",
         }
 
-        # Si es 21 o más → pasamos al mes siguiente
+        # Si es 25 o más → pasamos al mes siguiente
         if dia >= 25:
             mes += 1
             if mes == 13:
@@ -121,5 +121,5 @@ class InformeForm(forms.ModelForm):
             field.widget.attrs.update({"class": css_class})
 
         # Añadimos readonly a año 
-        self.fields["año"].widget.attrs["readonly"] = True
+        self.fields["año"].widget.attrs["readonly"] = False
         
