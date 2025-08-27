@@ -212,18 +212,11 @@ def publicadores_inactivos(request):
 
 
 
-# Definición de meses del año de servicio (septiembre–agosto)
-
-MESES_SERVICIO = [
-    "Septiembre", "Octubre", "Noviembre", "Diciembre",
-    "Enero", "Febrero", "Marzo", "Abril",
-    "Mayo", "Junio", "Julio", "Agosto",
-]
 
 def informe_pdf(request, pk, anio):
     publicador = get_object_or_404(Publicador, pk=pk)
 
-    informes = Informe.objects.filter(publicador=publicador, año=anio).order_by("mes")
+    informes = Informe.objects.filter(publicador=publicador, año=anio)
 
     response = HttpResponse(content_type="application/pdf")
     response["Content-Disposition"] = f'attachment; filename="{publicador}_{anio}.pdf"'
@@ -285,9 +278,8 @@ def informe_pdf(request, pk, anio):
 
     # Agregar filas con el nombre del mes en vez del número
     for inf in informes:
-        nombre_mes = MESES_SERVICIO[inf.mes - 1]  # inf.mes = 1 → Septiembre
         data.append([
-            nombre_mes, inf.participacion, inf.estudios, inf.auxiliar, inf.horas,
+            inf.get_mes_display(), inf.participacion, inf.estudios, inf.auxiliar, inf.horas,
             inf.notas or ""
         ])
 

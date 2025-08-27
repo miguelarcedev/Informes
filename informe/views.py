@@ -23,17 +23,21 @@ MESES_SERVICIO = {
     
 }
 
+# Orden deseado: septiembre → agosto
+ORDEN_MESES = [9, 10, 11, 12, 1, 2, 3, 4, 5, 6, 7, 8]
+
 def totales_publicadores(request):
     titulo = "Totales Publicadores"
     queryset = Informe.objects.filter(
-        servicio = "Publicador",
+        participacion="Si",
+        servicio="Publicador",
         publicador__estado="Activo"
     ).values("año", "mes").annotate(
         total_estudios=Sum("estudios"),
         total_horas=Sum("horas"),
         total_publicadores=Count("publicador", distinct=True)
-    )
-   
+    ).order_by("-año")
+
     datos_por_año = {}
     for row in queryset:
         año = row["año"]
@@ -43,7 +47,17 @@ def totales_publicadores(request):
             datos_por_año[año] = []
         datos_por_año[año].append(row)
 
-    return render(request, "informe/totales.html", {"datos_por_año": datos_por_año,"titulo":titulo})
+    # Reordenar meses por año según ORDEN_MESES
+    for año in datos_por_año:
+        datos_por_año[año].sort(
+            key=lambda x: ORDEN_MESES.index(x["mes"])
+        )
+
+    return render(
+        request,
+        "informe/totales.html",
+        {"datos_por_año": datos_por_año, "titulo": titulo}
+    )
 
 def totales_auxiliares(request):
     titulo = "Totales Auxiliares"
@@ -65,6 +79,12 @@ def totales_auxiliares(request):
         if año not in datos_por_año:
             datos_por_año[año] = []
         datos_por_año[año].append(row)
+
+    # Reordenar meses por año según ORDEN_MESES
+    for año in datos_por_año:
+        datos_por_año[año].sort(
+            key=lambda x: ORDEN_MESES.index(x["mes"])
+        )
 
     return render(request, "informe/totales.html", {"datos_por_año": datos_por_año,"titulo":titulo})
 
@@ -88,6 +108,12 @@ def totales_regulares(request):
         if año not in datos_por_año:
             datos_por_año[año] = []
         datos_por_año[año].append(row)
+    
+    # Reordenar meses por año según ORDEN_MESES
+    for año in datos_por_año:
+        datos_por_año[año].sort(
+            key=lambda x: ORDEN_MESES.index(x["mes"])
+        )
 
     return render(request, "informe/totales.html", {"datos_por_año": datos_por_año,"titulo":titulo})
 
@@ -100,37 +126,35 @@ def informe_pdf(request, año,titulo):
         queryset = Informe.objects.filter(
             año=año,
             participacion="Si",
-            auxiliar__isnull = True,  # <-- cambia según el tipo de publicador que quieras
-            publicador__servicio__isnull=True,
+            servicio = "Publicador",  # <-- cambia según el tipo de publicador que quieras
             publicador__estado="Activo"
         ).values("año", "mes").annotate(
             total_estudios=Sum("estudios"),
             total_horas=Sum("horas"),
             total_publicadores=Count("publicador", distinct=True)
-        ).order_by("mes")
+        )
     if titulo == "Totales Auxiliares":
         queryset = Informe.objects.filter(
             año=año,
             participacion="Si",
-            auxiliar="Si",  # <-- cambia según el tipo de publicador que quieras
-            publicador__servicio__isnull=True,
+            servicio="Auxiliar",  # <-- cambia según el tipo de publicador que quieras
             publicador__estado="Activo"
         ).values("año", "mes").annotate(
             total_estudios=Sum("estudios"),
             total_horas=Sum("horas"),
             total_publicadores=Count("publicador", distinct=True)
-        ).order_by("mes")
+        )
     if titulo == "Totales Regulares":
         queryset = Informe.objects.filter(
             año=año,
             participacion="Si",
-            publicador__servicio = "Precursor Regular",
+            servicio = "Regular",
             publicador__estado="Activo"
         ).values("año", "mes").annotate(
             total_estudios=Sum("estudios"),
             total_horas=Sum("horas"),
             total_publicadores=Count("publicador", distinct=True)
-        ).order_by("mes")
+        )
 
     # Agrupar en dict por año (aunque pedimos solo uno, mantenemos la lógica)
     datos_por_año = {}
@@ -141,6 +165,12 @@ def informe_pdf(request, año,titulo):
         if año not in datos_por_año:
             datos_por_año[año] = []
         datos_por_año[año].append(row)
+    
+    # Reordenar meses por año según ORDEN_MESES
+    for año in datos_por_año:
+        datos_por_año[año].sort(
+            key=lambda x: ORDEN_MESES.index(x["mes"])
+        )
 
     # === 2) ARMAR EL PDF ===
     response = HttpResponse(content_type="application/pdf")
@@ -150,8 +180,12 @@ def informe_pdf(request, año,titulo):
     styles = getSampleStyleSheet()
     elements = []
 
+    # --- 2. Estilo modificado Título ---
+    titulo_modificado = styles["Title"].clone('TituloModificado')
+    titulo_modificado.fontName = "Helvetica-Bold"
+    titulo_modificado.fontSize = 12
     # Título principal
-    elements.append(Paragraph(f"{titulo} - Año {año}", styles["Title"]))
+    elements.append(Paragraph(f"{titulo} - Año {año}", titulo_modificado))
     elements.append(Spacer(1, 12))
 
     # Por cada año (aunque es uno en este caso)
@@ -229,13 +263,6 @@ class Precursores(LoginRequiredMixin, View):
         normal_modificado_izq.fontSize = 8
         normal_modificado_izq.leading = 12
 
-        # Meses en el orden del año de servicio (1=Sept, ..., 12=Agosto)
-        meses = [
-            "Septiembre", "Octubre", "Noviembre", "Diciembre",
-            "Enero", "Febrero", "Marzo", "Abril",
-            "Mayo", "Junio", "Julio", "Agosto"
-        ]
-
         for pub in publicadores:
             # Título con el nombre del publicador
             story.append(Paragraph(f"REGISTRO DE PUBLICADOR DE LA CONGREGACION", titulo_modificado))
@@ -253,33 +280,29 @@ class Precursores(LoginRequiredMixin, View):
             # Función auxiliar para armar tabla de un año
             def build_table(año_actual):
                 data = [[año_actual, "Participación", "Estudios", "Auxiliar", "Horas", "Notas"]]
-
-                # Total anual solo de horas
                 total_horas = 0
 
-                for mes_num, mes_nombre in enumerate(meses, start=1):
-                    informe = Informe.objects.filter(
-                        publicador=pub,
-                        año=año_actual,
-                        mes=mes_num
-                    ).first()
+                # Traer registros ya ordenados según la BD
+                informes = Informe.objects.filter(
+                    publicador=pub,
+                    año=año_actual
+                ).order_by("id")   # o por el campo que asegura tu orden Sept→Ago
 
-                    if informe:
-                        participacion = informe.participacion or 0
-                        estudios = informe.estudios or 0
-                        auxiliar = informe.auxiliar or 0
-                        horas = informe.horas or 0
-                        notas = informe.notas or ""
-                    else:
-                        participacion = estudios = auxiliar = horas = 0
-                        notas = ""
+                for informe in informes:
+                    participacion = informe.participacion or 0
+                    estudios = informe.estudios or 0
+                    auxiliar = informe.auxiliar or 0
+                    horas = informe.horas or 0
+                    notas = informe.notas or ""
 
-                    # Acumular solo horas
                     total_horas += horas
+
+                    # Convertir mes numérico a nombre
+                    mes_nombre = MESES_SERVICIO.get(informe.mes, "")
 
                     data.append([mes_nombre, participacion, estudios, auxiliar, horas, notas])
 
-                # Fila de total solo en horas
+                # Fila total de horas
                 data.append(["Total", "", "", "", total_horas, ""])
 
                 table = Table(data, colWidths=[90, 70, 50, 50, 50, 160])
@@ -292,6 +315,7 @@ class Precursores(LoginRequiredMixin, View):
                     ("FONTNAME", (0, -1), (-1, -1), "Helvetica-Bold"),
                 ]))
                 return table
+
 
             # ====================
             # Tabla Año 1
@@ -339,14 +363,6 @@ class Inactivos_tarjetas(LoginRequiredMixin, View):
         normal_modificado_izq.fontSize = 8
         normal_modificado_izq.leading = 12
 
-
-        # Meses en el orden del año de servicio (1=Septiembre ... 12=Agosto)
-        meses = [
-            "Septiembre", "Octubre", "Noviembre", "Diciembre",
-            "Enero", "Febrero", "Marzo", "Abril",
-            "Mayo", "Junio", "Julio", "Agosto"
-        ]
-
         for pub in publicadores:
             # Buscamos el último año en el que tiene informes
             ultimo_informe = Informe.objects.filter(publicador=pub).order_by("-año").first()
@@ -369,27 +385,24 @@ class Inactivos_tarjetas(LoginRequiredMixin, View):
             # Tabla de informes del último año activo
             data = [[año_actual, "Participación", "Estudios", "Auxiliar", "Horas", "Notas"]]
 
-            for mes_num, mes_nombre in enumerate(meses, start=1):
-                informe = Informe.objects.filter(
-                    publicador=pub,
-                    año=año_actual,
-                    mes=mes_num
-                ).first()
+            # Traer informes de ese año ya en el orden guardado en la tabla
+            informes = Informe.objects.filter(
+                publicador=pub,
+                año=año_actual
+            ).order_by("id")  # usa el campo que respeta tu orden Sept→Ago
 
-                if informe:
-                    participacion = informe.participacion or 0
-                    estudios = informe.estudios or 0
-                    auxiliar = informe.auxiliar or 0
-                    horas = informe.horas or 0
-                    notas = informe.notas or ""
-                else:
-                    participacion = estudios = auxiliar = horas = 0
-                    notas = ""
+            for informe in informes:
+                participacion = informe.participacion or 0
+                estudios = informe.estudios or 0
+                auxiliar = informe.auxiliar or 0
+                horas = informe.horas or 0
+                notas = informe.notas or ""
+
+                mes_nombre = MESES_SERVICIO.get(informe.mes, "")
 
                 data.append([mes_nombre, participacion, estudios, auxiliar, horas, notas])
 
             table = Table(data, colWidths=[90, 70, 50, 50, 50, 160])
-
             table.setStyle(TableStyle([
                 ("BACKGROUND", (0, 0), (-1, 0), colors.gray),
                 ("TEXTCOLOR", (0, 0), (-1, 0), colors.whitesmoke),
@@ -405,11 +418,11 @@ class Inactivos_tarjetas(LoginRequiredMixin, View):
         # Generamos el PDF
         doc.build(story)
         return response
-    
+
 
 class Tarjeta_grupo(LoginRequiredMixin, View):
 
-    def get(self, request, grupo, *args, **kwargs):
+    def get(self, request,grupo, *args, **kwargs):
         try:
             ultimo_registro = Informe.objects.all().last()
             año1 = ultimo_registro.año - 1
@@ -418,12 +431,12 @@ class Tarjeta_grupo(LoginRequiredMixin, View):
             año1 = 1
             año2 = 2
 
-        # Filtramos publicadores por grupo y en servicio
+        # Filtramos publicadores activos y en servicio
         publicadores = Publicador.objects.filter(grupo=grupo,estado="Activo",servicio__isnull=True)
 
         # Configuración PDF
         response = HttpResponse(content_type='application/pdf')
-        response['Content-Disposition'] = 'inline; filename="Grupo{grupo}.pdf"'
+        response["Content-Disposition"] = f'inline; filename="Grupo {grupo}.pdf"'
         doc = SimpleDocTemplate(response, pagesize=A4)
         styles = getSampleStyleSheet()
         story = []
@@ -445,13 +458,6 @@ class Tarjeta_grupo(LoginRequiredMixin, View):
         normal_modificado_izq.fontSize = 8
         normal_modificado_izq.leading = 12
 
-        # Meses en el orden del año de servicio (1=Sept, ..., 12=Agosto)
-        meses = [
-            "Septiembre", "Octubre", "Noviembre", "Diciembre",
-            "Enero", "Febrero", "Marzo", "Abril",
-            "Mayo", "Junio", "Julio", "Agosto"
-        ]
-
         for pub in publicadores:
             # Título con el nombre del publicador
             story.append(Paragraph(f"REGISTRO DE PUBLICADOR DE LA CONGREGACION", titulo_modificado))
@@ -460,8 +466,8 @@ class Tarjeta_grupo(LoginRequiredMixin, View):
             story.append(Paragraph(f"Fecha bautismo: {pub.bautismo}", normal_modificado_izq))
             story.append(Paragraph(f"Sexo: {pub.sexo}", normal_modificado_izq))
             story.append(Paragraph(f"{pub.u_oo}", normal_modificado_izq))
-            story.append(Paragraph(f"{pub.servicio or ''}", normal_modificado_izq))
-            story.append(Paragraph(f"{pub.a_sm or ''}", normal_modificado_izq))
+            story.append(Paragraph(f"{pub.servicio}", normal_modificado_izq))
+            story.append(Paragraph(f"{pub.a_sm}", normal_modificado_izq))
             story.append(Spacer(1, 12))
 
 
@@ -469,33 +475,29 @@ class Tarjeta_grupo(LoginRequiredMixin, View):
             # Función auxiliar para armar tabla de un año
             def build_table(año_actual):
                 data = [[año_actual, "Participación", "Estudios", "Auxiliar", "Horas", "Notas"]]
-
-                # Total anual solo de horas
                 total_horas = 0
 
-                for mes_num, mes_nombre in enumerate(meses, start=1):
-                    informe = Informe.objects.filter(
-                        publicador=pub,
-                        año=año_actual,
-                        mes=mes_num
-                    ).first()
+                # Traer registros ya ordenados según la BD
+                informes = Informe.objects.filter(
+                    publicador=pub,
+                    año=año_actual
+                ).order_by("id")   # o por el campo que asegura tu orden Sept→Ago
 
-                    if informe:
-                        participacion = informe.participacion or 0
-                        estudios = informe.estudios or 0
-                        auxiliar = informe.auxiliar or 0
-                        horas = informe.horas or 0
-                        notas = informe.notas or ""
-                    else:
-                        participacion = estudios = auxiliar = horas = 0
-                        notas = ""
+                for informe in informes:
+                    participacion = informe.participacion or 0
+                    estudios = informe.estudios or 0
+                    auxiliar = informe.auxiliar or 0
+                    horas = informe.horas or 0
+                    notas = informe.notas or ""
 
-                    # Acumular solo horas
                     total_horas += horas
+
+                    # Convertir mes numérico a nombre
+                    mes_nombre = MESES_SERVICIO.get(informe.mes, "")
 
                     data.append([mes_nombre, participacion, estudios, auxiliar, horas, notas])
 
-                # Fila de total solo en horas
+                # Fila total de horas
                 data.append(["Total", "", "", "", total_horas, ""])
 
                 table = Table(data, colWidths=[90, 70, 50, 50, 50, 160])
@@ -508,6 +510,7 @@ class Tarjeta_grupo(LoginRequiredMixin, View):
                     ("FONTNAME", (0, -1), (-1, -1), "Helvetica-Bold"),
                 ]))
                 return table
+
 
             # ====================
             # Tabla Año 1
@@ -523,6 +526,7 @@ class Tarjeta_grupo(LoginRequiredMixin, View):
         # Generamos el PDF
         doc.build(story)
         return response
+
 
 
 def publicadores_sin_informe(request,grupo):

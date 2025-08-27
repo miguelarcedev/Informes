@@ -28,14 +28,14 @@ def calculo_irregulares():
             for i in informe:
                 if isinstance(año, tuple):  # si 'año' tiene dos posibles valores
                     if i.año in año:
-                        if i.participacion != "Si":
+                        if i.participacion == "No":
                             irregulares.append((i.publicador,i.año,i.mes))
                             if bandera:
                                 cantidad += 1
                                 bandera = False
                 else:
                      if i.año == año:
-                        if i.participacion != "Si":
+                        if i.participacion == "No":
                             irregulares.append((i.publicador,i.año,i.mes))
                             if bandera:
                                 cantidad += 1

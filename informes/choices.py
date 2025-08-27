@@ -82,5 +82,5 @@ ESTADO = [
 
 SINO = [         
         ('Si', 'Si'),
-        
+        ('No', 'No'),
     ]

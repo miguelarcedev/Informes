@@ -12,11 +12,13 @@ from reportlab.lib.styles import getSampleStyleSheet
 from .models import Entre_Semana
 from django.db.models import Avg
 
+# Orden deseado: septiembre → agosto
+ORDEN_MESES = [9, 10, 11, 12, 1, 2, 3, 4, 5, 6, 7, 8]
+
 def asistencia_entre_semana_view(request):
-    from django.db.models import Avg
     titulo = "Asistencia Entre semana"
     data_por_anio = {}
-    registros = Entre_Semana.objects.all()
+    registros = Entre_Semana.objects.all().order_by("-año")
 
     for registro in registros:
         anio = registro.año
@@ -27,19 +29,27 @@ def asistencia_entre_semana_view(request):
             }
         data_por_anio[anio]["meses"].append(registro)
 
+    # Calcular promedio y ordenar meses
     for anio, datos in data_por_anio.items():
         promedio_final = (
             Entre_Semana.objects.filter(año=anio).aggregate(avg=Avg("promedio"))["avg"]
         )
         datos["promedio_final"] = round(promedio_final, 2) if promedio_final else 0
 
-    return render(request, "asistencia/asistencia.html", {"data_por_anio": data_por_anio, "titulo":titulo})
+        # Ordenar meses de septiembre a agosto
+        datos["meses"].sort(key=lambda r: ORDEN_MESES.index(r.mes))
+
+    return render(
+        request,
+        "asistencia/asistencia.html",
+        {"data_por_anio": data_por_anio, "titulo": titulo},
+    )
+
 
 def asistencia_fin_semana_view(request):
-    from django.db.models import Avg
     titulo = "Asistencia Fin de semana"
     data_por_anio = {}
-    registros = Fin_De_Semana.objects.all()
+    registros = Fin_De_Semana.objects.all().order_by("-año")
 
     for registro in registros:
         anio = registro.año
@@ -50,12 +60,17 @@ def asistencia_fin_semana_view(request):
             }
         data_por_anio[anio]["meses"].append(registro)
 
+    # Calcular promedio y ordenar meses
+
     for anio, datos in data_por_anio.items():
         promedio_final = (
             Fin_De_Semana.objects.filter(año=anio).aggregate(avg=Avg("promedio"))["avg"]
         )
         datos["promedio_final"] = round(promedio_final, 2) if promedio_final else 0
-
+        
+        # Ordenar meses de septiembre a agosto
+        datos["meses"].sort(key=lambda r: ORDEN_MESES.index(r.mes))
+    
     return render(request, "asistencia/asistencia.html", {"data_por_anio": data_por_anio, "titulo":titulo})
 
 
@@ -72,21 +87,25 @@ def asistencia_pdf(request, anio, titulo):
     
     # Preparar respuesta como PDF
     response = HttpResponse(content_type="application/pdf")
-    response['Content-Disposition'] = f'attachment; filename="asistencia_{anio}.pdf"'
+    response['Content-Disposition'] = f'attachment; filename="{titulo}{anio}.pdf"'
 
     doc = SimpleDocTemplate(response, pagesize=A4)
     elements = []
     styles = getSampleStyleSheet()
 
+    # --- 2. Estilo modificado Título ---
+    titulo_modificado = styles["Title"].clone('TituloModificado')
+    titulo_modificado.fontName = "Helvetica-Bold"
+    titulo_modificado.fontSize = 12
+
     # Título
-    elements.append(Paragraph(f"{titulo}", styles["Title"]))
-    elements.append(Paragraph(f"Año {anio}", styles["Title"]))
+    elements.append(Paragraph(f"{titulo} {anio}", titulo_modificado))
     elements.append(Spacer(1, 12))
 
     # Tabla de registros
     data = [["Mes", "Cantidad", "Total", "Promedio"]]
     for r in registros:
-        data.append([r.mes, r.cantidad, r.total, r.promedio])
+        data.append([r.get_mes_display(), r.cantidad, r.total, r.promedio])
 
     # Agregar fila del promedio final
     data.append(["", "", "Promedio Final", promedio_final])

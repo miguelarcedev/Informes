@@ -21,3 +21,8 @@ python manage.py migrate_schemas
 UPDATE "Alto_Comedero".informe_informe
 SET mes = 12
 WHERE mes LIKE '%Agosto%';
+
+# Consultas anidadas con SQL
+
+SELECT i.*, p.nombre, p.apellido FROM ac.informe_informe i JOIN ac.publicador_publicador p ON i.publicador_id = p.id
+where i.mes =9 and i.año = 2025 and i.servicio= 'Publicador' and p.estado = 'Activo'
