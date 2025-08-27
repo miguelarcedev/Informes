@@ -14,7 +14,6 @@ MES = [
 ]
 
 NOTAS = [
-        (' ', ' '),
         ('Trabajos Construccion Salon', 'Trabajos construccion Salon'),
         ('Enfermo', 'Enfermo'),
         ('Cuidado fliar. enfermo', 'Cuidado fliar. enfermo'),
@@ -50,6 +49,14 @@ SERVICIO = [
         ('Misionero', 'Misionero'),
         
     ]
+INF_SERVICIO = [
+        ('Publicador', 'Publicador'),
+        ('Auxiliar', 'Auxiliar'),
+        ('Regular', 'Regular'),
+        ('Especial', 'Especial'),
+        ('Misionero', 'Misionero'),
+        
+    ]
 
 GRUPO = [
         ('1', '1'),
@@ -74,7 +81,6 @@ ESTADO = [
 
 
 SINO = [         
-        (' ', ' '),
         ('Si', 'Si'),
         
     ]

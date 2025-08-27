@@ -16,7 +16,7 @@ def asistencia_entre_semana_view(request):
     from django.db.models import Avg
     titulo = "Asistencia Entre semana"
     data_por_anio = {}
-    registros = Entre_Semana.objects.all().order_by('-año','mes')
+    registros = Entre_Semana.objects.all()
 
     for registro in registros:
         anio = registro.año
@@ -39,7 +39,7 @@ def asistencia_fin_semana_view(request):
     from django.db.models import Avg
     titulo = "Asistencia Fin de semana"
     data_por_anio = {}
-    registros = Fin_De_Semana.objects.all().order_by('-año','mes')
+    registros = Fin_De_Semana.objects.all()
 
     for registro in registros:
         anio = registro.año

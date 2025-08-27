@@ -17,25 +17,23 @@ from datetime import date
 
 # Diccionario de meses de servicio
 MESES_SERVICIO = {
-    
+    9: "Septiembre", 10: "Octubre", 11: "Noviembre", 12: "Diciembre",
     1: "Enero", 2: "Febrero", 3: "Marzo", 4: "Abril",
     5: "Mayo", 6: "Junio", 7: "Julio", 8: "Agosto",
-    9: "Septiembre", 10: "Octubre", 11: "Noviembre", 12: "Diciembre",
+    
 }
 
 def totales_publicadores(request):
     titulo = "Totales Publicadores"
     queryset = Informe.objects.filter(
-        participacion="Si",
-        auxiliar__exact=" ",
-        publicador__servicio__isnull=True,
+        servicio = "Publicador",
         publicador__estado="Activo"
     ).values("año", "mes").annotate(
         total_estudios=Sum("estudios"),
         total_horas=Sum("horas"),
         total_publicadores=Count("publicador", distinct=True)
-    ).order_by("-año", "mes")
-
+    )
+   
     datos_por_año = {}
     for row in queryset:
         año = row["año"]
@@ -51,14 +49,13 @@ def totales_auxiliares(request):
     titulo = "Totales Auxiliares"
     queryset = Informe.objects.filter(
         participacion="Si",
-        auxiliar="Si",
-        publicador__servicio__isnull=True,
+        servicio = "Auxiliar",
         publicador__estado="Activo"
     ).values("año", "mes").annotate(
         total_estudios=Sum("estudios"),
         total_horas=Sum("horas"),
         total_publicadores=Count("publicador", distinct=True)
-    ).order_by("-año", "mes")
+    ).order_by("-año")
 
     datos_por_año = {}
     for row in queryset:
@@ -75,13 +72,13 @@ def totales_regulares(request):
     titulo = "Totales Regulares"
     queryset = Informe.objects.filter(
         participacion="Si",
-        publicador__servicio="Precursor Regular",
+        servicio = "Regular",
         publicador__estado="Activo"
     ).values("año", "mes").annotate(
         total_estudios=Sum("estudios"),
         total_horas=Sum("horas"),
         total_publicadores=Count("publicador", distinct=True)
-    ).order_by("-año", "mes")
+    ).order_by("-año")
 
     datos_por_año = {}
     for row in queryset:
@@ -103,7 +100,7 @@ def informe_pdf(request, año,titulo):
         queryset = Informe.objects.filter(
             año=año,
             participacion="Si",
-            auxiliar__exact = " ",  # <-- cambia según el tipo de publicador que quieras
+            auxiliar__isnull = True,  # <-- cambia según el tipo de publicador que quieras
             publicador__servicio__isnull=True,
             publicador__estado="Activo"
         ).values("año", "mes").annotate(
