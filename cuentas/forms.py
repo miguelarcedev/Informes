@@ -1,6 +1,8 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
+import datetime
+from informe.models import Informe
 
 class UsernameForm(forms.Form):
     username = forms.CharField(max_length=150, widget=forms.TextInput(attrs={'placeholder':'Nombre de usuario'}))
@@ -60,14 +62,12 @@ class RegisterForm(forms.ModelForm):
             user.save()
         return user
 
-import datetime
-from django import forms
-from informe.models import Informe
+
 
 class InformeForm(forms.ModelForm):
     class Meta:
         model = Informe
-        fields = ["año", "mes", "participacion", "estudios", "auxiliar", "horas", "notas"]
+        fields = ["año", "mes", "participacion", "estudios",  "servicio", "horas", "notas"]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -94,15 +94,12 @@ class InformeForm(forms.ModelForm):
 
         # Si es 25 o más → pasamos al mes siguiente
         if dia >= 25:
-            mes += 1
-            if mes == 13:
-                mes = 1
-                anio += 1
+            mes = mes
         else:
             mes -= 1
 
         # Determinar el año académico
-        if mes >= 9:  # septiembre a diciembre pertenecen al año académico siguiente
+        if mes >= 10:  # septiembre a diciembre pertenecen al año académico siguiente
             anio_academico = anio + 1
         else:  # enero a agosto pertenecen al año académico actual
             anio_academico = anio

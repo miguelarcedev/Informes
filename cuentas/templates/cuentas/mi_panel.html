@@ -216,7 +216,11 @@
                             <td>{{ informe.mes|mes_personalizado }}</td>
                             <td class="d-none d-sm-table-cell">{{ informe.participacion }}</td>
                             <td class="d-none d-sm-table-cell">{{ informe.estudios }}</td>
-                            <td>{{ informe.auxiliar }}</td>
+                            {% if informe.servicio == "Auxiliar" %}
+                              <td> Si </td>
+                            {% else %}
+                              <td>  </td>
+                            {% endif %}
                             <td>{{ informe.horas }}</td>
                             <td>{{ informe.notas|default_if_none:"" }}</td>
                             <td>
