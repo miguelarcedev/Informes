@@ -26,3 +26,20 @@ WHERE mes LIKE '%Agosto%';
 
 SELECT i.*, p.nombre, p.apellido FROM ac.informe_informe i JOIN ac.publicador_publicador p ON i.publicador_id = p.id
 where i.mes =9 and i.año = 2025 and i.servicio= 'Publicador' and p.estado = 'Activo'
+
+# Comandos para hacer copia de respaldo de BD de Postgre. 
+
+Directoria donde se encuanta las BD:
+cd c:\Archivos de programa\PostgreSQL\16\bin 
+
+Para ver las bd a respaldar:
+psql -U postgres     
+\l
+
+Para hacer Backup:
+pg_dump -U <tu_usuario> -d <nombre_de_la_base_datos> -f <nombre_archivo_backup.sql>
+
+Para restablecer el respaldo guardado:
+
+Borrar la BD:
+DROP DATABASE "database";

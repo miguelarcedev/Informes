@@ -148,7 +148,7 @@ TEMPLATES = [
 DATABASES = {
     'default': {
         'ENGINE': 'django_tenants.postgresql_backend',
-        'NAME': 'informes_db',
+        'NAME': 'info_db',
         'USER': 'postgres',
         'PASSWORD': 'superadmin',
         'HOST': 'localhost',
