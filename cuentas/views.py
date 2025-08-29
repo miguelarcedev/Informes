@@ -150,7 +150,10 @@ def editar_informe(request, pk):
     else:
         form = InformeForm(instance=informe)
 
-    return render(request, 'informes/editar_informe.html', {'form': form})
+    return render(request, 'informes/editar_informe.html', {'form': form}) 
+
+
+
 
 
 # Solo permite acceso si el usuario es staff

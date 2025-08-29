@@ -63,11 +63,15 @@ class RegisterForm(forms.ModelForm):
         return user
 
 
+ 
+# forms.py
+import datetime
+from django import forms
 
 class InformeForm(forms.ModelForm):
     class Meta:
         model = Informe
-        fields = ["año", "mes", "participacion", "estudios",  "servicio", "horas", "notas"]
+        fields = ["año", "mes", "participacion", "estudios", "servicio", "horas", "notas"]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -76,39 +80,24 @@ class InformeForm(forms.ModelForm):
         hoy = datetime.date.today()
         dia, mes, anio = hoy.day, hoy.month, hoy.year
 
-        # Diccionario de meses en español
-        meses_es = {
-            1: "Enero",
-            2: "Febrero",
-            3: "Marzo",
-            4: "Abril",
-            5: "Mayo",
-            6: "Junio",
-            7: "Julio",
-            8: "Agosto",
-            9: "Septiembre",
-            10: "Octubre",
-            11: "Noviembre",
-            12: "Diciembre",
-        }
-
-        # Si es 25 o más → pasamos al mes siguiente
-        if dia >= 25:
-            mes = mes
-        else:
+        # Si es antes del 25 → usar mes anterior
+        if dia < 25:
             mes -= 1
+            if mes == 0:  # caso enero → diciembre del año anterior
+                mes = 12
+                anio -= 1
 
-        # Determinar el año académico
-        if mes >= 10:  # septiembre a diciembre pertenecen al año académico siguiente
+        # Determinar año académico
+        if mes >= 10:  # octubre a diciembre → año académico siguiente
             anio_academico = anio + 1
-        else:  # enero a agosto pertenecen al año académico actual
+        else:  # enero a septiembre → año académico actual
             anio_academico = anio
 
-        # Preasignar valores por defecto
+        # Preasignar valores iniciales
         self.fields["año"].initial = anio_academico
-        self.fields["mes"].initial = meses_es[mes]
+        self.fields["mes"].initial = mes  # ✅ número (coincide con el modelo)
 
-        # ======= ESTILOS Y READONLY =======
+        # ======= ESTILOS =======
         for field_name, field in self.fields.items():
             css_class = "form-control"
             if isinstance(field.widget, forms.CheckboxInput):
@@ -117,6 +106,23 @@ class InformeForm(forms.ModelForm):
                 css_class = "form-control"
             field.widget.attrs.update({"class": css_class})
 
-        # Añadimos readonly a año 
-        self.fields["año"].widget.attrs["readonly"] = False
-        
+    def clean(self):
+        cleaned_data = super().clean()
+        año = cleaned_data.get("año")
+        mes = cleaned_data.get("mes")
+        publicador = getattr(self.instance, "publicador", None)  # viene de la instancia
+
+        if publicador and año and mes:
+            # Buscar otro informe con mismo publicador/año/mes
+            existe = Informe.objects.filter(
+                publicador=publicador,
+                año=año,
+                mes=mes
+            ).exclude(pk=self.instance.pk).exists()
+
+            if existe:
+                msg = "Ya existe un informe para este publicador en ese año y mes."
+                self.add_error("año", msg)
+                self.add_error("mes", msg)
+
+        return cleaned_data
