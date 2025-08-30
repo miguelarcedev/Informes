@@ -41,5 +41,8 @@ pg_dump -U <tu_usuario> -d <nombre_de_la_base_datos> -f <nombre_archivo_backup.s
 
 Para restablecer el respaldo guardado:
 
+psql -U nombre_usuario -d nombre_base_de_datos -f ruta/al/tu/archivo.sql
+
+
 Borrar la BD:
 DROP DATABASE "database";
