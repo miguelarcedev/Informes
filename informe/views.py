@@ -481,9 +481,13 @@ class Tarjeta_grupo(LoginRequiredMixin, View):
                 ).order_by("id")   # o por el campo que asegura tu orden Sept→Ago
 
                 for informe in informes:
+                    if informe.servicio == "Auxiliar":
+                        auxiliar = "Si"
+                    else:
+                        auxiliar = " "
                     participacion = informe.participacion or 0
                     estudios = informe.estudios or 0
-                    auxiliar = informe.auxiliar or 0
+                    auxiliar = auxiliar
                     horas = informe.horas or 0
                     notas = informe.notas or ""
 
