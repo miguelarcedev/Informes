@@ -85,7 +85,11 @@
                                   <td>{{ inf.mes|mes_personalizado }}</td>
                                   <td>{{ inf.participacion }}</td>
                                   <td>{{ inf.estudios }}</td>
-                                  <td>{{ inf.auxiliar}}</td>
+                                  {% if inf.servicio == "Auxiliar" %}
+                                  <td> Si </td>
+                                  {% else %}
+                                  <td>  </td>
+                                  {% endif %}
                                   <td>{{ inf.horas }}</td>
                                   <td>{{ inf.notas|default_if_none:"" }}</td>
                                 </tr>

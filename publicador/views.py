@@ -278,8 +278,12 @@ def informe_pdf(request, pk, anio):
 
     # Agregar filas con el nombre del mes en vez del número
     for inf in informes:
+        if inf.servicio == "Auxiliar":
+            aux= "Si"
+        else:
+            aux = " "
         data.append([
-            inf.get_mes_display(), inf.participacion, inf.estudios, inf.auxiliar, inf.horas,
+            inf.get_mes_display(), inf.participacion, inf.estudios, aux, inf.horas,
             inf.notas or ""
         ])
 
