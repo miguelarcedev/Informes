@@ -534,7 +534,7 @@ def publicadores_sin_informe(request,grupo):
     mes_actual = hoy.month
     anio_actual = hoy.year
 
-    if mes_actual in range(9, 13):  # de 9 a 12 (septiembre a diciembre)
+    if mes_actual in range(10, 13):  # de 9 a 12 (septiembre a diciembre)
         anio_consulta = (anio_actual + 1)
     else:
         anio_consulta = (anio_actual)
