@@ -31,7 +31,6 @@ def totales_publicadores(request):
     queryset = Informe.objects.filter(
         participacion="Si",
         servicio="Publicador",
-        publicador__estado="Activo"
     ).values("año", "mes").annotate(
         total_estudios=Sum("estudios"),
         total_horas=Sum("horas"),
@@ -64,7 +63,6 @@ def totales_auxiliares(request):
     queryset = Informe.objects.filter(
         participacion="Si",
         servicio = "Auxiliar",
-        publicador__estado="Activo"
     ).values("año", "mes").annotate(
         total_estudios=Sum("estudios"),
         total_horas=Sum("horas"),
@@ -93,7 +91,6 @@ def totales_regulares(request):
     queryset = Informe.objects.filter(
         participacion="Si",
         servicio = "Regular",
-        publicador__estado="Activo"
     ).values("año", "mes").annotate(
         total_estudios=Sum("estudios"),
         total_horas=Sum("horas"),
