@@ -1,57 +1,9 @@
-.login-body {
-    font-family: Arial, Helvetica, sans-serif;
-    background: #f5f7fb;
-    margin: 0;
-}
-
-.container {
-    max-width: 440px;
-    margin: 80px auto;
-    background: #fff;
-    padding: 26px 28px;
-    border-radius: 12px;
-    box-shadow: 0 10px 25px rgba(0,0,0,.06);
-}
-
-/* resto igual... */
-
-h2{
-    text-align:center;
-    margin:0 0 18px
-}
-label{
-    display:block;
-    margin:8px 0 4px;
-    font-size:14px;
-    color:#333
-}
+body{font-family:Arial,Helvetica,sans-serif;background:#f5f7fb;margin:0}
+.container{max-width:440px;margin:80px auto;background:#fff;padding:26px 28px;border-radius:12px;box-shadow:0 10px 25px rgba(0,0,0,.06)}
+h2{text-align:center;margin:0 0 18px}
+label{display:block;margin:8px 0 4px;font-size:14px;color:#333}
 input[type="text"],input[type="password"],input[type="email"]{width:100%;padding:12px;border:1px solid #d9dbe1;border-radius:8px;box-sizing:border-box;margin-bottom:12px}
-button{
-    width:100%;
-    padding:12px;
-    border:0;
-    border-radius:10px;
-    cursor:pointer;
-    background:#2563eb;
-    color:#fff;font-weight:600
-}
-a{
-    display:block;
-    text-align:center;
-    margin-top:10px;
-    color:#2563eb;
-    text-decoration:none
-}
-.error{
-    color:#b91c1c;
-    font-size:13px;
-    margin-bottom:10px
-}
-.alert{
-    background:#e9f5ff;
-    border:1px solid #b3e1ff;
-    color:#0b5394;
-    padding:10px;
-    border-radius:8px;
-    margin-bottom:12px
-}
+button{width:100%;padding:12px;border:0;border-radius:10px;cursor:pointer;background:#2563eb;color:#fff;font-weight:600}
+a{display:block;text-align:center;margin-top:10px;color:#2563eb;text-decoration:none}
+.error{color:#b91c1c;font-size:13px;margin-bottom:10px}
+.alert{background:#e9f5ff;border:1px solid #b3e1ff;color:#0b5394;padding:10px;border-radius:8px;margin-bottom:12px}
