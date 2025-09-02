@@ -1,20 +1,24 @@
-{% extends 'base_cuentas.html' %}
+{% extends "base.html" %}
+{% load static %}
 {% block title %}Iniciar sesión{% endblock %}
+
+{% block body_class %}login-body{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/styles.css' %}">
+{% endblock %}
+
 {% block content %}
 <h2>Iniciar sesión</h2>
-<form method="post" onsubmit="return validateUsername()">{% csrf_token %}
-  {{ form.username }}
-  <div id="usernameError" class="error">{% for e in form.username.errors %}{{ e }}{% endfor %}</div>
-  <button type="submit">Siguiente</button>
+
+<form method="post" novalidate>
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <button type="submit">Entrar</button>
 </form>
-<a href="{% url 'forgot_username' %}">¿Olvidaste tu usuario?</a>
+
 <a href="{% url 'password_reset' %}">¿Olvidaste tu contraseña?</a>
-<a href="{% url 'register' %}">¿No tienes cuenta? Crear cuenta</a>
-<script>
-function validateUsername(){
-  const el=document.querySelector('input[name="username"]'); const err=document.getElementById('usernameError');
-  if(!el.value.trim()){err.textContent='Por favor ingresa tu nombre de usuario.'; return false;}
-  err.textContent=''; return true;
-}
-</script>
+<a href="{% url 'register' %}">Crear una cuenta nueva</a>
 {% endblock %}
+
