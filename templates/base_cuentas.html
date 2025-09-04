@@ -1,24 +1,65 @@
 {% load static %}
 <!doctype html>
 <html lang="es">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <link rel="stylesheet" href="{% static 'css/styles.css' %}">
   <title>{% block title %}Sistema{% endblock %}</title>
+
+  <style>
+    nav-bar {
+      display: flex;
+      width: 100%;
+      height: 40px;
+    }
+
+    nav-left {
+      background-color: #E36600;
+      color: white;
+      padding: 0.5rem 1rem;
+      display: flex;
+      align-items: center;
+      font-weight: bold;
+      white-space: nowrap;
+    }
+
+    nav-right {
+      background-color: #000;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding: 0 20px;
+    }
+
+    
+  </style>
 </head>
+
+</head>
+
 <body>
-<div class="container">
-{% if messages %}
-  {% for m in messages %}
-    <div class="alert">{{ m }}</div>
-  {% endfor %}
-{% endif %}
 
-{% block content %}
+  <nav-bar>
+    <nav-left>{{ nombre_cong }}</nav-left>
+    <nav-right>
+      
+    </nav-right>
+  </nav-bar>
+  <div class="container">
+    {% if messages %}
+      {% for m in messages %}
+        <div class="alert">{{ m }}</div>
+      {% endfor %}
+    {% endif %}
 
-{% endblock %}
+    {% block content %}
 
-</div>
+    {% endblock %}
+
+  </div>
 </body>
+
 </html>
