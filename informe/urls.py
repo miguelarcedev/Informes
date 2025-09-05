@@ -13,4 +13,5 @@ urlpatterns = [
     path('informes/pdf/<int:año>/<str:titulo>/', views.informe_pdf, name='informe_pdf'),
     path('inactivos/tarjetas/', Inactivos_tarjetas.as_view(), name='inactivos_tarjetas'),
     path("publicadores/sin/informe/<int:grupo>/", views.publicadores_sin_informe, name="publicadores_sin_informe"),
+    path("entrar/<int:publicador_id>/<int:anio>/<int:mes>/", views.entrar_informe, name="entrar_informe"),
 ]

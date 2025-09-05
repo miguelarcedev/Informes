@@ -12,6 +12,8 @@ from reportlab.lib.styles import getSampleStyleSheet
 from django.views import View
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle, PageBreak
 from datetime import date
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib import messages
 
 
 
@@ -535,7 +537,7 @@ def publicadores_sin_informe(request,grupo):
     mes_actual = hoy.month
     anio_actual = hoy.year
 
-    if mes_actual in range(10, 13):  # de 9 a 12 (septiembre a diciembre)
+    if mes_actual in range(10, 13):  # de 10 a 12 (octubre a diciembre)
         anio_consulta = (anio_actual + 1)
     else:
         anio_consulta = (anio_actual)
@@ -552,7 +554,7 @@ def publicadores_sin_informe(request,grupo):
         .exclude(id__in=publicadores_con_informe)
         .order_by("grupo", "apellido", "nombre")
     )
-    print(grupo)
+    
     context = {
         "publicadores": publicadores_sin_informe.order_by("apellido", "nombre"),
         "mes_consulta": mes_consulta,
@@ -560,3 +562,34 @@ def publicadores_sin_informe(request,grupo):
         "grupo": grupo,
     }
     return render(request, "informe/publicadores_sin_informe.html", context)
+
+
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib import messages
+from .models import Publicador, Informe
+from cuentas.forms import InformeForm
+
+def entrar_informe(request, publicador_id, anio, mes):
+    publicador = get_object_or_404(Publicador, id=publicador_id)
+
+    if request.method == "POST":
+        form = InformeForm(request.POST)
+        if form.is_valid():
+            informe = form.save(commit=False)
+            informe.publicador = publicador
+            informe.año = anio
+            informe.mes = mes
+            informe.save()
+            messages.success(request, f"✅ Informe registrado para {publicador}.")
+            return redirect("panel_general")
+    else:
+        form = InformeForm()
+
+    return render(request, "informe/entrar_informe.html", {
+        "form": form,
+        "publicador": publicador,
+        "anio": anio,
+        "mes": mes,
+    })
+
+
