@@ -1,6 +1,5 @@
 from django.db.models import Sum, Count, Max
 from django.views.generic import  View
-from django.shortcuts import render
 from django.http import HttpResponse
 from publicador.models import Publicador
 from informe.models import Informe
@@ -14,7 +13,7 @@ from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, Tabl
 from datetime import date
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
-
+from cuentas.forms import InformeForm
 
 
 # Diccionario de meses de servicio
@@ -564,10 +563,6 @@ def publicadores_sin_informe(request,grupo):
     return render(request, "informe/publicadores_sin_informe.html", context)
 
 
-from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib import messages
-from .models import Publicador, Informe
-from cuentas.forms import InformeForm
 
 def entrar_informe(request, publicador_id, anio, mes):
     publicador = get_object_or_404(Publicador, id=publicador_id)
@@ -581,7 +576,10 @@ def entrar_informe(request, publicador_id, anio, mes):
             informe.mes = mes
             informe.save()
             messages.success(request, f"✅ Informe registrado para {publicador}.")
-            return redirect("panel_general")
+            return redirect(
+                "publicadores_sin_informe",
+                 grupo=publicador.grupo
+            )
     else:
         form = InformeForm()
 

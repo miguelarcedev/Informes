@@ -1,43 +1,55 @@
 {% extends "base.html" %}
 {% block contenido %}
 
-<div class="container mt-5">
-    <h5 class="fw-bold">
-        📋 Publicadores sin informe {{ mes_consulta }}/{{ anio_servicio }}
-    </h5>
+<div class="container mt-3">
 
-    <div class="card shadow-lg mt-3">
-        <div class="card-body">
-            {% if publicadores %}
-                <div class="table-responsive">
-                    <table class="table table-striped table-hover align-middle text-center">
-    <thead class="table-dark">
-        <tr>
-            <th>Publicador - Grupo {{ grupo }}</th>
-            <th>Acción</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for p in publicadores %}
-        <tr>
-            <td>{{ p.apellido }} {{ p.nombre }}</td>
-            <td>
-                <a href="{% url 'entrar_informe' p.id anio_servicio mes_consulta %}" 
-                   class="btn btn-sm btn-primary">
-                    ➕ Ingresar Informe
-                </a>
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+  <!-- Mensajes -->
+  {% if messages %}
+    {% for message in messages %}
+      <div class="alert alert-{{ message.tags }} alert-dismissible fade show py-1 px-2 small" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close btn-sm" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    {% endfor %}
+  {% endif %}
 
-                </div>
-            {% else %}
-                <p class="text-success">✅ Todos los publicadores presentaron su informe.</p>
-            {% endif %}
+  <h6 class="fw-bold text-center">
+    📋 Sin informe {{ mes_consulta }}/{{ anio_servicio }}
+  </h6>
+
+  <div class="card shadow-sm mt-2">
+    <div class="card-body p-2">
+      {% if publicadores %}
+        <div class="table-responsive">
+          <table class="table table-sm table-striped table-hover text-center align-middle">
+            <thead class="table-dark">
+              <tr>
+                <th>Grupo {{ grupo }}</th>
+                <th>Acción</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for p in publicadores %}
+              <tr>
+                <td class="text-start small">{{ p.apellido }} {{ p.nombre }}</td>
+                <td>
+                  <a href="{% url 'entrar_informe' p.id anio_servicio mes_consulta %}" 
+                     class="btn btn-sm btn-primary">
+                    ➕
+                  </a>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
         </div>
+      {% else %}
+        <p class="text-success text-center small mb-0">
+          ✅ Todos presentaron su informe
+        </p>
+      {% endif %}
     </div>
+  </div>
 </div>
 
 {% endblock %}
