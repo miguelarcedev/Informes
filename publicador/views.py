@@ -10,7 +10,8 @@ from django.db.models import  Sum, Max, Avg
 from django.contrib.auth.mixins import LoginRequiredMixin
 from informe.utils import *
 from django.shortcuts import render, get_object_or_404
-
+from dateutil.relativedelta import relativedelta
+from datetime import date
 # Para PDF
 from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Spacer
 from reportlab.lib.pagesizes import A4
@@ -129,21 +130,29 @@ class Estadisticas(LoginRequiredMixin,View):
         tot_otras_ovejas = tot_activos - tot_ungidos
         irregulares = calculo_irregulares()
         inactivos = calculo_inactivos()
-        notas = "Nuevo Publicador"
-        nuevos_publicadores = nuevo(notas)
-        notas = "Bautismo"
-        nuevos_bautizados = nuevo(notas)
-        notas = "Reactivado"
-        reactivados = nuevo(notas)
-        notas = "Readmitido"
-        readminitidos = nuevo(notas)   
+        nuevos_publicadores = nuevo("Nuevo Publicador")
+        reactivados = nuevo("Reactivado")
+        readmitidos = nuevo("Readmitido")   
+
+        # Fecha actual
+        hoy = date.today()
+
+        # Fecha límite (6 meses atrás)
+        hace_seis_meses = hoy - relativedelta(months=6)
+
+        # Contar publicadores bautizados en los últimos 6 meses
+        bautizados_ultimos_6m = Publicador.objects.filter(
+            bautismo__gte=hace_seis_meses
+        ).count()
+        nuevos_bautizados = bautizados_ultimos_6m
+
         context = {
             'inactivos': inactivos,
             'irregulares': irregulares[1],
             'nuevos_publicadores': nuevos_publicadores,
             'nuevos_bautizados': nuevos_bautizados,
             'reactivados': reactivados,
-            'readminitidos': readminitidos,
+            'readmitidos': readmitidos,
             'tot_inactivos': tot_inactivos,
             'tot_activos': tot_activos,
             'tot_inactivos': tot_inactivos,

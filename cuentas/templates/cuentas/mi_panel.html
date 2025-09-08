@@ -146,9 +146,15 @@
             <p><strong>Bautismo:</strong> {{ publicador.bautismo|default_if_none:"" }}</p>
             <p><strong>Estado:</strong> {{ publicador.estado }}</p>
             <p><strong>Grupo:</strong> {{ publicador.grupo }}</p>
-            <p><strong>Tel:</strong> {{ publicador.telefono }}</p>
-            <p><strong>Contacto:</strong> {{ publicador.contacto|default_if_none:""  }}</p>
-            <p><strong>Tel. contacto:</strong> {{ publicador.telefono_contacto }}</p>
+            <p><strong>Teléfono:</strong> {{ publicador.telefono }}</p>
+            <p><strong>Nombre del Contacto:</strong> {{ publicador.contacto|default_if_none:""  }}</p>
+            <p><strong>Teléfono del contacto:</strong> {{ publicador.telefono_contacto }}</p>
+            <!-- 🔹 Botón para editar -->
+            <div class="mt-2">
+              <a href="{% url 'editar_publicador' %}" class="btn btn-sm btn-primary shadow-sm">
+                ✏️ Editar mis datos
+              </a>
+            </div>
           {% else %}
             <div class="alert alert-warning mt-2 shadow-sm small" role="alert">
               ⚠️ Tus registros no están vinculados a un publicador. Contacta al Secretario.

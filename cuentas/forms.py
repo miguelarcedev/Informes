@@ -3,6 +3,10 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 import datetime
 from informe.models import Informe
+import datetime
+from django import forms
+from publicador.models import Publicador
+
 
 class UsernameForm(forms.Form):
     username = forms.CharField(max_length=150, widget=forms.TextInput(attrs={'placeholder':'Nombre de usuario'}))
@@ -63,10 +67,6 @@ class RegisterForm(forms.ModelForm):
         return user
 
 
- 
-# forms.py
-import datetime
-from django import forms
 
 class InformeForm(forms.ModelForm):
     class Meta:
@@ -126,3 +126,9 @@ class InformeForm(forms.ModelForm):
                 self.add_error("mes", msg)
 
         return cleaned_data
+
+
+class PublicadorForm(forms.ModelForm):
+    class Meta:
+        model = Publicador
+        fields = ['nacimiento', 'bautismo', 'telefono', 'contacto', 'telefono_contacto']

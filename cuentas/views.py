@@ -15,6 +15,9 @@ from .forms import InformeForm
 from django.db import IntegrityError, transaction
 from django.contrib.auth.decorators import user_passes_test
 from django.db.models import  Max
+from .forms import PublicadorForm
+
+
 
 def login_username(request):
     if request.user.is_authenticated:
@@ -172,3 +175,18 @@ def panel_general(request):
             grupos.append(i)
      
     return render(request, "cuentas/panel_general.html",{"grupos":grupos})
+
+
+@login_required
+def editar_publicador(request):
+    publicador = get_object_or_404(Publicador, user=request.user)
+
+    if request.method == "POST":
+        form = PublicadorForm(request.POST, instance=publicador)
+        if form.is_valid():
+            form.save()
+            return redirect('mi_panel')  # redirige al panel luego de guardar
+    else:
+        form = PublicadorForm(instance=publicador)
+
+    return render(request, 'publicador/editar_publicador.html', {'form': form})

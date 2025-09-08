@@ -17,14 +17,12 @@ NOTAS = [
         ('Trabajos Construccion Salon', 'Trabajos construccion Salon'),
         ('Enfermo', 'Enfermo'),
         ('Cuidado fliar. enfermo', 'Cuidado fliar. enfermo'),
-        ('Reactivado', 'Reactivado'),
         ('Trabajos en Asamblea', 'Trabajos en Asamblea'),
         ('Escuela Precursor', 'Escuela Precursor'),
         ('Inicia Regular', 'Inicia Regular'),
         ('Nuevo Publicador', 'Nuevo Publicador'),
-        ('Bautismo', 'Bautismo'),
         ('Readmitido', 'Readmitido'),
-        
+        ('Reactivado', 'Reactivado'),        
 ]
 
 SEXO = [

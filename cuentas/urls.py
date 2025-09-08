@@ -30,4 +30,5 @@ urlpatterns = [
     path('informes/nuevo/', views.crear_informe, name='crear_informe'),
     path('informes/<int:pk>/editar/', views.editar_informe, name='editar_informe'),
     path("panel/general/", views.panel_general, name="panel_general"),
+    path('editar-publicador/', views.editar_publicador, name='editar_publicador'),
 ]

@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block contenido %}
+<div class="container my-3 px-2">
+  <div class="row justify-content-center">
+    <div class="col-12 col-sm-10 col-md-8 col-lg-6">
+      <div class="card shadow-sm border-0 rounded-3">
+        <div class="card-header bg-primary text-white text-center py-2 rounded-top-3">
+          <h6 class="mb-0">✏️ Editar mis Datos</h6>
+        </div>
+        <div class="card-body p-3">
+
+          <!-- Mensajes -->
+          {% if messages %}
+            {% for message in messages %}
+              <div class="alert alert-{{ message.tags }} alert-dismissible fade show small py-2 mb-2" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close btn-sm" data-bs-dismiss="alert"></button>
+              </div>
+            {% endfor %}
+          {% endif %}
+
+          <!-- Formulario -->
+          <form method="post" novalidate>
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+              <div class="alert alert-danger small py-2">
+                {{ form.non_field_errors }}
+              </div>
+            {% endif %}
+
+            <!-- Campos -->
+            <div class="mb-2">
+              <label class="form-label small">Fecha de nacimiento</label>
+              {{ form.nacimiento }}
+              {% for error in form.nacimiento.errors %}
+                <div class="text-danger small">{{ error }}</div>
+              {% endfor %}
+            </div>
+            <div class="mb-2">
+              <label class="form-label small">Fecha de Bautismo</label>
+              {{ form.bautismo }}
+              {% for error in form.bautismo.errors %}
+                <div class="text-danger small">{{ error }}</div>
+              {% endfor %}
+            </div>
+            <div class="mb-2">
+              <label class="form-label small">Teléfono</label>
+              {{ form.telefono }}
+              {% for error in form.telefono.errors %}
+                <div class="text-danger small">{{ error }}</div>
+              {% endfor %}
+            </div>
+            <div class="mb-2">
+              <label class="form-label small">Nombre del contacto</label>
+              {{ form.contacto }}
+              {% for error in form.contacto.errors %}
+                <div class="text-danger small">{{ error }}</div>
+              {% endfor %}
+            </div>
+            <div class="mb-2">
+              <label class="form-label small">Teléfono del contacto</label>
+              {{ form.telefono_contacto }}
+              {% for error in form.telefono_contacto.errors %}
+                <div class="text-danger small">{{ error }}</div>
+              {% endfor %}
+            </div>
+
+            <!-- Botones -->
+            <div class="d-flex justify-content-between mt-3">
+              <a href="{% url 'mi_panel' %}" class="btn btn-outline-secondary btn-sm">
+                ⬅️ Cancelar
+              </a>
+              <button type="submit" class="btn btn-primary btn-sm px-3">
+                Guardar cambios
+              </button>
+            </div>
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
