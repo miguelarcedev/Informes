@@ -8,11 +8,12 @@ def calculo_irregulares():
         hoy = datetime.now()
         mes_actual = hoy.month   # número de mes (1-12)
         año_actual = hoy.year    # año (ej. 2025)
-        
-        if mes_actual in range(3, 9):  # de 3 a 8 (marzo a agosto)
+        if mes_actual in range(1, 3):  # de 3 a 9 (enero a febrero)
+            año = (año_actual - 1, año_actual)
+        if mes_actual in range(3, 10):  # de 3 a 9 (marzo a septiembre)
             año = año_actual
-        else:
-            año = (año_actual -1, año_actual)
+        if mes_actual in range(10, 13):  # de 3 a 9 (octubre a diciembre)
+            año = (año_actual, año_actual +1)
 
         bandera = True
         cantidad = 0
