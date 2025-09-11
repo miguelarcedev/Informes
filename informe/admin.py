@@ -60,7 +60,10 @@ class Informe_Admin(ImportExportModelAdmin):
     resource_class = Informe_Resource
     list_display = ('publicador', 'año', 'mes', 'participacion', 'estudios', 'horas', 'notas')
     list_filter = ['servicio','notas', 'año', 'mes']
+    search_fields = ['publicador__apellido', 'publicador__nombre']
 
+######## lo que sigue se hizo para que los usuarios comunes no puedan acceder a registros de otros ##########
+######## por ahora se anula ya que el control se hace por mi panel y se restringe por tipo de usuario ########
     def get_queryset(self, request):
         qs = super().get_queryset(request)
         if request.user.is_superuser:
@@ -135,7 +138,9 @@ class Informe_Admin(ImportExportModelAdmin):
         return request.user.is_superuser
 
     def has_export_permission(self, request):
-        return request.user.is_superuser
-
+        return request.user.is_superuser 
+   
 admin.site.register(Informe, Informe_Admin)
 admin.site.site_header = "Panel de Administración"
+
+

@@ -11,6 +11,7 @@ class Entre_Semana(models.Model):
           
 
     class Meta():
+        unique_together = ( 'año', 'mes')  # Un informe por mes y año 
         verbose_name='entre semana'
         verbose_name_plural='entre semana'
         ordering=['id']
@@ -33,6 +34,7 @@ class Fin_De_Semana(models.Model):
           
 
     class Meta():
+        unique_together = ( 'año', 'mes')  # Un informe por mes y año 
         verbose_name='fin de semana'
         verbose_name_plural='fin de semana'
         ordering=['id']
