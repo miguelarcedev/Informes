@@ -64,7 +64,7 @@ class Informe_Admin(ImportExportModelAdmin):
 
 ######## lo que sigue se hizo para que los usuarios comunes no puedan acceder a registros de otros ##########
 ######## por ahora se anula ya que el control se hace por mi panel y se restringe por tipo de usuario ########
-"""    def get_queryset(self, request):
+    def get_queryset(self, request):
         qs = super().get_queryset(request)
         if request.user.is_superuser:
             return qs
@@ -139,7 +139,7 @@ class Informe_Admin(ImportExportModelAdmin):
 
     def has_export_permission(self, request):
         return request.user.is_superuser 
-  """ 
+   
 admin.site.register(Informe, Informe_Admin)
 admin.site.site_header = "Panel de Administración"
 
