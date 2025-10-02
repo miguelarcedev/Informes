@@ -81,11 +81,10 @@ class InformeForm(forms.ModelForm):
         dia, mes, anio = hoy.day, hoy.month, hoy.year
 
         # Si es antes del 25 → usar mes anterior
-        if dia < 25:
+        if dia < 27:  # 27 para dar tiempo a los informes tardíos del mes anterior a informar
             mes -= 1
             if mes == 0:  # caso enero → diciembre del año anterior
                 mes = 12
-                anio -= 1
 
         # Determinar año académico
         if mes >= 10:  # octubre a diciembre → año académico siguiente
