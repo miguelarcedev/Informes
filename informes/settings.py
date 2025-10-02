@@ -27,7 +27,6 @@ ALLOWED_HOSTS = ["*"]
 DEBUG = False
 
 
-
 # Application definition
 
 """ SHARED_APPS = [

@@ -79,12 +79,12 @@ class InformeForm(forms.ModelForm):
         # ======= LÓGICA DE AÑO Y MES AUTOMÁTICO =======
         hoy = datetime.date.today()
         dia, mes, anio = hoy.day, hoy.month, hoy.year
-
+        mes_academico = hoy.month
         # Si es antes del 25 → usar mes anterior
         if dia < 27:  # 27 para dar tiempo a los informes tardíos del mes anterior a informar
-            mes -= 1
-            if mes == 0:  # caso enero → diciembre del año anterior
-                mes = 12
+            mes_academico -= 1
+            if mes_academico == 0:  # caso enero → diciembre del año anterior
+                mes_academico = 12
 
         # Determinar año académico
         if mes >= 10:  # octubre a diciembre → año académico siguiente
@@ -94,7 +94,7 @@ class InformeForm(forms.ModelForm):
 
         # Preasignar valores iniciales
         self.fields["año"].initial = anio_academico
-        self.fields["mes"].initial = mes  # ✅ número (coincide con el modelo)
+        self.fields["mes"].initial = mes_academico  # ✅ número (coincide con el modelo)
 
         # ======= ESTILOS =======
         for field_name, field in self.fields.items():
