@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.urls import path
 from . import views
 
-from publicador.views import Irregulares, Grupos, Estadisticas,Contactos
+from publicador.views import Irregulares, Grupos, Estadisticas,Contactos,Contactos_inactivos
 
 
 
@@ -11,9 +11,11 @@ urlpatterns = [
     path('irregulares/', Irregulares.as_view(), name='irregulares-list'),
     path('estadisticas/', Estadisticas.as_view(), name='estadisticas'),
     path('contactos/', Contactos.as_view(), name='contactos'),
+    path('contactos_inactivos/', Contactos_inactivos.as_view(), name='contactos_inactivos'),
     path("activos/", views.publicadores_activos, name="activos"),
     path("inactivos/", views.publicadores_inactivos, name="inactivos"),
     path("publicador/<int:pk>/pdf/<int:anio>/", views.informe_pdf, name="informe_pdf"),
     path("exportar_contactos_pdf/", views.exportar_contactos_pdf, name="exportar_contactos_pdf"),
+    path("exportar_contactos_inactivos_pdf/", views.exportar_contactos_inactivos_pdf, name="exportar_contactos_inactivos_pdf"),
 
 ]

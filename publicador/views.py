@@ -173,13 +173,21 @@ class Estadisticas(LoginRequiredMixin,View):
     
 class Contactos(LoginRequiredMixin,View):
     def get(self, request, *args, **kwargs):
-        contactos = Publicador.objects.filter(estado__contains='ctivo').values()
+        contactos = Publicador.objects.filter(estado='Activo').values()
         context = {
             'contactos': contactos,
         }
         
         return render(request, "publicador/contactos.html",context=context)  
 
+class Contactos_inactivos(LoginRequiredMixin,View):
+    def get(self, request, *args, **kwargs):
+        contactos = Publicador.objects.filter(estado='Inactivo').values()
+        context = {
+            'contactos': contactos,
+        }
+        
+        return render(request, "publicador/contactos_inactivos.html",context=context)  
 
 
 def publicadores_activos(request):
@@ -331,7 +339,7 @@ def exportar_contactos_pdf(request):
 
     # Datos de la tabla
     from .models import Publicador
-    contactos = Publicador.objects.filter(estado__contains="ctivo")
+    contactos = Publicador.objects.filter(estado="Activo")
 
     data = [["Publicador", "Teléfono", "Nombre de Contacto", "Teléfono contacto"]]
     for c in contactos:
@@ -365,3 +373,62 @@ def exportar_contactos_pdf(request):
     doc.build(elements)
 
     return response
+
+
+def exportar_contactos_inactivos_pdf(request):
+    # Configuración de respuesta HTTP
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="contactos_inactivos.pdf"'
+
+    # Documento con márgenes mínimos
+    doc = SimpleDocTemplate(
+        response,
+        pagesize=A4,
+        leftMargin=20, rightMargin=20,
+        topMargin=30, bottomMargin=20
+    )
+
+    styles = getSampleStyleSheet()
+    elements = []
+
+    # Encabezado
+    elements.append(Paragraph("📒 Listado de Contactos", styles["Heading3"]))
+    elements.append(Spacer(1, 10))
+
+    # Datos de la tabla
+    from .models import Publicador
+    contactos = Publicador.objects.filter(estado="Inactivo")
+
+    data = [["Publicador", "Teléfono", "Nombre de Contacto", "Teléfono contacto"]]
+    for c in contactos:
+        data.append([
+            f"{c.apellido} {c.nombre}",
+            c.telefono,
+            c.contacto,
+            c.telefono_contacto
+        ])
+
+    # Crear tabla
+    table = Table(data, colWidths=[200, 100, 140, 100])
+
+    # Estilos compactos
+    style = TableStyle([
+        ('BACKGROUND', (0,0), (-1,0), colors.grey),
+        ('TEXTCOLOR',(0,0),(-1,0),colors.whitesmoke),
+        ('ALIGN',(0,0),(-1,-1),'LEFT'),
+        ('FONTNAME', (0,0), (-1,0), 'Helvetica-Bold'),
+        ('FONTSIZE', (0,0), (-1,-1), 8),
+        ('GRID', (0,0), (-1,-1), 0.25, colors.black),
+        ('BOTTOMPADDING', (0,0), (-1,0), 4),
+        ('TOPPADDING', (0,0), (-1,-1), 2),
+    ])
+    table.setStyle(style)
+
+    # Agregar tabla al documento
+    elements.append(table)
+
+    # Construir documento (se divide automáticamente en varias páginas)
+    doc.build(elements)
+
+    return response
+

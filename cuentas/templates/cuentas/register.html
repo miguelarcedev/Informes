@@ -17,14 +17,14 @@
 </form>
 <a href="{% url 'login_username' %}">¿Ya tienes cuenta? Inicia sesión</a>
 <script>
-function validateRegister(){
-  const req = ['first_name','last_name','username','email','password1','password2'];
-  const err = document.getElementById('registerError');
-  for (const n of req){ const el=document.querySelector(`[name="${n}"]`); if(!el||!el.value.trim()){err.textContent='Todos los campos son obligatorios.'; return false;}}
-  const p1=document.querySelector('[name="password1"]').value;
-  const p2=document.querySelector('[name="password2"]').value;
-  if(p1!==p2){err.textContent='Las contraseñas no coinciden.'; return false;}
-  err.textContent=''; return true;
-}
+  function validateRegister() {
+    const req = ['first_name', 'last_name', 'username', 'email', 'password1', 'password2'];
+    const err = document.getElementById('registerError');
+    for (const n of req) { const el = document.querySelector(`[name="${n}"]`); if (!el || !el.value.trim()) { err.textContent = 'Todos los campos son obligatorios.'; return false; } }
+    const p1 = document.querySelector('[name="password1"]').value;
+    const p2 = document.querySelector('[name="password2"]').value;
+    if (p1 !== p2) { err.textContent = 'Las contraseñas no coinciden.'; return false; }
+    err.textContent = ''; return true;
+  }
 </script>
 {% endblock %}
