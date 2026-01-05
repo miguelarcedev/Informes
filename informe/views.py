@@ -540,7 +540,11 @@ def publicadores_sin_informe(request,grupo):
         anio_consulta = (anio_actual + 1)
     else:
         anio_consulta = (anio_actual)
-    mes_consulta = mes_actual - 1 
+    
+    if mes_actual == 1:
+        mes_consulta = 12
+    else:
+        mes_consulta = mes_actual - 1 
     
 
     # --- Obtener publicadores que NO tienen informe de ese mes y año de servicio ---
