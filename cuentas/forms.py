@@ -6,7 +6,6 @@ from informe.models import Informe
 import datetime
 from django import forms
 from publicador.models import Publicador
-from django_recaptcha import ReCaptchaField
 from django_recaptcha.widgets import ReCaptchaV2Checkbox
 from django.contrib.auth.forms import PasswordResetForm
 from django_recaptcha.fields import ReCaptchaField
