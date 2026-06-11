@@ -6,6 +6,10 @@ from informe.models import Informe
 import datetime
 from django import forms
 from publicador.models import Publicador
+from django_recaptcha import ReCaptchaField
+from django_recaptcha.widgets import ReCaptchaV2Checkbox
+from django.contrib.auth.forms import PasswordResetForm
+from django_recaptcha.fields import ReCaptchaField
 
 
 class UsernameForm(forms.Form):
@@ -15,8 +19,22 @@ class PasswordForm(forms.Form):
     username = forms.CharField(widget=forms.HiddenInput())
     password = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder':'Contraseña'}))
 
+
+
 class ForgotUsernameForm(forms.Form):
-    email = forms.EmailField(widget=forms.EmailInput(attrs={'placeholder':'Correo electrónico'}))
+    email = forms.EmailField(
+        widget=forms.EmailInput(
+            attrs={'placeholder': 'Correo electrónico'}
+        )
+    )
+
+    captcha = ReCaptchaField()
+
+
+class CustomPasswordResetForm(PasswordResetForm):
+    captcha = ReCaptchaField()
+
+
 
 class RegisterForm(forms.ModelForm):
     first_name = forms.CharField(

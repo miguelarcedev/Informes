@@ -94,6 +94,7 @@ TENANT_APPS = [
     'asistencia',
     'import_export',
     'cuentas',
+    'django_recaptcha',
 ]
 
 INSTALLED_APPS = list(dict.fromkeys(SHARED_APPS + TENANT_APPS))
@@ -236,3 +237,7 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'adm.cuentas.correo@gmail.com'
 #EMAIL_HOST_PASSWORD = 'lhso hedx aqao ixox'
 EMAIL_HOST_PASSWORD = 'vqbh muwm dtnw ural'
+
+# Lineas para configurar reCAPTCHA
+RECAPTCHA_PUBLIC_KEY = '6LcKsRktAAAAADVGpeut2NDZnC5glhecIWPeiiJ8'
+RECAPTCHA_PRIVATE_KEY = '6LcKsRktAAAAAMcGW8R2-c6GH939vB21H-wQvrOI'

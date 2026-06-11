@@ -2,10 +2,28 @@
 {% block title %}Recuperar usuario{% endblock %}
 {% block content %}
 <h2>Recuperar nombre de usuario</h2>
-<form method="post">{% csrf_token %}
-  {{ form.email }}
-  <div class="error">{% for e in form.email.errors %}{{ e }}{% endfor %}</div>
-  <button type="submit">Enviar</button>
+<form method="post">
+    {% csrf_token %}
+
+    {{ form.email }}
+
+    <div class="error">
+        {% for e in form.email.errors %}
+            {{ e }}
+        {% endfor %}
+    </div>
+
+    {{ form.captcha }}
+
+    <div class="error">
+        {% for e in form.captcha.errors %}
+            {{ e }}
+        {% endfor %}
+    </div>
+
+    <button type="submit">
+        Enviar
+    </button>
 </form>
 <a href="{% url 'login_username' %}">Volver al inicio de sesión</a>
 {% endblock %}

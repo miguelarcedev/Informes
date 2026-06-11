@@ -75,7 +75,11 @@ def forgot_username(request):
             form.add_error('email', 'No hay cuentas vinculadas a ese correo.')
     return render(request, 'cuentas/forgot_username.html', {'form': form})
 
+from django.contrib.auth.views import PasswordResetView
+from .forms import CustomPasswordResetForm
 
+class CustomPasswordResetView(PasswordResetView):
+    form_class = CustomPasswordResetForm
 
 @login_required
 def mi_panel(request):

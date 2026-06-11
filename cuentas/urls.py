@@ -10,7 +10,7 @@ urlpatterns = [
     path('logout/', views.do_logout, name='logout'),
     path('mi/panel/', views.mi_panel, name='mi_panel'),
 
-    path('password-reset/', auth_views.PasswordResetView.as_view(
+    path('password-reset/', views.CustomPasswordResetView.as_view(
         template_name='cuentas/password_reset_form.html',
         email_template_name='emails/password_reset_email.txt',
         subject_template_name='emails/password_reset_subject.txt',
