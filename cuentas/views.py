@@ -16,6 +16,7 @@ from django.db import IntegrityError, transaction
 from django.contrib.auth.decorators import user_passes_test
 from django.db.models import  Max
 from .forms import PublicadorForm
+from django_ratelimit.decorators import ratelimit
 
 
 
@@ -59,6 +60,7 @@ def register(request):
         return redirect('login_username')
     return render(request, 'cuentas/register.html', {'form': form})
 
+@ratelimit(key='ip', rate='5/h', block=True)
 def forgot_username(request):
     form = ForgotUsernameForm(request.POST or None)
     if request.method == 'POST' and form.is_valid():
@@ -75,9 +77,16 @@ def forgot_username(request):
             form.add_error('email', 'No hay cuentas vinculadas a ese correo.')
     return render(request, 'cuentas/forgot_username.html', {'form': form})
 
-from django.contrib.auth.views import PasswordResetView
-from .forms import CustomPasswordResetForm
 
+from .forms import CustomPasswordResetForm
+from django.contrib.auth.views import PasswordResetView
+from django.utils.decorators import method_decorator
+from django_ratelimit.decorators import ratelimit
+
+@method_decorator(
+    ratelimit(key='ip', rate='5/h', block=True),
+    name='dispatch'
+)
 class CustomPasswordResetView(PasswordResetView):
     form_class = CustomPasswordResetForm
 
